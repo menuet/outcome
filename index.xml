@@ -16,7 +16,7 @@
       
       <guid>https://ned14.github.io/outcome/tutorial/default-actions/udt-err/</guid>
       <description>Let us imagine a some user defined value type (udt) and some user defined error type (err):
-struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int operator*() const { return a; }};struct err{int a{0};explicit err(int _a): a(_a){}err() = default;}; View this code on GithubFirstly, note that both the udt and err types can be constructed from an int.</description>
+struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; struct err { int a{0}; explicit err(int _a) : a(_a) { } err() = default; };  View this code on Github Firstly, note that both the udt and err types can be constructed from an int.</description>
     </item>
     
     <item>
@@ -38,7 +38,7 @@ Let us demonstrate this by recompiling the code to use the undefined behaviour s
       
       <guid>https://ned14.github.io/outcome/tutorial/policies/anatomy/</guid>
       <description>A NoValuePolicy is quite simple. This is a complete policy, only the top two thirds is needed if you never use the policy in an outcome.
-struct blank_policy{//! Performs a narrow check of state, used in the assume_value() functions. template &amp;lt;class Impl&amp;gt; static constexpr void narrow_value_check(Impl &amp;amp;&amp;amp;self) noexcept;//! Performs a narrow check of state, used in the assume_error() functions. template &amp;lt;class Impl&amp;gt; static constexpr void narrow_error_check(Impl &amp;amp;&amp;amp;self) noexcept;//!</description>
+struct blank_policy { //! Performs a narrow check of state, used in the assume_value() functions.  template &amp;lt;class Impl&amp;gt; static constexpr void narrow_value_check(Impl &amp;amp;&amp;amp;self) noexcept; //! Performs a narrow check of state, used in the assume_error() functions.  template &amp;lt;class Impl&amp;gt; static constexpr void narrow_error_check(Impl &amp;amp;&amp;amp;self) noexcept; //!</description>
     </item>
     
     <item>
@@ -69,7 +69,7 @@ We therefore are going to need some completely static and trivially typed storag
       <guid>https://ned14.github.io/outcome/tutorial/payload/copy_file/</guid>
       <description>Something which has long annoyed the purists in the C++ leadership is the problem of dual overloads in error_code capable standard library APIs.
 Consider the copy_file() API from the Filesystem TS:
-namespace filesystem{/*! Copies the file at path `from` to path `to`.\returns True if file was successfully copied.\throws On failure throws `filesystem_error(ec.message(), from, to, ec)` with`ec` being the error code reported by the operating system.*/bool copy_file(const path &amp;amp;from, const path &amp;amp;to);/*!</description>
+namespace filesystem { /*! Copies the file at path `from` to path `to`. \returns True if file was successfully copied. \throws On failure throws `filesystem_error(ec.message(), from, to, ec)` with `ec` being the error code reported by the operating system. */ bool copy_file(const path &amp;amp;from, const path &amp;amp;to); /*!</description>
     </item>
     
     <item>
@@ -89,7 +89,7 @@ namespace filesystem{/*! Copies the file at path `from` to path `to`.\returns
       
       <guid>https://ned14.github.io/outcome/tutorial/constructors/file_handle/</guid>
       <description>Borrowing from afio::file_handle which uses this design pattern, here is a simplified file_handle implementation:
-class file_handle{int _fd{-1}; // file descriptor struct stat _stat{0}; // stat of the fd at open// Phase 1 private constexpr constructor constexpr file_handle() {}public:using path_type = filesystem::path;//! The behaviour of the handle: does it read, read and write, or atomic append? enum class mode : unsigned char // bit 0 set means writable {unchanged = 0,none = 2, //!</description>
+class file_handle { int _fd{-1}; // file descriptor  struct stat _stat { 0 }; // stat of the fd at open  // Phase 1 private constexpr constructor  constexpr file_handle() {} public: using path_type = filesystem::path; //! The behaviour of the handle: does it read, read and write, or atomic append?  enum class mode : unsigned char // bit 0 set means writable  { unchanged = 0, none = 2, //!</description>
     </item>
     
     <item>
@@ -100,7 +100,7 @@ class file_handle{int _fd{-1}; // file descriptor struct stat _stat{0}; //
       <guid>https://ned14.github.io/outcome/tutorial/hooks/adl_bridging/</guid>
       <description>In a previous section, we used the failure_info type to create the ADL bridge into the namespace where the ADL discovered throw_as_system_error_with_payload() function was to be found.
 Here we do the same, but more directly by creating a thin clone of std::error_code into the local namespace. This ensures that this namespace will be searched by the compiler when discovering the event hooks.
-namespace error_code_extended{// Use the error_code type as the ADL bridge for the hooks by creating a type here // It can be any type that your localised result uses, including the value type but // by localising the error code type here you prevent nasty surprises later when the // value type you use doesn&amp;#39;t trigger the ADL bridge.</description>
+namespace error_code_extended { // Use the error_code type as the ADL bridge for the hooks by creating a type here  // It can be any type that your localised result uses, including the value type but  // by localising the error code type here you prevent nasty surprises later when the  // value type you use doesn&amp;#39;t trigger the ADL bridge.</description>
     </item>
     
     <item>
@@ -120,7 +120,7 @@ Hence a very common thing you&amp;rsquo;ll need to do is static cast to a more d
       
       <guid>https://ned14.github.io/outcome/tutorial/default-actions/enums/</guid>
       <description>Let&amp;rsquo;s replace err with something likely in many people&amp;rsquo;s code, a strongly typed enum:
-struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int operator*() const { return a; }};enum class err{success, // REMEMBER it is best practice to always put &amp;#34;success&amp;#34; failure1, // with value 0 as your first item in any error code failure2 // enum, even if you never use it.</description>
+struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; enum class err { success, // REMEMBER it is best practice to always put &amp;#34;success&amp;#34;  failure1, // with value 0 as your first item in any error code  failure2 // enum, even if you never use it.</description>
     </item>
     
     <item>
@@ -130,7 +130,7 @@ struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int ope
       
       <guid>https://ned14.github.io/outcome/tutorial/c-api/example/</guid>
       <description>Let us start with a simple C++ function which we wish to make available to C code:
-// Fill the supplied buffer with the integer v converted to a string, returning// length of string minus null terminatorextern &amp;#34;C&amp;#34; outcome::result&amp;lt;size_t&amp;gt; to_string(char *buffer, size_t bufferlen, int v) noexcept{try{// Could throw an exception! std::string temp(std::to_string(v));// Will this string exceed the supplied buffer? if(temp.size() + 1 &amp;gt; bufferlen)return std::errc::no_buffer_space;// Copy the string into the supplied buffer, and return length of string memcpy(buffer, temp.</description>
+// Fill the supplied buffer with the integer v converted to a string, returning // length of string minus null terminator extern &amp;#34;C&amp;#34; outcome::result&amp;lt;size_t&amp;gt; to_string(char *buffer, size_t bufferlen, int v) noexcept { try { // Could throw an exception!  std::string temp(std::to_string(v)); // Will this string exceed the supplied buffer?  if(temp.size() + 1 &amp;gt; bufferlen) return std::errc::no_buffer_space; // Copy the string into the supplied buffer, and return length of string  memcpy(buffer, temp.</description>
     </item>
     
     <item>
@@ -140,7 +140,7 @@ struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int ope
       
       <guid>https://ned14.github.io/outcome/tutorial/result/inspecting/</guid>
       <description>Suppose we will be writing function print_half that takes an integral number (however big) represented as an std::string and outputs a number which is twice smaller:
-outcome::result&amp;lt;void&amp;gt; print_half(const std::string&amp;amp; text); View this code on GithubType result&amp;lt;void&amp;gt; means that there is no value to be retuned upon success, but that the operation might still fail, and we may be interested in inspecting the cause of the failure. Class template result&amp;lt;&amp;gt; is declared with attribute [[nodiscard]], which means compiler will warn you if you forget to inspect the returned object (in C++ 17 or later).</description>
+outcome::result&amp;lt;void&amp;gt; print_half(const std::string&amp;amp; text);  View this code on Github Type result&amp;lt;void&amp;gt; means that there is no value to be retuned upon success, but that the operation might still fail, and we may be interested in inspecting the cause of the failure. Class template result&amp;lt;&amp;gt; is declared with attribute [[nodiscard]], which means compiler will warn you if you forget to inspect the returned object (in C++ 17 or later).</description>
     </item>
     
     <item>
@@ -150,7 +150,7 @@ outcome::result&amp;lt;void&amp;gt; print_half(const std::string&amp;amp; text);
       
       <guid>https://ned14.github.io/outcome/tutorial/payload/copy_file2/</guid>
       <description>An Outcome based solution to the dual overload problem is straightforward:
-namespace filesystem2{// Error code + paths related to a failure. Also causes ADL discovery to check this namespace. struct failure_info{std::error_code ec;path path1, path2;};// Tell Outcome that failure_info is to be treated as a std::error_code inline const std::error_code &amp;amp;make_error_code(const failure_info &amp;amp;fi) { return fi.ec; }// Localise an outcome implementation specific to this namespace.</description>
+namespace filesystem2 { // Error code + paths related to a failure. Also causes ADL discovery to check this namespace.  struct failure_info { std::error_code ec; path path1, path2; }; // Tell Outcome that failure_info is to be treated as a std::error_code  inline const std::error_code &amp;amp;make_error_code(const failure_info &amp;amp;fi) { return fi.ec; } // Localise an outcome implementation specific to this namespace.</description>
     </item>
     
     <item>
@@ -162,7 +162,7 @@ namespace filesystem2{// Error code + paths related to a failure. Also causes 
       <description>Let us run the code from the previous page:
 ned@lyta:~/outcome/build_posix$ bin/outcome-snippets_error_code_enums1 Segmentation fault (core dumped) ned@lyta:~/outcome/build_posix$  Also undefined behaviour. This is because Outcome doesn&amp;rsquo;t know what to do with a strongly typed enum any more than some user defined struct.
 Let us register our error code enum with the C++ standard library. This causes Outcome to treat it quite differently.
-struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int operator*() const { return a; }};enum class err{success,failure1,failure2};// Tell the standard library that enum err is an error code enum// by specialising the is_error_code_enum trait.</description>
+struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; enum class err { success, failure1, failure2 }; // Tell the standard library that enum err is an error code enum // by specialising the is_error_code_enum trait.</description>
     </item>
     
     <item>
@@ -204,7 +204,7 @@ Seeing as we are replacing the throwing overload of copy_file() in the Filesyste
       
       <guid>https://ned14.github.io/outcome/tutorial/c-api/example2/</guid>
       <description>Now let us call our result returning C++ function from C:
-#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;string.h&amp;gt; // for strerror// This header in Outcome is pure C, it provides a suite of C helper macros#include &amp;#34;../../../include/outcome/result.h&amp;#34;// Declare our C++ function&amp;#39;s returning result type. Only needs to be done once.CXX_DECLARE_RESULT_EC(size_t, size_t);// Tell C about our C++ functionextern CXX_RESULT_EC(size_t) to_string(char *buffer, size_t bufferlen, int v);void print(int v){char buffer[4];CXX_RESULT_EC(size_t) res;res = to_string(buffer, sizeof(buffer), v);if(CXX_RESULT_HAS_VALUE(res)){printf(&amp;#34;to_string(%d) fills buffer with &amp;#39;%s&amp;#39; of %zu characters\n&amp;#34;, v, buffer, res.</description>
+#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;string.h&amp;gt; // for strerror// This header in Outcome is pure C, it provides a suite of C helper macros #include &amp;#34;../../../include/outcome/result.h&amp;#34; // Declare our C++ function&amp;#39;s returning result type. Only needs to be done once. CXX_DECLARE_RESULT_EC(size_t, size_t); // Tell C about our C++ function extern CXX_RESULT_EC(size_t) to_string(char *buffer, size_t bufferlen, int v); void print(int v) { char buffer[4]; CXX_RESULT_EC(size_t) res; res = to_string(buffer, sizeof(buffer), v); if(CXX_RESULT_HAS_VALUE(res)) { printf(&amp;#34;to_string(%d) fills buffer with &amp;#39;%s&amp;#39; of %zu characters\n&amp;#34;, v, buffer, res.</description>
     </item>
     
     <item>
@@ -214,7 +214,7 @@ Seeing as we are replacing the throwing overload of copy_file() in the Filesyste
       
       <guid>https://ned14.github.io/outcome/tutorial/hooks/hook_result/</guid>
       <description>We now tell Outcome that for every instance of our localised result&amp;lt;T&amp;gt;, that on failure construction only, we want custom code to be run which increments the current slot in TLS storage and writes the current stack backtrace into it.
-namespace error_code_extended{// Specialise the result construction hook for our localised result // We hook any non-copy, non-move, non-inplace construction, capturing a stack backtrace // if the result is errored.</description>
+namespace error_code_extended { // Specialise the result construction hook for our localised result  // We hook any non-copy, non-move, non-inplace construction, capturing a stack backtrace  // if the result is errored.</description>
     </item>
     
     <item>
@@ -224,7 +224,7 @@ namespace error_code_extended{// Specialise the result construction hook for o
       
       <guid>https://ned14.github.io/outcome/tutorial/outcome/inspecting/</guid>
       <description>Continuing with the previous example, in Layer3 we obtain an outcome&amp;lt;double&amp;gt; which may store a double or an std::error_code or an std::exception_ptr. Layer3 uses exceptions to indicate failure, so we want to turn a failed result into an exception: if we are storing an std::exception_ptr just rethrow it. If we are storing an std::error_code throw it as std::system_error, which is designed to store std::error_codes:
-namespace Layer3{auto run() -&amp;gt; double // may throw {if (outcome::outcome&amp;lt;double&amp;gt; o = Layer2NX::fun())return o.</description>
+namespace Layer3 { auto run() -&amp;gt; double // may throw  { if (outcome::outcome&amp;lt;double&amp;gt; o = Layer2NX::fun()) return o.</description>
     </item>
     
     <item>
@@ -234,7 +234,7 @@ namespace Layer3{auto run() -&amp;gt; double // may throw {if (outcome::outc
       
       <guid>https://ned14.github.io/outcome/tutorial/constructors/static-constructor/</guid>
       <description>Its phase 2 constructor:
-// Phase 2 static member constructor function, which cannot throwinline outcome::result&amp;lt;file_handle&amp;gt; file_handle::file(file_handle::path_type path, file_handle::mode mode) noexcept{// Perform phase 1 of object construction file_handle ret;// Perform phase 2 of object construction int flags = 0;switch(mode){case mode::attr_read:case mode::read:flags = O_RDONLY;break;case mode::attr_write:case mode::write:flags = O_RDWR;break;case mode::append:flags = O_APPEND;break;default:return std::errc::invalid_argument;}ret.</description>
+// Phase 2 static member constructor function, which cannot throw inline outcome::result&amp;lt;file_handle&amp;gt; file_handle::file(file_handle::path_type path, file_handle::mode mode) noexcept { // Perform phase 1 of object construction  file_handle ret; // Perform phase 2 of object construction  int flags = 0; switch(mode) { case mode::attr_read: case mode::read: flags = O_RDONLY; break; case mode::attr_write: case mode::write: flags = O_RDWR; break; case mode::append: flags = O_APPEND; break; default: return std::errc::invalid_argument; } ret.</description>
     </item>
     
     <item>
@@ -256,7 +256,7 @@ Additionally, in GCC and Clang which provide an extension to C++ known as statem
       
       <guid>https://ned14.github.io/outcome/tutorial/default-actions/error-codes/</guid>
       <description>Now that we have told the C++ standard library about our custom error code enum err, we actually no longer need to specify EC = err, we can just leave it default to std::error_code:
-result&amp;lt;udt /*, std::error_code */&amp;gt; res(err::failure1);// What happens here? What exception type is thrown? try{std::cout &amp;lt;&amp;lt; *res.value() &amp;lt;&amp;lt; std::endl;}catch(const std::exception &amp;amp;e){// Prints &amp;#34;Exception thrown was failure1&amp;#34;, exactly the same as before std::cerr &amp;lt;&amp;lt; &amp;#34;Exception thrown was &amp;#34; &amp;lt;&amp;lt; e.</description>
+result&amp;lt;udt /*, std::error_code */&amp;gt; res(err::failure1); // What happens here? What exception type is thrown?  try { std::cout &amp;lt;&amp;lt; *res.value() &amp;lt;&amp;lt; std::endl; } catch(const std::exception &amp;amp;e) { // Prints &amp;#34;Exception thrown was failure1&amp;#34;, exactly the same as before  std::cerr &amp;lt;&amp;lt; &amp;#34;Exception thrown was &amp;#34; &amp;lt;&amp;lt; e.</description>
     </item>
     
     <item>
@@ -276,9 +276,9 @@ But let&amp;rsquo;s keep going by intercepting any construction of our localised
       
       <guid>https://ned14.github.io/outcome/tutorial/constructors/metaprogrammg1/</guid>
       <description>We have built our first two phases of construction for file_handle, and for some users they might be happy writing:
-outcome::result&amp;lt;file_handle&amp;gt; fh1 = file_handle::file(&amp;#34;hello&amp;#34; /*, file_handle::mode::read */);if(!fh1){std::cerr &amp;lt;&amp;lt; &amp;#34;Opening file &amp;#39;hello&amp;#39; failed with &amp;#34; &amp;lt;&amp;lt; fh1.error().message() &amp;lt;&amp;lt; std::endl;} View this code on Github&amp;hellip; and be done with it.
+outcome::result&amp;lt;file_handle&amp;gt; fh1 = file_handle::file(&amp;#34;hello&amp;#34; /*, file_handle::mode::read */); if(!fh1) { std::cerr &amp;lt;&amp;lt; &amp;#34;Opening file &amp;#39;hello&amp;#39; failed with &amp;#34; &amp;lt;&amp;lt; fh1.error().message() &amp;lt;&amp;lt; std::endl; }  View this code on Github &amp;hellip; and be done with it.
 But wouldn&amp;rsquo;t it be nicer if we could instead write:
-outcome::result&amp;lt;file_handle&amp;gt; fh2 = construct&amp;lt;file_handle&amp;gt;{&amp;#34;hello&amp;#34; /*, file_handle::mode::read */}();if(!</description>
+outcome::result&amp;lt;file_handle&amp;gt; fh2 = construct&amp;lt;file_handle&amp;gt;{&amp;#34;hello&amp;#34; /*, file_handle::mode::read */}(); if(!</description>
     </item>
     
     <item>
@@ -299,7 +299,7 @@ struct cxx_error_code { int code; void *category; };  &amp;hellip; which is decl
       <guid>https://ned14.github.io/outcome/tutorial/default-actions/exception-ptr/</guid>
       <description>Another default action exists for result&amp;lt;T, EC&amp;gt; where trait::has_exception_ptr&amp;lt;EC&amp;gt; is true, and for outcome&amp;lt;T, EC, EP&amp;gt; where trait::has_exception_ptr&amp;lt;EP&amp;gt; is true.
 This default action simply rethrows the exception pointer via std::rethrow_exception(make_exception_ptr(.error())) for result and std::rethrow_exception(make_exception_ptr(.exception())) for outcome.
-struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int operator*() const { return a; }};result&amp;lt;udt, std::exception_ptr&amp;gt; res(std::make_exception_ptr(std::runtime_error(&amp;#34;hello&amp;#34;)));// What happens here? What exception type is thrown?</description>
+struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; result&amp;lt;udt, std::exception_ptr&amp;gt; res(std::make_exception_ptr(std::runtime_error(&amp;#34;hello&amp;#34;))); // What happens here? What exception type is thrown?</description>
     </item>
     
     <item>
@@ -318,9 +318,9 @@ struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int ope
       
       <guid>https://ned14.github.io/outcome/tutorial/constructors/metaprogrammg2/</guid>
       <description>First, we need a base definition for construct&amp;lt;T&amp;gt;:
-template &amp;lt;class T&amp;gt; struct construct{outcome::result&amp;lt;T&amp;gt; operator()() const noexcept{ // static_assert(!std::is_same&amp;lt;T, T&amp;gt;::value, &amp;#34;construct&amp;lt;T&amp;gt;() was not specialised for the type T supplied&amp;#34;);}}; View this code on GithubThis fails a static assert if the type is ever instantiated unspecialised.
+template &amp;lt;class T&amp;gt; struct construct { outcome::result&amp;lt;T&amp;gt; operator()() const noexcept { //  static_assert(!std::is_same&amp;lt;T, T&amp;gt;::value, &amp;#34;construct&amp;lt;T&amp;gt;() was not specialised for the type T supplied&amp;#34;); } };  View this code on Github This fails a static assert if the type is ever instantiated unspecialised.
 We then specialise for construct&amp;lt;file_handle&amp;gt;:
-template &amp;lt;&amp;gt; struct construct&amp;lt;file_handle&amp;gt;{file_handle::path_type _path;file_handle::mode _mode{file_handle::mode::read};// Any other args, default initialised if necessary, follow here .</description>
+template &amp;lt;&amp;gt; struct construct&amp;lt;file_handle&amp;gt; { file_handle::path_type _path; file_handle::mode _mode{file_handle::mode::read}; // Any other args, default initialised if necessary, follow here .</description>
     </item>
     
     <item>
@@ -332,7 +332,7 @@ template &amp;lt;&amp;gt; struct construct&amp;lt;file_handle&amp;gt;{file_han
       <description>What about result&amp;lt;udt, void&amp;gt;? This is absolutely legal, it means that no error state is returned when there was an error. This can help with clarifying in code the use of std::optional&amp;lt;udt&amp;gt; as Optional more logically means value-or-nothing, not necessarily value-or-error.
 In contrast, result&amp;lt;udt, void&amp;gt; unambiguously does mean success-or-failure, just with an unspecified cause of failure.
 Outcome&amp;rsquo;s default action for EC = void is to call std::terminate:
-struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int operator*() const { return a; }};result&amp;lt;udt, void&amp;gt; res(in_place_type&amp;lt;void&amp;gt;);// What happens here?</description>
+struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; result&amp;lt;udt, void&amp;gt; res(in_place_type&amp;lt;void&amp;gt;); // What happens here?</description>
     </item>
     
     <item>
@@ -381,7 +381,7 @@ If you don&amp;rsquo;t want all this clever automatic detection of traits, and j
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/credits/</guid>
-      <description>github contributors .ghContributors{display:flex;flex-flow: wrap;align-content: flex-start}.ghContributors  div{width: 50% ;display: inline-flex;margin-bottom: 5px;}.ghContributors  div label{padding-left: 4px ;}.ghContributors  div span{font-size: x-small;padding-left: 4px ;}@ned14652 commits@akrzemi19 commits@jenkins-nedprod1 commits This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation.</description>
+      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }  This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation. Standardese - the API reference generator  Special thanks To Paul Bristow who proposed the name &amp;ldquo;Outcome&amp;rdquo; for the library after a very extended period of name bikeshedding on boost-dev.</description>
     </item>
     
   </channel>
