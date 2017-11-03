@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="generator" content="Hugo 0.29" />
+    <meta name="description" content="">
+
+
+    <title>Build and install :: Outcome documentation</title>
+    <link rel="shortcut icon" href="/outcome/images/favicon.png" type="image/x-icon" />
+    <link href="/outcome/css/nucleus.css" rel="stylesheet">
+    <link href="/outcome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/outcome/css/hybrid.css" rel="stylesheet">
+    <link href="/outcome/css/featherlight.min.css" rel="stylesheet">
+    <link href="/outcome/css/horsey.css" rel="stylesheet">
+    
+    <link href="/outcome/css/theme.css" rel="stylesheet">
+    
+    
+    <link rel="stylesheet" href="/outcome/css/bootstrap.min.css">
+    <script src="/outcome/js/jquery-2.x.min.js"></script>
+    <style type="text/css">
+      :root #header + #content > #left > #rlblock_left {
+        display:none !important;
+      }
+    </style>
+
+    
+
+    <link href="/outcome/css/local.css" rel="stylesheet">
+
+  </head>
+  <body class="" data-url="/outcome/build/">
+    <nav id="sidebar" class=""><div class="highlightable">
+  <div id="header-wrapper">
+    <div id="header"> 
+	<p>Outcome 2.0 library documentation</p>
+ 
+
+
+    </div><div class="searchbox">
+    <label for="search-by"><i class="fa fa-search"></i></label>
+    <input data-search-input id="search-by" type="text" placeholder="Search...">
+    <span data-search-clear=""><i class="fa fa-close"></i></span>
+</div>
+<script type="text/javascript" src="/outcome/js/lunr.min.js"></script>
+<script type="text/javascript" src="/outcome/js/horsey.js"></script>
+<script type="text/javascript">
+    var baseurl = "https:\/\/ned14.github.io\/outcome\/";
+</script>
+<script type="text/javascript" src="/outcome/js/search.js"></script>
+
+  </div>
+
+
+    <ul class="topics">
+            <li data-nav-id="/outcome/" class="dd-item">
+            <a href="/outcome/"><i class="fa fa-fw fa-home"></i></a>
+            </li>
+    <li data-nav-id="/outcome/requirements/" class="dd-item">
+      <a href="/outcome/requirements/">
+        <span>Prerequisites</span>
+      </a>
+    </li>
+    <li data-nav-id="/outcome/build/" class="dd-item parent active">
+      <a href="/outcome/build/">
+        <span>Build and install</span>
+      </a>
+    </li>
+    <li data-nav-id="/outcome/use-matrix/" class="dd-item">
+      <a href="/outcome/use-matrix/">
+        <span>Decision matrix</span>
+      </a>
+    </li>
+    <li data-nav-id="/outcome/tutorial/" class="dd-item">
+      <a href="/outcome/tutorial/">
+        <span>Tutorial</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+    <li data-nav-id="/outcome/tutorial/result/" class="dd-item">
+      <a href="/outcome/tutorial/result/">
+        <span>result&lt;T, EC&gt;</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/result/inspecting/" class="dd-item">
+        <a href="/outcome/tutorial/result/inspecting/">
+          <span>Inspecting result&lt;T, EC&gt;</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/result/try/" class="dd-item">
+        <a href="/outcome/tutorial/result/try/">
+          <span>TRY operations</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/outcome/" class="dd-item">
+      <a href="/outcome/tutorial/outcome/">
+        <span>outcome&lt;T, EC, EP&gt;</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/outcome/inspecting/" class="dd-item">
+        <a href="/outcome/tutorial/outcome/inspecting/">
+          <span>Inspecting outcome&lt;T, EC, EP&gt;</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/payload/" class="dd-item">
+      <a href="/outcome/tutorial/payload/">
+        <span>Custom payloads</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/payload/copy_file/" class="dd-item">
+        <a href="/outcome/tutorial/payload/copy_file/">
+          <span>The Filesystem TS</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/payload/copy_file2/" class="dd-item">
+        <a href="/outcome/tutorial/payload/copy_file2/">
+          <span>Upgrading the Filesystem TS</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/payload/copy_file3/" class="dd-item">
+        <a href="/outcome/tutorial/payload/copy_file3/">
+          <span>Auto-throwing filesystem_error</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/default-actions/" class="dd-item">
+      <a href="/outcome/tutorial/default-actions/">
+        <span>Default actions</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/default-actions/udt-err/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/udt-err/">
+          <span>User defined error types</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/happens1/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/happens1/">
+          <span>-- What happens?</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/enums/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/enums/">
+          <span>Error code enums</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/happens2/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/happens2/">
+          <span>-- What happens?</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/happens3/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/happens3/">
+          <span>-- Now what happens?</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/error-codes/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/error-codes/">
+          <span>error_code</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/exception-ptr/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/exception-ptr/">
+          <span>exception_ptr</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/void/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/void/">
+          <span>void</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/default-actions/unchecked/" class="dd-item">
+        <a href="/outcome/tutorial/default-actions/unchecked/">
+          <span>unchecked&lt;T, E&gt; and checked&lt;T, E&gt;</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/constructors/" class="dd-item">
+      <a href="/outcome/tutorial/constructors/">
+        <span>Result returning constructors</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/constructors/two-phase-init/" class="dd-item">
+        <a href="/outcome/tutorial/constructors/two-phase-init/">
+          <span>Two phase construction</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/constructors/file_handle/" class="dd-item">
+        <a href="/outcome/tutorial/constructors/file_handle/">
+          <span>A file handle</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/constructors/static-constructor/" class="dd-item">
+        <a href="/outcome/tutorial/constructors/static-constructor/">
+          <span>Phase 2 construction</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/constructors/metaprogrammg1/" class="dd-item">
+        <a href="/outcome/tutorial/constructors/metaprogrammg1/">
+          <span>Phase 3</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/constructors/metaprogrammg2/" class="dd-item">
+        <a href="/outcome/tutorial/constructors/metaprogrammg2/">
+          <span>construct&lt;T&gt;</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/constructors/metaprogrammg3/" class="dd-item">
+        <a href="/outcome/tutorial/constructors/metaprogrammg3/">
+          <span>Alternatives</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/hooks/" class="dd-item">
+      <a href="/outcome/tutorial/hooks/">
+        <span>Hooking events</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/hooks/keeping_state/" class="dd-item">
+        <a href="/outcome/tutorial/hooks/keeping_state/">
+          <span>Keeping state</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/hooks/adl_bridging/" class="dd-item">
+        <a href="/outcome/tutorial/hooks/adl_bridging/">
+          <span>ADL bridging</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/hooks/hook_result/" class="dd-item">
+        <a href="/outcome/tutorial/hooks/hook_result/">
+          <span>Hook result</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/hooks/poke_exception/" class="dd-item">
+        <a href="/outcome/tutorial/hooks/poke_exception/">
+          <span>Custom exception ptr</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/hooks/hook_outcome/" class="dd-item">
+        <a href="/outcome/tutorial/hooks/hook_outcome/">
+          <span>Hook outcome</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/policies/" class="dd-item">
+      <a href="/outcome/tutorial/policies/">
+        <span>Policies</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/policies/anatomy/" class="dd-item">
+        <a href="/outcome/tutorial/policies/anatomy/">
+          <span>Anatomy of a policy</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/policies/cast/" class="dd-item">
+        <a href="/outcome/tutorial/policies/cast/">
+          <span>Casting workaround</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/policies/builtin/" class="dd-item">
+        <a href="/outcome/tutorial/policies/builtin/">
+          <span>Built-in policies</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/c-api/" class="dd-item">
+      <a href="/outcome/tutorial/c-api/">
+        <span>Using result&lt;T&gt; from C code</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+      </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/c-api/limitations/" class="dd-item">
+        <a href="/outcome/tutorial/c-api/limitations/">
+          <span>Limitations</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/c-api/example/" class="dd-item">
+        <a href="/outcome/tutorial/c-api/example/">
+          <span>Example C&#43;&#43; function</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/c-api/example2/" class="dd-item">
+        <a href="/outcome/tutorial/c-api/example2/">
+          <span>Calling it from C</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/c-api/variations/" class="dd-item">
+        <a href="/outcome/tutorial/c-api/variations/">
+          <span>Variations</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/tutorial/interop/" class="dd-item">
+      <a href="/outcome/tutorial/interop/">
+        <span>Interoperation</span>
+      </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/error_code/" class="dd-item">
+        <a href="/outcome/tutorial/error_code/">
+          <span>Custom error codes</span>
+        </a>
+    </li>
+        </ul>
+    </li>
+    <li data-nav-id="/outcome/faq/" class="dd-item">
+      <a href="/outcome/faq/">
+        <span>Frequently asked questions</span>
+      </a>
+    </li>
+    <li data-nav-id="/outcome/history/" class="dd-item">
+      <a href="/outcome/history/">
+        <span>History</span>
+      </a>
+    </li>
+        <section id="shortcuts">
+                <li class="" role=""><a href="/outcome/standardese/standardese_entities.html" target="_blank" rel="noopener">API reference (standardese)</a></li>
+                <li class="" role=""><a href="/outcome/doxygen/namespaceoutcome__v2__xxx.html" target="_blank" rel="noopener">API reference (doxygen)</a></li>
+                <li class="" role=""><h3>More</h3><a href="https://github.com/ned14/outcome" target="_blank" rel="noopener"><i class='fa fa-github'></i> Outcome 2.0 github repo</a></li>
+                <li class="" role=""><a href="/outcome/credits" target="_blank" rel="noopener"><i class='fa fa-bullhorn'></i> Acknowledgements</a></li>
+        </section>
+    </ul>
+
+
+    <section id="footer"><center>
+
+<a class="github-button" href="https://dedi4.nedprod.com/static/files/outcome-v2.0-source-latest.tar.xz" data-icon="octicon-cloud-download" aria-label="Download Outcome">Download</a>
+
+
+<a class="github-button" href="https://github.com/ned14/outcome" data-icon="octicon-star" data-show-count="false" aria-label="Star Outcome on GitHub">Star</a>
+
+
+<a class="github-button" href="https://github.com/ned14/outcome/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork Outcome on GitHub">Fork</a>
+
+</center>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    </section>
+  </div>
+</nav>
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+        
+          <div id="top-bar">
+            
+              
+              
+              
+            <div id="top-github-link">
+              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/build/_index.md" target="blank">
+                <i class="fa fa-code-fork"></i>
+                Edit page
+              </a>
+            </div><div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                <span id="sidebar-toggle-span">
+                  <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                </span>
+                <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                <span class="links">
+                
+
+
+
+
+ <a href='/outcome/'>Home</a> > Build and install
+
+ 
+
+   
+                </span>
+            </div>
+            <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#usage-as-a-single-header-file">Usage as a single header file</a></li>
+<li><a href="#usage-from-the-conan-package-manager">Usage from the Conan package manager</a></li>
+<li><a href="#usage-as-a-git-submodule">Usage as a git submodule</a></li>
+<li><a href="#usage-as-a-stable-source-tarball">Usage as a stable source tarball</a></li>
+</ul></li>
+<li><a href="#running-the-unit-test-suite">Running the unit test suite</a></li>
+<li><a href="#modular-cmake-build-support">Modular CMake build support</a></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+          </div>
+        
+        
+        <div id="body-inner">
+          
+            <h1>Build and install</h1>
+          
+
+
+
+
+
+
+<p>Outcome v2 is feature complete, meeting the feedback from the Boost peer review in May 2017.
+It is an all new code base, written entirely from scratch during the month of June 2017.
+It has completed three months of maturation, and will shortly be sent back to Boost
+for a second peer review. As a result, consider this library to <strong>beta</strong>
+quality and subject change if a second review demands it.</p>
+
+<p>That said, the essentials here are the same as they were in v1. Indeed most code
+written for v1 should be convertible to v2 without too much effort.</p>
+
+<h2 id="usage-as-a-single-header-file">Usage as a single header file</h2>
+
+<p>Outcome v2 comes in single header file form. This is regenerated per commit. To fetch
+on Linux:</p>
+
+<pre><code>wget https://github.com/ned14/outcome/raw/develop/single-header/outcome.hpp
+</code></pre>
+
+<p>On BSD and OS X:</p>
+
+<pre><code>fetch https://github.com/ned14/outcome/raw/develop/single-header/outcome.hpp
+</code></pre>
+
+<p>On Windows, simply download the raw file from above and place it wherever it suits you.</p>
+
+<h2 id="usage-from-the-conan-package-manager">Usage from the Conan package manager</h2>
+
+<p><em>(thanks to Théo Delrieu for contributing this support)</em></p>
+
+<p>At the command line, add the bintray repo for Outcome to conan:</p>
+
+<pre><code>conan remote add outcome https://api.bintray.com/conan/ned14/Outcome
+</code></pre>
+
+<p>Now simply add this to your Conan build:</p>
+
+<pre><code>[requires]
+Outcome/master@ned14/stable
+</code></pre>
+
+<p>Outcome will be made available by Conan at <code>&lt;outcome.hpp&gt;</code>.</p>
+
+<h2 id="usage-as-a-git-submodule">Usage as a git submodule</h2>
+
+<p>Given that v2 is still under development, it is currently best used as a git
+submodule to your project so you can keep abreast of bug fixes. Here is how:</p>
+
+<pre><code>git submodule add https://github.com/ned14/outcome
+cd outcome
+git checkout develop
+git submodule update --init --recursive
+</code></pre>
+
+<p>After this you can bring Outcome into your code using:</p>
+
+<pre><code>#include &quot;outcome/include/outcome.hpp&quot;
+</code></pre>
+
+<p>That&rsquo;s it, you are ready to go. From time to time, you may wish to update to
+latest:</p>
+
+<pre><code>cd outcome
+git pull
+git submodule update
+</code></pre>
+
+<h2 id="usage-as-a-stable-source-tarball">Usage as a stable source tarball</h2>
+
+<p>If you would prefer a single source tarball of the stable branch containing
+all the documentation, tests and sources, this can always be retrieved from:</p>
+
+<p><a href="https://dedi4.nedprod.com/static/files/outcome-v2.0-source-latest.tar.xz">https://dedi4.nedprod.com/static/files/outcome-v2.0-source-latest.tar.xz</a></p>
+
+<p>This tarball is automatically generated when Outcome fully compiles and passes
+all unit tests on all platforms tested by the CIs. This currently includes:</p>
+
+<ul>
+<li>Linux: GCC 6.3, clang 4.0</li>
+<li>MacOS: XCode 9</li>
+<li>Windows: VS2017</li>
+</ul>
+
+<hr>
+
+<h1 id="running-the-unit-test-suite">Running the unit test suite</h1>
+
+<p>To run the unit test suite you will need cmake 3.1 or later installed.</p>
+
+<pre><code>mkdir build
+cd build
+cmake ..
+cmake --build .
+ctest
+</code></pre>
+
+<p>On some cmake generators (Visual Studio, Xcode) you may need to tell cmake build a configuration
+like Release or Debug. Similarly, ctest needs to be told the same e.g.</p>
+
+<pre><code>mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+ctest -C Release
+</code></pre>
+
+<p><a href="http://my.cdash.org/index.php?project=Boost.Outcome">Per commit, tests are run by Travis and uploaded to a CDash dashboard here</a>.</p>
+
+<hr>
+
+<h1 id="modular-cmake-build-support">Modular CMake build support</h1>
+
+<p>If you are using Outcome in a CMake project, Outcome is a &ldquo;modular cmake&rdquo; project
+using only modern cmake 3 throughout. This lets you add the Outcome directory as a
+cmake subdirectory with no unexpected consequence on the rest of your cmake. You will need
+to be using cmake 3.1 or better.</p>
+
+<pre><code>add_subdirectory(
+  &quot;${CMAKE_CURRENT_SOURCE_DIR}/outcome&quot;  # path to outcome source
+  &quot;${CMAKE_CURRENT_BINARY_DIR}/outcome&quot;  # your choice of where to put binaries
+  EXCLUDE_FROM_ALL                       # please only lazy build outcome on demand
+)
+</code></pre>
+
+<p>Outcome&rsquo;s cmake has the following useful products:</p>
+
+<ul>
+<li><code>outcome::hl</code> (target): the Outcome header only library. Add this to any
+<code>target_link_libraries()</code> in your cmake to bring in Outcome as a header only library. This will also
+add to your link (via <code>PUBLIC</code>) any debugger visualisation support files, any system library
+dependencies and also force all consuming executables to be configured with a minimum
+of C++ 14 as Outcome requires a minimum of that.</li>
+<li><code>outcome_TEST_TARGETS</code> (list): a list of targets which generate Outcome&rsquo;s test
+suite. You can append this to your own test suite if you wish to run Outcome&rsquo;s test
+suite along with your own.</li>
+</ul>
+
+
+<footer class=" footline" >
+	
+</footer>
+
+
+
+
+
+
+        
+
+      </div>
+    </div>
+
+    
+ 
+    
+
+    <div id="navigation">
+        <a class="nav nav-prev" href="/outcome/requirements/" title="Prerequisites"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="/outcome/use-matrix/" title="Decision matrix" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+    </div>
+
+    </section>
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>    
+
+    <script src="/outcome/js/clipboard.min.js"></script>
+<script src="/outcome/js/featherlight.min.js"></script>
+<script src="/outcome/js/html5shiv-printshiv.min.js"></script>
+
+
+<script src="/outcome/js/modernizr.custom.71422.js"></script>
+<script src="/outcome/js/learn.js"></script>
+<script src="/outcome/js/hugo-learn.js"></script>
+
+
+<link href="/outcome/mermaid/mermaid.css" type="text/css" rel="stylesheet"/>
+<script src="/outcome/mermaid/mermaid.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+    
+
+  </body>
+</html>
