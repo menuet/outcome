@@ -187,15 +187,19 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tutorial/value-or-error/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/history/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/interop/</loc>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/error_code/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/history/</loc>
   </url>
   
   <url>

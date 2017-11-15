@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.29" />
-    <meta name="description" content="">
+    <meta name="description" content="Interoperating with std::expected&lt;T, E&gt; and other ValueOrError concept matching types.">
 
 
-    <title>-- What happens? :: Outcome documentation</title>
+    <title>ValueOrError Concept :: Outcome documentation</title>
     <link rel="shortcut icon" href="/outcome/images/favicon.png" type="image/x-icon" />
     <link href="/outcome/css/nucleus.css" rel="stylesheet">
     <link href="/outcome/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <link href="/outcome/css/local.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/outcome/tutorial/default-actions/happens2/">
+  <body class="" data-url="/outcome/tutorial/value-or-error/">
     <nav id="sidebar" class=""><div class="highlightable">
   <div id="header-wrapper">
     <div id="header"> 
@@ -130,10 +130,9 @@
     </li>
         </ul>
     </li>
-    <li data-nav-id="/outcome/tutorial/default-actions/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/default-actions/" class="dd-item">
       <a href="/outcome/tutorial/default-actions/">
-        <span>Default actions</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Default actions</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
       <li data-nav-id="/outcome/tutorial/default-actions/udt-err/" class="dd-item">
@@ -151,7 +150,7 @@
           <span>Error code enums</span>
         </a>
     </li>
-      <li data-nav-id="/outcome/tutorial/default-actions/happens2/" class="dd-item active">
+      <li data-nav-id="/outcome/tutorial/default-actions/happens2/" class="dd-item">
         <a href="/outcome/tutorial/default-actions/happens2/">
           <span>-- What happens?</span>
         </a>
@@ -301,7 +300,7 @@
     </li>
         </ul>
     </li>
-      <li data-nav-id="/outcome/tutorial/value-or-error/" class="dd-item">
+      <li data-nav-id="/outcome/tutorial/value-or-error/" class="dd-item active">
         <a href="/outcome/tutorial/value-or-error/">
           <span>ValueOrError Concept</span>
         </a>
@@ -366,7 +365,7 @@
               
               
             <div id="top-github-link">
-              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/default-actions/happens2.md" target="blank">
+              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/value-or-error.md" target="blank">
                 <i class="fa fa-code-fork"></i>
                 Edit page
               </a>
@@ -386,12 +385,7 @@
 
 
 
-
-
-
- <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/default-actions/'>Default actions</a> > -- What happens?
-
- 
+ <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > ValueOrError Concept
 
  
 
@@ -411,84 +405,41 @@
         
         <div id="body-inner">
           
-            <h1>-- What happens?</h1>
+            <h1>ValueOrError Concept</h1>
           
 
 
 
 
-<p>Let us run the code from the previous page:</p>
+<p>Something not really mentioned until now is how Outcome interoperates with the proposed
+<a href="https://wg21.link/P0323"><code>std::expected&lt;T, E&gt;</code></a>, whose design lands in between <code>outcome::unchecked&lt;T, E&gt;</code>
+and <code>outcome::checked&lt;T, E&gt;</code>, both of which are simplified aliases for <code>outcome::result&lt;T, E&gt;</code> hard
+coding the <code>NoValuePolicy</code> to a fixed policy.</p>
 
-<pre><code>ned@lyta:~/outcome/build_posix$ bin/outcome-snippets_error_code_enums1
-Segmentation fault (core dumped)
-ned@lyta:~/outcome/build_posix$
-</code></pre>
+<p>Expected and Outcome are <a href="../../faq/#why-doesn-t-outcome-duplicate-std-expected-t-e-s-design">isomorphic to one another in design intent</a>, but interoperation
+for code using Expected and Outcome ought to be seamless thanks to the proposed <a href="https://wg21.link/P0786"><code>ValueOrError</code>
+concept framework</a>, a subset of which Outcome implements.</p>
 
-<p>Also undefined behaviour. This is because Outcome doesn&rsquo;t know what to do
-with a strongly typed <code>enum</code> any more than some user defined <code>struct</code>.</p>
+<p>Outcome&rsquo;s <code>result&lt;X, Y&gt;</code> will explicitly construct from any type matching the <code>ValueOrError</code>
+concept, which includes <code>std::expected&lt;A, B&gt;</code>, if <code>A</code> is constructible to <code>X</code> and <code>B</code> is
+constructible to <code>Y</code>. The <code>ValueOrError</code> concept in turn is true if and only if the input type has:</p>
 
-<p>Let us register our error code enum with the C++ standard library. This causes
-Outcome to treat it quite differently.</p>
+<ol>
+<li>A <code>value_type</code> and <code>error_type</code> member typedefs.</li>
+<li>A <code>.has_value()</code> observer returning a <code>bool</code>.</li>
+<li><code>.value()</code> and <code>.error()</code> observers.</li>
+</ol>
 
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">struct</span> udt
-{
-  <span class="s3ee">int</span> a{0};
-  <span class="s3e8">explicit</span> udt(<span class="s3ee">int</span> _a)
-      : a(_a)
-  {
-  }
-  udt() = <span class="s3e8">default</span>;
-  <span class="s3ee">int</span> <span class="s3e8">operator</span>*() <span class="s3e8">const</span> { <span class="s3e8">return</span> a; }
-};
-<span class="s3e8">enum</span> <span class="s3e8">class</span> <span class="s7d4">err</span>
-{
-  success,
-  failure1,
-  failure2
-};
+<p>Outcome&rsquo;s default <code>convert::value_or_error(U&amp;&amp;)</code> implementation explicitly excludes Outcome <code>result</code>
+types from this mechanism as there is a major gotcha:
+<code>.value()</code> is often not callable in constexpr, which makes this built-in interoperation support pretty much
+useless for constexpr code. Thus separate explicit converting constructors exist which will constexpr convert
+from any <code>result&lt;A, B&gt;</code>.</p>
 
-<span class="s1770">// Tell the standard library that enum err is an error code enum
-</span><span class="s1770">// by specialising the is_error_code_enum trait. See
-</span><span class="s1770">// http://en.cppreference.com/w/cpp/error/error_code/is_error_code_enum
-</span><span class="s1770"></span><span class="s3e8">namespace</span> std
-{
-  <span class="s3e8">template</span> &lt;&gt; <span class="s3e8">struct</span> is_error_code_enum&lt;err&gt; : std::true_type
-  {
-  };
-}
-
-<span class="s1770">// We also must declare a free function make_error_code. This is
-</span><span class="s1770">// discovered via ADL by the standard library. See
-</span><span class="s1770">// http://en.cppreference.com/w/cpp/error/errc/make_error_code
-</span><span class="s1770"></span><span class="s3e8">inline</span> std::error_code make_error_code(err c)
-{
-  <span class="s1770">// We need to inherit from std::error_category to define
-</span><span class="s1770"></span>  <span class="s1770">// an error code domain with the standard library for
-</span><span class="s1770"></span>  <span class="s1770">// our strongly typed enum. See
-</span><span class="s1770"></span>  <span class="s1770">// http://en.cppreference.com/w/cpp/error/error_category
-</span><span class="s1770"></span>  <span class="s3e8">static</span> <span class="s3e8">struct</span> err_category : std::error_category
-  {
-    <span class="s3e8">virtual</span> <span class="s3e8">const</span> <span class="s3ee">char</span> *name() <span class="s3e8">const</span> <span class="s3e8">noexcept</span> <span class="s3e8">override</span> <span class="s3e8">final</span> { <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err_category&#34;</span>; };
-    <span class="s3e8">virtual</span> std::string message(<span class="s3ee">int</span> c) <span class="s3e8">const</span> <span class="s3e8">override</span> <span class="s3e8">final</span>
-    {
-      <span class="s3e8">switch</span>(<span class="s3e8">static_cast</span>&lt;err&gt;(c))
-      {
-      <span class="s3e8">case</span> err::success:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err::success&#34;</span>;
-      <span class="s3e8">case</span> err::failure1:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err::failure1&#34;</span>;
-      <span class="s3e8">case</span> err::failure2:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err::failure2&#34;</span>;
-      }
-      <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;unknown&#34;</span>;
-    }
-  } category;
-  <span class="s3e8">return</span> std::error_code(<span class="s3e8">static_cast</span>&lt;<span class="s3ee">int</span>&gt;(c), category);
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_enums2.cpp#L29" class="code-snippet-url" target="_blank">View this code on Github</a></div>
-
+<p>You may inject your own custom <code>value_or_error()</code> converters into the <code>OUTCOME_V2_NAMESPACE::convert</code>
+namespace. If an overload is available for some input <code>T</code> and some output <code>result&lt;A, B&gt;</code>, the
+converting constructor will become available. <code>T</code> need not match the <code>ValueOrError</code> concept unless
+you wish it to.</p>
 
 
 <footer class=" footline" >
@@ -508,8 +459,8 @@ Outcome to treat it quite differently.</p>
     
 
     <div id="navigation">
-        <a class="nav nav-prev" href="/outcome/tutorial/default-actions/enums/" title="Error code enums"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="/outcome/tutorial/default-actions/happens3/" title="-- Now what happens?" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="/outcome/tutorial/c-api/variations/" title="Variations"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="/outcome/tutorial/interop/" title="Interoperation" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

@@ -301,6 +301,11 @@
     </li>
         </ul>
     </li>
+      <li data-nav-id="/outcome/tutorial/value-or-error/" class="dd-item">
+        <a href="/outcome/tutorial/value-or-error/">
+          <span>ValueOrError Concept</span>
+        </a>
+    </li>
     <li data-nav-id="/outcome/tutorial/interop/" class="dd-item">
       <a href="/outcome/tutorial/interop/">
         <span>Interoperation</span>
@@ -440,7 +445,7 @@ failing paths is easy:</p>
 </span><span class="s1770"></span>  <span class="s3e8">inline</span> <span class="s3ee">void</span> throw_as_system_error_with_payload(failure_info fi)
   {
     <span class="s1770">// If the error code is not filesystem related e.g. ENOMEM, throw that as a standard STL exception.
-</span><span class="s1770"></span>    outcome::try_throw_exception_from_error(fi.ec);
+</span><span class="s1770"></span>    outcome::try_throw_std_exception_from_error(fi.ec);
     <span class="s1770">// Throw the exact same filesystem_error exception which the throwing copy_file() edition does.
 </span><span class="s1770"></span>    <span class="s3e8">throw</span> filesystem_error(fi.ec.message(), std::move(fi.path1), std::move(fi.path2), fi.ec);
   }
