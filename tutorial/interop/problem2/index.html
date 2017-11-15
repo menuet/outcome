@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>ADL bridging :: Outcome documentation</title>
+    <title>Arbitrary failure handling :: Outcome documentation</title>
     <link rel="shortcut icon" href="/outcome/images/favicon.png" type="image/x-icon" />
     <link href="/outcome/css/nucleus.css" rel="stylesheet">
     <link href="/outcome/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <link href="/outcome/css/local.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/outcome/tutorial/hooks/adl_bridging/">
+  <body class="" data-url="/outcome/tutorial/interop/problem2/">
     <nav id="sidebar" class=""><div class="highlightable">
   <div id="header-wrapper">
     <div id="header"> 
@@ -219,10 +219,9 @@
     </li>
         </ul>
     </li>
-    <li data-nav-id="/outcome/tutorial/hooks/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/hooks/" class="dd-item">
       <a href="/outcome/tutorial/hooks/">
-        <span>Hooking events</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Hooking events</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
       <li data-nav-id="/outcome/tutorial/hooks/keeping_state/" class="dd-item">
@@ -230,7 +229,7 @@
           <span>Keeping state</span>
         </a>
     </li>
-      <li data-nav-id="/outcome/tutorial/hooks/adl_bridging/" class="dd-item active">
+      <li data-nav-id="/outcome/tutorial/hooks/adl_bridging/" class="dd-item">
         <a href="/outcome/tutorial/hooks/adl_bridging/">
           <span>ADL bridging</span>
         </a>
@@ -306,9 +305,10 @@
           <span>ValueOrError Concept</span>
         </a>
     </li>
-    <li data-nav-id="/outcome/tutorial/interop/" class="dd-item">
+    <li data-nav-id="/outcome/tutorial/interop/" class="dd-item parent">
       <a href="/outcome/tutorial/interop/">
-        <span>Interoperation</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+        <span>Interoperation</span>
+            <i class="fa fa-angle-down fa-lg category-icon"></i>
       </a>
         <ul>
       <li data-nav-id="/outcome/tutorial/interop/problem1/" class="dd-item">
@@ -316,7 +316,7 @@
           <span>Incommensurate E types</span>
         </a>
     </li>
-      <li data-nav-id="/outcome/tutorial/interop/problem2/" class="dd-item">
+      <li data-nav-id="/outcome/tutorial/interop/problem2/" class="dd-item active">
         <a href="/outcome/tutorial/interop/problem2/">
           <span>Arbitrary failure handling</span>
         </a>
@@ -378,7 +378,7 @@
               
               
             <div id="top-github-link">
-              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/hooks/adl_bridging.md" target="blank">
+              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/interop/problem2.md" target="blank">
                 <i class="fa fa-code-fork"></i>
                 Edit page
               </a>
@@ -401,7 +401,7 @@
 
 
 
- <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/hooks/'>Hooking events</a> > ADL bridging
+ <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/interop/'>Interoperation</a> > Arbitrary failure handling
 
  
 
@@ -423,48 +423,37 @@
         
         <div id="body-inner">
           
-            <h1>ADL bridging</h1>
+            <h1>Arbitrary failure handling</h1>
           
 
 
 
 
-<p>In a previous section, we used the <code>failure_info</code> type to create
-the ADL bridge into the namespace where the ADL discovered <code>throw_as_system_error_with_payload()</code>
-function was to be found.</p>
+<p>Thanks to the age of C, there are a great deal of common design patterns for returning failure
+which C++ not only must cope with, but often copies and is inspired by. Here are some
+APIs copied and pasted from various well-known libraries and systems:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="s1770">// Returns -1 if failed, can check errno for cause.
+</span><span class="s1770"></span>ssize_t read(<span class="s3ee">int</span> fd, <span class="s3ee">void</span> *buf, size_t count);
 
-<p>Here we do the same, but more directly by creating a thin clone of <code>std::error_code</code>
-into the local namespace. This ensures that this namespace will be searched by the
-compiler when discovering the event hooks.</p>
+<span class="s1770">// Returns FALSE if failed, can check GetLastError() for cause.
+</span><span class="s1770"></span>BOOL WINAPI ReadFile(
+  _In_        HANDLE       hFile,
+  _Out_       LPVOID       lpBuffer,
+  _In_        DWORD        nNumberOfBytesToRead,
+  _Out_opt_   LPDWORD      lpNumberOfBytesRead,
+  _Inout_opt_ LPOVERLAPPED lpOverlapped
+);
 
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> error_code_extended
-{
-  <span class="s1770">// Use the error_code type as the ADL bridge for the hooks by creating a type here
-</span><span class="s1770"></span>  <span class="s1770">// It can be any type that your localised result uses, including the value type but
-</span><span class="s1770"></span>  <span class="s1770">// by localising the error code type here you prevent nasty surprises later when the
-</span><span class="s1770"></span>  <span class="s1770">// value type you use doesn&#39;t trigger the ADL bridge.
-</span><span class="s1770"></span>  <span class="s3e8">struct</span> error_code : <span class="s3e8">public</span> std::error_code
-  {
-    <span class="s1770">// literally passthrough
-</span><span class="s1770"></span>    <span class="s3e8">using</span> std::error_code::error_code;
-    error_code() = <span class="s3e8">default</span>;
-    error_code(std::error_code ec)
-        : std::error_code(ec)
-    {
-    }
-  };
+<span class="s1770">// Returns 0 if it *may* have failed. ferror() can be used to check.
+</span><span class="s1770"></span>size_t fread(<span class="s3ee">void</span> *ptr, size_t size, size_t count, FILE *stream);
 
-  <span class="s1770">// Localise result and outcome to using the local error_code so this namespace gets looked up for the hooks
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">R</span>&gt; <span class="s3e8">using</span> result = OUTCOME_V2_NAMESPACE::result&lt;R, error_code&gt;;
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">R</span>&gt; <span class="s3e8">using</span> outcome = OUTCOME_V2_NAMESPACE::outcome&lt;R, error_code <span class="s1770">/*, std::exception_ptr */</span>&gt;;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L89" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="s1770">// You must call alGetError(void) after every API call to check if it failed!
+</span><span class="s1770"></span><span class="s3ee">void</span> alSourceQueueBuffers (ALuint sourceName, ALsizei numBuffers, ALuint *bufferNames);
 
-
-<p>For convenience, we template alias local copies of <code>result</code> and <code>outcome</code> in this
-namespace bound to the ADL bridging <code>error_code</code>.</p>
+<span class="s1770">// Returns 0 for success, anything else is the cause of failure.
+</span><span class="s1770"></span><span class="s3ee">int</span> sqlite3_blob_read(sqlite3_blob *, <span class="s3ee">void</span> *Z, <span class="s3ee">int</span> N, <span class="s3ee">int</span> iOffset);</code></pre>
+</div>
+<p>&hellip; in progress &hellip;</p>
 
 
 <footer class=" footline" >
@@ -484,8 +473,8 @@ namespace bound to the ADL bridging <code>error_code</code>.</p>
     
 
     <div id="navigation">
-        <a class="nav nav-prev" href="/outcome/tutorial/hooks/keeping_state/" title="Keeping state"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="/outcome/tutorial/hooks/hook_result/" title="Hook result" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="/outcome/tutorial/interop/problem1/" title="Incommensurate E types"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="/outcome/tutorial/error_code/" title="Custom error codes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

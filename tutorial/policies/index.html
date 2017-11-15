@@ -308,8 +308,20 @@
     </li>
     <li data-nav-id="/outcome/tutorial/interop/" class="dd-item">
       <a href="/outcome/tutorial/interop/">
-        <span>Interoperation</span>
+        <span>Interoperation</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/interop/problem1/" class="dd-item">
+        <a href="/outcome/tutorial/interop/problem1/">
+          <span>Incommensurate E types</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/interop/problem2/" class="dd-item">
+        <a href="/outcome/tutorial/interop/problem2/">
+          <span>Arbitrary failure handling</span>
+        </a>
+    </li>
+        </ul>
     </li>
       <li data-nav-id="/outcome/tutorial/error_code/" class="dd-item">
         <a href="/outcome/tutorial/error_code/">
@@ -416,7 +428,7 @@
 actions which Outcome can take upon no-value observation, and we noted that this facility
 is fully programmable.</p>
 
-<p><code>result&lt;T, EC&gt;</code> is actually <code>result&lt;T, EC, NoValuePolicy&gt;</code>. So is <code>outcome&lt;T, EC, EP&gt;</code> in
+<p><code>result&lt;T, EC&gt;</code> is actually <code>result&lt;T, EC, NoValuePolicy&gt;</code>. <code>outcome&lt;T, EC, EP&gt;</code> is in
 fact <code>outcome&lt;T, EC, EP, NoValuePolicy&gt;</code>. The <code>NoValuePolicy</code> template type is defaulted
 to a template alias as follows:</p>
 <div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="s3e8">namespace</span> policy {
@@ -435,8 +447,8 @@ to a template alias as follows:</p>
 }</code></pre>
 </div>
 <ul>
-<li>For <code>unchecked&lt;T, EC&gt;</code>, <code>NoValuePolicy</code> is set to <code>policy::all_narrow</code>.</li>
-<li>For <code>checked&lt;T, EC&gt;</code>, <code>NoValuePolicy</code> is set to <code>policy::throw_bad_result_access&lt;EC&gt;</code>.
+<li>For <code>unchecked&lt;T, EC&gt;</code>, <code>NoValuePolicy</code> is hard coded to <code>policy::all_narrow</code>.</li>
+<li>For <code>checked&lt;T, EC&gt;</code>, <code>NoValuePolicy</code> is hard coded to <code>policy::throw_bad_result_access&lt;EC&gt;</code>.
 <br /></li>
 </ul>
 

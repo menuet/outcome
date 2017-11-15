@@ -307,8 +307,20 @@
     </li>
     <li data-nav-id="/outcome/tutorial/interop/" class="dd-item">
       <a href="/outcome/tutorial/interop/">
-        <span>Interoperation</span>
+        <span>Interoperation</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/interop/problem1/" class="dd-item">
+        <a href="/outcome/tutorial/interop/problem1/">
+          <span>Incommensurate E types</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/interop/problem2/" class="dd-item">
+        <a href="/outcome/tutorial/interop/problem2/">
+          <span>Arbitrary failure handling</span>
+        </a>
+    </li>
+        </ul>
     </li>
       <li data-nav-id="/outcome/tutorial/error_code/" class="dd-item">
         <a href="/outcome/tutorial/error_code/">
@@ -396,7 +408,14 @@
             </div>
             <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#implementation">Implementation</a></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
@@ -411,10 +430,12 @@
 
 
 
+
+
 <p>Something not really mentioned until now is how Outcome interoperates with the proposed
 <a href="https://wg21.link/P0323"><code>std::expected&lt;T, E&gt;</code></a>, whose design lands in between <code>outcome::unchecked&lt;T, E&gt;</code>
-and <code>outcome::checked&lt;T, E&gt;</code>, both of which are simplified aliases for <code>outcome::result&lt;T, E&gt;</code> hard
-coding the <code>NoValuePolicy</code> to a fixed policy.</p>
+and <code>outcome::checked&lt;T, E&gt;</code>, both of which are simplified aliases for <code>outcome::result&lt;T, E&gt;</code> <a href="../policies">hard
+coding the <code>NoValuePolicy</code> to a fixed policy</a>.</p>
 
 <p>Expected and Outcome are <a href="../../faq/#why-doesn-t-outcome-duplicate-std-expected-t-e-s-design">isomorphic to one another in design intent</a>, but interoperation
 for code using Expected and Outcome ought to be seamless thanks to the proposed <a href="https://wg21.link/P0786"><code>ValueOrError</code>
@@ -430,16 +451,20 @@ constructible to <code>Y</code>. The <code>ValueOrError</code> concept in turn i
 <li><code>.value()</code> and <code>.error()</code> observers.</li>
 </ol>
 
-<p>Outcome&rsquo;s default <code>convert::value_or_error(U&amp;&amp;)</code> implementation explicitly excludes Outcome <code>result</code>
-types from this mechanism as there is a major gotcha:
-<code>.value()</code> is often not callable in constexpr, which makes this built-in interoperation support pretty much
-useless for constexpr code. Thus separate explicit converting constructors exist which will constexpr convert
-from any <code>result&lt;A, B&gt;</code>.</p>
+<h2 id="implementation">Implementation</h2>
 
-<p>You may inject your own custom <code>value_or_error()</code> converters into the <code>OUTCOME_V2_NAMESPACE::convert</code>
-namespace. If an overload is available for some input <code>T</code> and some output <code>result&lt;A, B&gt;</code>, the
-converting constructor will become available. <code>T</code> need not match the <code>ValueOrError</code> concept unless
-you wish it to.</p>
+<p>Outcome&rsquo;s machinery for implementing <code>ValueOrError</code> conversion is user extensible by injection
+of specialisations of the <code>value_or_error&lt;DEST, SRC&gt;</code> type into the <code>OUTCOME_V2_NAMESPACE::convert</code> namespace.</p>
+
+<p>Outcome&rsquo;s default <code>convert::value_or_error&lt;DEST, SRC&gt;</code> implementation explicitly excludes Outcome <code>result</code>
+and <code>outcome</code> types from the default mechanism as there is a major gotcha:
+Outcome&rsquo;s <code>.value()</code> is often not callable in constexpr as it can throw, which makes this mechanism pretty much
+useless for constexpr code. Thus separate explicit converting constructors exist which constexpr convert
+from any Outcome type (though note that <code>result</code> construction from <code>outcome</code> does use the
+<code>ValueOrError</code> mechanism).</p>
+
+<p>No example of how to implement your own <code>convert::value_or_error&lt;DEST, SRC&gt;</code> is given here as many
+examples of implementation follow in the final tutorial section, next.</p>
 
 
 <footer class=" footline" >

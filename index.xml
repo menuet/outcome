@@ -10,6 +10,15 @@
     
     
     <item>
+      <title>Incommensurate E types</title>
+      <link>https://ned14.github.io/outcome/tutorial/interop/problem1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ned14.github.io/outcome/tutorial/interop/problem1/</guid>
+      <description>Back in the tutorial section on Default Actions, we studied a likely very common initial choice of E type: a strongly typed enum. We saw how by marking up strongly typed enums to tell the C++ standard library what they are, they gain implicit convertibility into std::error_code, and we then pointed out that you might as well now set E = std::error_code as that comes with the enormous advantage that you can use the boilerplate saving OUTCOME_TRY macro when the E type is always the same.</description>
+    </item>
+    
+    <item>
       <title>User defined error types</title>
       <link>https://ned14.github.io/outcome/tutorial/default-actions/udt-err/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -39,6 +48,16 @@ Let us demonstrate this by recompiling the code to use the undefined behaviour s
       <guid>https://ned14.github.io/outcome/tutorial/policies/anatomy/</guid>
       <description>A NoValuePolicy is quite simple. This is a complete policy, only the top two thirds is needed if you never use the policy in an outcome.
 struct blank_policy { //! Performs a narrow check of state, used in the assume_value() functions.  template &amp;lt;class Impl&amp;gt; static constexpr void narrow_value_check(Impl &amp;amp;&amp;amp;self) noexcept; //! Performs a narrow check of state, used in the assume_error() functions.  template &amp;lt;class Impl&amp;gt; static constexpr void narrow_error_check(Impl &amp;amp;&amp;amp;self) noexcept; //!</description>
+    </item>
+    
+    <item>
+      <title>Arbitrary failure handling</title>
+      <link>https://ned14.github.io/outcome/tutorial/interop/problem2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ned14.github.io/outcome/tutorial/interop/problem2/</guid>
+      <description>Thanks to the age of C, there are a great deal of common design patterns for returning failure which C++ not only must cope with, but often copies and is inspired by. Here are some APIs copied and pasted from various well-known libraries and systems:
+// Returns -1 if failed, can check errno for cause. ssize_t read(int fd, void *buf, size_t count); // Returns FALSE if failed, can check GetLastError() for cause.</description>
     </item>
     
     <item>
@@ -391,7 +410,7 @@ Expected and Outcome are isomorphic to one another in design intent, but interop
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/credits/</guid>
-      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }  This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation. Standardese - the API reference generator  Special thanks To Paul Bristow who proposed the name &amp;ldquo;Outcome&amp;rdquo; for the library after a very extended period of name bikeshedding on boost-dev.</description>
+      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }   @ned14 722 commits   @akrzemi1 10 commits   @jenkins-nedprod 1 commits   This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation.</description>
     </item>
     
   </channel>

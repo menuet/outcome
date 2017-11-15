@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="generator" content="Hugo 0.29" />
-    <meta name="description" content="Tying all of the above into namespace-boundary result and outcome interoperation">
+    <meta name="description" content="Tying all of the above into non-intrusive namespace-boundary result and outcome interoperation.">
 
 
     <title>Interoperation :: Outcome documentation</title>
@@ -308,7 +308,20 @@
     <li data-nav-id="/outcome/tutorial/interop/" class="dd-item parent active">
       <a href="/outcome/tutorial/interop/">
         <span>Interoperation</span>
+            <i class="fa fa-angle-down fa-lg category-icon"></i>
       </a>
+        <ul>
+      <li data-nav-id="/outcome/tutorial/interop/problem1/" class="dd-item">
+        <a href="/outcome/tutorial/interop/problem1/">
+          <span>Incommensurate E types</span>
+        </a>
+    </li>
+      <li data-nav-id="/outcome/tutorial/interop/problem2/" class="dd-item">
+        <a href="/outcome/tutorial/interop/problem2/">
+          <span>Arbitrary failure handling</span>
+        </a>
+    </li>
+        </ul>
     </li>
       <li data-nav-id="/outcome/tutorial/error_code/" class="dd-item">
         <a href="/outcome/tutorial/error_code/">
@@ -411,7 +424,33 @@
 
 
 
-<p>Todo</p>
+<p>This is the final section of the tutorial, and it is quite lengthy. It ties
+together all of the tutorial topics described above into a single worked example
+utilising all of the facilities of Outcome at once.</p>
+
+<p>One thing which Outcome solves &ndash; which alternatives do not &ndash; is how to
+non-intrusively tie together multiple third party libraries, each using
+Outcome with custom incommensurate <code>E</code> types, or indeed arbitrary return
+types which have no relation whatsoever to a <code>T|E</code> return type. Solving
+this well is the <em>coup de grâce</em> of Outcome against alternative approaches
+to this problem domain,
+including <code>std::expected&lt;T, E&gt;</code>. It is the major reason why you should
+strongly consider using Outcome over alternatives, including Expected.</p>
+
+<p>Firstly we shall explore some of the problems faced by the software
+developer when <code>T|E</code> return type based code proliferates at scale,
+where dozens of libraries may be using completely incompatible <code>T|E</code> return types.
+We will also briefly cover some of the design patterns common in the
+wild which return failure by returning from functions, rather than
+throwing exceptions.</p>
+
+<p>We shall then step through a worked example which mocks up a realistic
+situation that the software developer may find themselves in: tying
+together disparate third party libraries, whose source code cannot be
+modified, into an application-wide, mixed-mode <code>T|E</code> and exception
+throwing universal error handling system which is capable of
+accurately representing the original failure, but also propagating it
+in a way that the application can deal with universally.</p>
 
 
 <footer class=" footline" >
@@ -434,7 +473,7 @@
 
     <div id="navigation">
         <a class="nav nav-prev" href="/outcome/tutorial/value-or-error/" title="ValueOrError Concept"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="/outcome/tutorial/error_code/" title="Custom error codes" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-next" href="/outcome/tutorial/interop/problem1/" title="Incommensurate E types" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

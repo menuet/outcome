@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>ADL bridging :: Outcome documentation</title>
+    <title>Incommensurate E types :: Outcome documentation</title>
     <link rel="shortcut icon" href="/outcome/images/favicon.png" type="image/x-icon" />
     <link href="/outcome/css/nucleus.css" rel="stylesheet">
     <link href="/outcome/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <link href="/outcome/css/local.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/outcome/tutorial/hooks/adl_bridging/">
+  <body class="" data-url="/outcome/tutorial/interop/problem1/">
     <nav id="sidebar" class=""><div class="highlightable">
   <div id="header-wrapper">
     <div id="header"> 
@@ -219,10 +219,9 @@
     </li>
         </ul>
     </li>
-    <li data-nav-id="/outcome/tutorial/hooks/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/hooks/" class="dd-item">
       <a href="/outcome/tutorial/hooks/">
-        <span>Hooking events</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Hooking events</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
       <li data-nav-id="/outcome/tutorial/hooks/keeping_state/" class="dd-item">
@@ -230,7 +229,7 @@
           <span>Keeping state</span>
         </a>
     </li>
-      <li data-nav-id="/outcome/tutorial/hooks/adl_bridging/" class="dd-item active">
+      <li data-nav-id="/outcome/tutorial/hooks/adl_bridging/" class="dd-item">
         <a href="/outcome/tutorial/hooks/adl_bridging/">
           <span>ADL bridging</span>
         </a>
@@ -306,12 +305,13 @@
           <span>ValueOrError Concept</span>
         </a>
     </li>
-    <li data-nav-id="/outcome/tutorial/interop/" class="dd-item">
+    <li data-nav-id="/outcome/tutorial/interop/" class="dd-item parent">
       <a href="/outcome/tutorial/interop/">
-        <span>Interoperation</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+        <span>Interoperation</span>
+            <i class="fa fa-angle-down fa-lg category-icon"></i>
       </a>
         <ul>
-      <li data-nav-id="/outcome/tutorial/interop/problem1/" class="dd-item">
+      <li data-nav-id="/outcome/tutorial/interop/problem1/" class="dd-item active">
         <a href="/outcome/tutorial/interop/problem1/">
           <span>Incommensurate E types</span>
         </a>
@@ -378,7 +378,7 @@
               
               
             <div id="top-github-link">
-              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/hooks/adl_bridging.md" target="blank">
+              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/interop/problem1.md" target="blank">
                 <i class="fa fa-code-fork"></i>
                 Edit page
               </a>
@@ -401,7 +401,7 @@
 
 
 
- <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/hooks/'>Hooking events</a> > ADL bridging
+ <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/interop/'>Interoperation</a> > Incommensurate E types
 
  
 
@@ -423,48 +423,53 @@
         
         <div id="body-inner">
           
-            <h1>ADL bridging</h1>
+            <h1>Incommensurate E types</h1>
           
 
 
 
 
-<p>In a previous section, we used the <code>failure_info</code> type to create
-the ADL bridge into the namespace where the ADL discovered <code>throw_as_system_error_with_payload()</code>
-function was to be found.</p>
+<p>Back in the tutorial section on Default Actions, we studied a likely very common
+initial choice of <code>E</code> type: <a href="../../default-actions/enums">a strongly typed enum</a>.
+We saw how by marking up strongly typed enums to tell the C++ standard library
+what they are, they gain implicit convertibility into <code>std::error_code</code>, and we
+then pointed out that you might as well now set <code>E = std::error_code</code> as that
+comes with the enormous advantage that you can use the boilerplate saving
+<code>OUTCOME_TRY</code> macro when the <code>E</code> type is always the same.</p>
 
-<p>Here we do the same, but more directly by creating a thin clone of <code>std::error_code</code>
-into the local namespace. This ensures that this namespace will be searched by the
-compiler when discovering the event hooks.</p>
+<p>We thus strongly recommend to users that for any given piece of code, always
+using the same <code>E</code> type across the codebase is very wise, except where you explicitly want
+to prevent implicit propagation of failure up a call stack e.g. local failures in
+some domain specific piece of code.</p>
 
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> error_code_extended
-{
-  <span class="s1770">// Use the error_code type as the ADL bridge for the hooks by creating a type here
-</span><span class="s1770"></span>  <span class="s1770">// It can be any type that your localised result uses, including the value type but
-</span><span class="s1770"></span>  <span class="s1770">// by localising the error code type here you prevent nasty surprises later when the
-</span><span class="s1770"></span>  <span class="s1770">// value type you use doesn&#39;t trigger the ADL bridge.
-</span><span class="s1770"></span>  <span class="s3e8">struct</span> error_code : <span class="s3e8">public</span> std::error_code
-  {
-    <span class="s1770">// literally passthrough
-</span><span class="s1770"></span>    <span class="s3e8">using</span> std::error_code::error_code;
-    error_code() = <span class="s3e8">default</span>;
-    error_code(std::error_code ec)
-        : std::error_code(ec)
-    {
-    }
-  };
+<p>However it is unreasonable to expect that any non-trivial codebase can make do
+with <code>E = std::error_code</code>. This is why Outcome allows you to use <a href="../../payload">custom <code>E</code>
+types which carry payload</a> in addition to an error code, yet
+still have the Default Actions of <code>std::error_code</code>, including <a href="../../payload/copy_file3">lazy custom exception
+throw synthesis</a>.</p>
 
-  <span class="s1770">// Localise result and outcome to using the local error_code so this namespace gets looked up for the hooks
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">R</span>&gt; <span class="s3e8">using</span> result = OUTCOME_V2_NAMESPACE::result&lt;R, error_code&gt;;
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">R</span>&gt; <span class="s3e8">using</span> outcome = OUTCOME_V2_NAMESPACE::outcome&lt;R, error_code <span class="s1770">/*, std::exception_ptr */</span>&gt;;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L89" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<p>All this is good, but if library A uses <code>result&lt;T, libraryA::failure_info&gt;</code>
+and library B uses <code>result&lt;T, libraryB::error_info&gt;</code> and so on, there becomes
+a problem for the application writer who is bringing in these third party
+dependencies and tying them together into an application.</p>
 
+<p>Does the application writer have to wrap every call to a third party library
+in a macro which translates the library-specific failure into something that
+the application understands? Pretty much, yes they do. At least if the third
+party library uses Outcome, calling <code>.value()</code> may throw a third party library
+specific C++ exception type, which forces the exception handling part of the
+application to become aware of the C++ exception types throwable by the third
+party libraries in use. This may not be desirable, either.</p>
 
-<p>For convenience, we template alias local copies of <code>result</code> and <code>outcome</code> in this
-namespace bound to the ADL bridging <code>error_code</code>.</p>
+<p>Things get even more complication in the presence of callbacks. If in the
+callback you supply to library A, you call library B, you may need to insert
+switch statement maps or other mechanisms to convert library B&rsquo;s failures into
+something library A can understand, and then somehow extract that out &ndash; preferably
+without loss of original information &ndash; into the application&rsquo;s failure handling
+mechanism if library A subsequently returns failure as well.</p>
+
+<p>There is also a huge ecosystem of code out there which does not use a <code>T|E</code>
+return mechanism. Let us look at some common design patterns next.</p>
 
 
 <footer class=" footline" >
@@ -484,8 +489,8 @@ namespace bound to the ADL bridging <code>error_code</code>.</p>
     
 
     <div id="navigation">
-        <a class="nav nav-prev" href="/outcome/tutorial/hooks/keeping_state/" title="Keeping state"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="/outcome/tutorial/hooks/hook_result/" title="Hook result" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="/outcome/tutorial/interop/" title="Interoperation"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="/outcome/tutorial/interop/problem2/" title="Arbitrary failure handling" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>
