@@ -15,11 +15,15 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/tutorial/interop/problem1/</loc>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/problem/</loc>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/default-actions/udt-err/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/value-or-error/</loc>
   </url>
   
   <url>
@@ -28,10 +32,6 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/policies/anatomy/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/tutorial/interop/problem2/</loc>
   </url>
   
   <url>
@@ -47,6 +47,10 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/httplib/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/</loc>
   </url>
   
@@ -56,6 +60,10 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/result/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/tidylib/</loc>
   </url>
   
   <url>
@@ -83,6 +91,10 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/filelib/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/payload/copy_file2/</loc>
   </url>
   
@@ -92,6 +104,10 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/default-actions/happens2/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/app/</loc>
   </url>
   
   <url>
@@ -127,6 +143,10 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/app-map-httplib1/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/constructors/static-constructor/</loc>
   </url>
   
@@ -139,7 +159,15 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/app-map-httplib2/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/hooks/poke_exception/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/app-map-filelib/</loc>
   </url>
   
   <url>
@@ -159,6 +187,10 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/app-map-tidylib/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/constructors/</loc>
   </url>
   
@@ -171,11 +203,19 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/app-go/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/constructors/metaprogrammg2/</loc>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/default-actions/void/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/conclusion/</loc>
   </url>
   
   <url>
@@ -195,15 +235,11 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/tutorial/value-or-error/</loc>
+    <loc>https://ned14.github.io/outcome/tutorial/interop/</loc>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/history/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/tutorial/interop/</loc>
   </url>
   
   <url>
