@@ -492,7 +492,7 @@ Conceptually, <code>outcome&lt;T, EC, EP&gt;</code> can be thought of as <code>v
 <li>Interoperability with <code>result&lt;T, EC&gt;</code>.</li>
 </ol>
 
-<p><code>outcome&lt;T, EC, EP&gt;</code> is useful for transporting exceptions across layers of the program that was never designed with exception_ptr`safety in mind.</p>
+<p><code>outcome&lt;T, EC, EP&gt;</code> is useful for transporting exceptions across layers of the program that were never designed with exception safety in mind.</p>
 
 <p>Consider a program consisting of three layers:</p>
 
@@ -504,9 +504,9 @@ graph BT
 </div>
 
 <p>The highest-level layer, <code>Layer3</code>, uses exceptions for signalling failures. The middle layer, <code>Layer2NX</code>,
-was not designed with exception safety in mind and function need to return information about failures in return value.
+was not designed with exception safety in mind and functions need to return information about failures in return value.
 But down in the implementation details, in <code>Layer1</code>, another library is used that again throws exceptions. The goal is
-to be able to transfer an exception thrown in <code>Layer1</code> through <code>Layer2</code>, which is not exception-safe, and be able to rethrow it in <code>Layer3</code>.</p>
+to be able to transfer an exception thrown in <code>Layer1</code> through <code>Layer2NX</code>, which is not exception-safe, and be able to rethrow it in <code>Layer3</code>.</p>
 
 <p>In <code>Layer1</code> we have a throwing function:</p>
 
