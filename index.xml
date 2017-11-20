@@ -386,9 +386,9 @@ struct cxx_error_code { int code; void *category; };  &amp;hellip; which is decl
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/tutorial/default-actions/exception-ptr/</guid>
-      <description>Another default action exists for result&amp;lt;T, EC&amp;gt; where trait::has_exception_ptr&amp;lt;EC&amp;gt; is true, and for outcome&amp;lt;T, EC, EP&amp;gt; where trait::has_exception_ptr&amp;lt;EP&amp;gt; is true.
-This default action simply rethrows the exception pointer via std::rethrow_exception(make_exception_ptr(.error())) for result and std::rethrow_exception(make_exception_ptr(.exception())) for outcome.
-struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; result&amp;lt;udt, std::exception_ptr&amp;gt; res(std::make_exception_ptr(std::runtime_error(&amp;#34;hello&amp;#34;))); // What happens here? What exception type is thrown?</description>
+      <description>Another default action exists for result&amp;lt;T, EC&amp;gt; where trait::has_exception_ptr&amp;lt;EC&amp;gt; is true, and for outcome&amp;lt;T, EC, EP&amp;gt; where either or both trait::has_exception_ptr&amp;lt;EC&amp;gt; and trait::has_exception_ptr&amp;lt;EP&amp;gt; is true.
+This default action simply rethrows the exception pointer via std::rethrow_exception(make_exception_ptr(.error())) for result and std::rethrow_exception(make_exception_ptr(.error())) and/or std::rethrow_exception(make_exception_ptr(.exception())) for outcome, if trait::has_exception_ptr&amp;lt;EC&amp;gt; and/or trait::has_exception_ptr&amp;lt;EP&amp;gt; is true.
+struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; result&amp;lt;udt, std::exception_ptr&amp;gt; res(std::make_exception_ptr(std::runtime_error(&amp;#34;hello&amp;#34;))); // What happens here?</description>
     </item>
     
     <item>
@@ -500,7 +500,7 @@ If you don&amp;rsquo;t want all this clever automatic detection of traits, and j
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/credits/</guid>
-      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }  This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation. Standardese - the API reference generator  Special thanks To Paul Bristow who proposed the name &amp;ldquo;Outcome&amp;rdquo; for the library after a very extended period of name bikeshedding on boost-dev.</description>
+      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }   @ned14 742 commits   @akrzemi1 11 commits   @jenkins-nedprod 1 commits   This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation.</description>
     </item>
     
   </channel>

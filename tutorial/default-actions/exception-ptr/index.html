@@ -475,11 +475,14 @@
 
 
 <p>Another default action exists for <code>result&lt;T, EC&gt;</code> where <code>trait::has_exception_ptr&lt;EC&gt;</code> is
-true, and for <code>outcome&lt;T, EC, EP&gt;</code> where <code>trait::has_exception_ptr&lt;EP&gt;</code> is true.</p>
+true, and for <code>outcome&lt;T, EC, EP&gt;</code> where either or both <code>trait::has_exception_ptr&lt;EC&gt;</code> and
+<code>trait::has_exception_ptr&lt;EP&gt;</code> is true.</p>
 
 <p>This default action simply rethrows
 the exception pointer via <code>std::rethrow_exception(make_exception_ptr(.error()))</code> for <code>result</code> and
-<code>std::rethrow_exception(make_exception_ptr(.exception()))</code> for <code>outcome</code>.</p>
+<code>std::rethrow_exception(make_exception_ptr(.error()))</code> and/or
+<code>std::rethrow_exception(make_exception_ptr(.exception()))</code> for <code>outcome</code>, if
+<code>trait::has_exception_ptr&lt;EC&gt;</code> and/or <code>trait::has_exception_ptr&lt;EP&gt;</code> is true.</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
   <span class="s3e8">struct</span> udt

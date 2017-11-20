@@ -505,10 +505,11 @@ if there is no error.
 if there is no exception.
 The narrow checks are the same as for the <code>all_narrow</code> policy.</p></dd>
 <dt><code>exception_ptr_rethrow&lt;T, EC, EP&gt;</code></dt>
-<dd><p>Policy interpreting either <code>EC</code> or <code>EP</code> as meeting the <code>std::exception_ptr</code> contract. If
+<dd><p>Policy interpreting either or both <code>EC</code> and <code>EP</code> as meeting the <code>std::exception_ptr</code> contract. If
 there is no value, <code>.value()</code>
 will <code>std::rethrow_exception(error)</code> or <code>std::rethrow_exception(make_exception_ptr(error))</code>
-if <code>EP</code> is <code>void</code>, else <code>std::rethrow_exception(exception)</code> or <code>std::rethrow_exception(make_exception_ptr(exception))</code>.
+if <code>EP</code> is <code>void</code>, else <code>std::rethrow_exception(exception)</code> or <code>std::rethrow_exception(make_exception_ptr(exception))</code>
+or <code>std::rethrow_exception(error)</code> or <code>std::rethrow_exception(make_exception_ptr(error))</code> as appropriate.
 <code>.error()</code> will <code>OUTCOME_THROW_EXCEPTION(bad_result_access(&quot;no error&quot;))</code>
 or <code>OUTCOME_THROW_EXCEPTION(bad_outcome_access(&quot;no error&quot;))</code>
 if there is no error.
