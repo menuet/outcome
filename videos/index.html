@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>Phase 2 construction :: Outcome documentation</title>
+    <title>Videos :: Outcome documentation</title>
     <link rel="shortcut icon" href="/outcome/images/favicon.png" type="image/x-icon" />
     <link href="/outcome/css/nucleus.css" rel="stylesheet">
     <link href="/outcome/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <link href="/outcome/css/local.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/outcome/tutorial/constructors/static-constructor/">
+  <body class="" data-url="/outcome/videos/">
     <nav id="sidebar" class=""><div class="highlightable">
   <div id="header-wrapper">
     <div id="header"> 
@@ -73,10 +73,9 @@
         <span>Decision matrix</span>
       </a>
     </li>
-    <li data-nav-id="/outcome/tutorial/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/" class="dd-item">
       <a href="/outcome/tutorial/">
-        <span>Tutorial</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Tutorial</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
     <li data-nav-id="/outcome/tutorial/result/" class="dd-item">
@@ -182,10 +181,9 @@
     </li>
         </ul>
     </li>
-    <li data-nav-id="/outcome/tutorial/constructors/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/constructors/" class="dd-item">
       <a href="/outcome/tutorial/constructors/">
-        <span>Result returning constructors</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Result returning constructors</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
       <li data-nav-id="/outcome/tutorial/constructors/two-phase-init/" class="dd-item">
@@ -198,7 +196,7 @@
           <span>A file handle</span>
         </a>
     </li>
-      <li data-nav-id="/outcome/tutorial/constructors/static-constructor/" class="dd-item active">
+      <li data-nav-id="/outcome/tutorial/constructors/static-constructor/" class="dd-item">
         <a href="/outcome/tutorial/constructors/static-constructor/">
           <span>Phase 2 construction</span>
         </a>
@@ -380,7 +378,7 @@
         <span>Frequently asked questions</span>
       </a>
     </li>
-    <li data-nav-id="/outcome/videos/" class="dd-item">
+    <li data-nav-id="/outcome/videos/" class="dd-item parent active">
       <a href="/outcome/videos/">
         <span>Videos</span>
       </a>
@@ -428,7 +426,7 @@
               
               
             <div id="top-github-link">
-              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/constructors/static-constructor.md" target="blank">
+              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/videos/_index.md" target="blank">
                 <i class="fa fa-code-fork"></i>
                 Edit page
               </a>
@@ -445,17 +443,7 @@
 
 
 
-
-
-
-
-
-
- <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/constructors/'>Result returning constructors</a> > Phase 2 construction
-
- 
-
- 
+ <a href='/outcome/'>Home</a> > Videos
 
  
 
@@ -464,7 +452,15 @@
             </div>
             <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#meeting-c-2017-introduction-to-proposed-std-expected-lt-t-e-gt">Meeting C++ 2017 <em>&ldquo;Introduction to proposed std::expected&lt;T, E&gt;&ldquo;</em></a></li>
+<li><a href="#accu-2017-mongrel-monads-dirty-dirty-dirty">ACCU 2017 <em>&ldquo;Mongrel Monads, Dirty, dirty, dirty&rdquo;</em></a></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
@@ -473,80 +469,52 @@
         
         <div id="body-inner">
           
-            <h1>Phase 2 construction</h1>
+            <h1>Videos</h1>
           
 
 
 
 
-<p>Its phase 2 constructor:</p>
-
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">// Phase 2 static member constructor function, which cannot throw
-</span><span class="s1770"></span><span class="s3e8">inline</span> outcome::result&lt;file_handle&gt; file_handle::file(file_handle::path_type path, file_handle::mode mode) <span class="s3e8">noexcept</span>
-{
-  <span class="s1770">// Perform phase 1 of object construction
-</span><span class="s1770"></span>  file_handle ret;
-
-  <span class="s1770">// Perform phase 2 of object construction
-</span><span class="s1770"></span>  <span class="s3ee">int</span> flags = 0;
-  <span class="s3e8">switch</span>(mode)
-  {
-  <span class="s3e8">case</span> mode::attr_read:
-  <span class="s3e8">case</span> mode::read:
-    flags = O_RDONLY;
-    <span class="s3e8">break</span>;
-  <span class="s3e8">case</span> mode::attr_write:
-  <span class="s3e8">case</span> mode::write:
-    flags = O_RDWR;
-    <span class="s3e8">break</span>;
-  <span class="s3e8">case</span> mode::append:
-    flags = O_APPEND;
-    <span class="s3e8">break</span>;
-  <span class="s3e8">default</span>:
-    <span class="s3e8">return</span> std::errc::invalid_argument;
-  }
-  ret._fd = ::open(path.u8string().c_str(), flags);
-  <span class="s3e8">if</span>(-1 == ret._fd)
-  {
-    <span class="s1770">// Note that if we bail out here, ~file_handle() will correctly not call ::close()
-</span><span class="s1770"></span>    <span class="s3e8">return</span> {errno, std::system_category()};
-  }
-  <span class="s3e8">if</span>(-1 == ::fstat(ret._fd, &amp;ret._stat))
-  {
-    <span class="s1770">// Note that if we bail out here, ~file_handle() will correctly call ::close()
-</span><span class="s1770"></span>    <span class="s3e8">return</span> {errno, std::system_category()};
-  }
-
-  <span class="s1770">// Returning ret directly is an area full of compiler specific behaviour quirks,
-</span><span class="s1770"></span>  <span class="s1770">// so be explicit by wrapping into an initialiser list with embedded move.
-</span><span class="s1770"></span>  <span class="s3e8">return</span> {std::move(ret)};
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/constructors.cpp#L103" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
-<p>The static member function implementing phase 2 firstly calls phase 1
-which puts the object into a legally destructible state. We then
-proceed to implement phase 2 of construction, filling in the various
-parts as we go, reporting via <code>result</code> any failures.</p>
+<p>Outcome has been presented at some of the major C++ conferences as it has
+evolved. As the older content is less relevant to Outcome today, this
+list is given in reverse chronological order.</p>
 
-<p><div class="notices note" ><p>Remember that <code>operator new</code> has a non-throwing form, <code>new(std::nothrow)</code>.</p>
-</div>
-</p>
+<hr />
 
-<p>For the final return, in theory we could just <code>return ret</code> and
-depending on the C++ version currently in force, it might work
-via move, or via copy, or it might refuse to compile. You can
-of course type lots of boilerplate to be explicit, but this use
-via initialiser list is a reasonable balance of explicitness
-versus brevity, and it should generate minimum overhead code
-irrespective of compiler, C++ version, or any other factor.</p>
+<h2 id="meeting-c-2017-introduction-to-proposed-std-expected-lt-t-e-gt">Meeting C++ 2017 <em>&ldquo;Introduction to proposed std::expected&lt;T, E&gt;&ldquo;</em></h2>
+
+<p><em>Literature review of the several WG21 papers relating to std::expected<T, E>.</em></p>
+
+<p>Awaiting video</p>
+
+<br/><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSnTCn_hX3_uKNco8LtJTgAg2LrRO0zOJ3JiQiWMFFG8pNVwvUZr2ooYjXO9V94kdlqLxSB7DLTLPf5/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<hr />
+
+<h2 id="accu-2017-mongrel-monads-dirty-dirty-dirty">ACCU 2017 <em>&ldquo;Mongrel Monads, Dirty, dirty, dirty&rdquo;</em></h2>
+
+<p><em>Covers the history of error handling in C++, and how the LEWG Expected works.</em></p>
+
+<p><em>(Note that the Expected presented here no longer exists, it was substantially changed
+after the Outcome v1 peer review. Furthermore the Outcome presented here no longer
+exists, the peer review demanded a complete rebuild)</em></p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/XVofgKH-uu4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
+
+
+<br/><iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQZXLxkB716ZIMcEqV8QkeUvKhG33BmzKJdzSvx6QRfEGjmjXjHjeLrXSjgTZwG2rCaBNAZTxj41r5n/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 
 <footer class=" footline" >
 	
 </footer>
+
+
 
 
 
@@ -561,8 +529,8 @@ irrespective of compiler, C++ version, or any other factor.</p>
     
 
     <div id="navigation">
-        <a class="nav nav-prev" href="/outcome/tutorial/constructors/file_handle/" title="A file handle"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="/outcome/tutorial/constructors/metaprogrammg1/" title="Phase 3" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="/outcome/faq/" title="Frequently asked questions"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="/outcome/history/" title="History" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>
@@ -587,4 +555,3 @@ irrespective of compiler, C++ version, or any other factor.</p>
 
   </body>
 </html>
-
