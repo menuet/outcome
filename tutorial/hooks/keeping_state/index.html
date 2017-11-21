@@ -522,7 +522,7 @@ perhaps kept per-thread to avoid the need to keep mutexes.</p>
     }
   };
 
-  <span class="s1770">// Meyer singleton returning a thread local data structure for this thread
+  <span class="s1770">// Meyers&#39; singleton returning a thread local data structure for this thread
 </span><span class="s1770"></span>  <span class="s3e8">inline</span> mythreadlocaldata_t &amp;mythreadlocaldata()
   {
     <span class="s3e8">static</span> <span class="s3e8">thread_local</span> mythreadlocaldata_t v;
