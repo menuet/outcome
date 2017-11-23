@@ -531,8 +531,7 @@ and be able to rethrow it in <code>Layer3</code>.</p>
   OUTCOME_TRY(i, g());               <span class="s1770">// #1
 </span><span class="s1770"></span>    
   <span class="s3e8">try</span> {
-    <span class="s3ee">int</span> j = f();
-    <span class="s3e8">return</span> i + j;
+    <span class="s3e8">return</span> i + f();
   }
   <span class="s3e8">catch</span> (...) {
     <span class="s3e8">return</span> std::current_exception(); <span class="s1770">// #2
