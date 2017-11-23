@@ -504,126 +504,48 @@ Conceptually, <code>outcome&lt;T, EC, EP&gt;</code> can be thought of as <code>v
 <div class="mermaid" align="center" >
 graph BT
     L3["Layer3"]
-    L2["Layer2NX"] --> L3
+    L2["Layer2_old"] --> L3
     L1["Layer1"] --> L2
 </div>
 
-<p>The highest-level layer, <code>Layer3</code>, uses exceptions for signalling failures. The middle layer, <code>Layer2NX</code>,
+<p>The highest-level layer, <code>Layer3</code>, uses exceptions for signalling failures. The middle layer, <code>Layer2_old</code>,
 was not designed with exception safety in mind and functions need to return information about failures in return value.
 But down in the implementation details, in <code>Layer1</code>, another library is used that again throws exceptions. The goal is
-to be able to transfer an exception thrown in <code>Layer1</code> through <code>Layer2NX</code>, which is not exception-safe, and be able to rethrow it in <code>Layer3</code>.</p>
+to be able to transfer an exception thrown in <code>Layer1</code> through <code>Layer2_old</code>, which is not exception-safe,
+and be able to rethrow it in <code>Layer3</code>.</p>
 
-<p>In <code>Layer1</code> we have a throwing function:</p>
+<p>In <code>Layer1</code> we have two functions from two libraries: one reports failures by throwin exceptions, the other by returnin <code>result&lt;&gt;</code>:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> Layer1
-{
-  <span class="s3e8">auto</span> f() -&gt; <span class="s3ee">int</span>; <span class="s1770">// may throw
-</span><span class="s1770"></span>}  
+<span class="s3e8">auto</span> f() -&gt; <span class="s3ee">int</span>;  <span class="s1770">// may throw
+</span><span class="s1770"></span><span class="s3e8">auto</span> g() <span class="s3e8">noexcept</span> -&gt; outcome::result&lt;<span class="s3ee">int</span>&gt;;
 </code></pre>
 </div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_outcome.cpp#L7" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
-<p>In <code>Layer2NX</code> we cannot use exceptions, so its function <code>g</code> uses <code>result&lt;&gt;</code> to report failures:</p>
+<p>In <code>Layer2_old</code> we cannot use exceptions, so its function <code>h</code> uses return type <code>outcome&lt;&gt;</code> to report failures. It is using functions <code>f</code> and <code>g</code> and reports their failures inside <code>outcome&lt;&gt;</code>:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> Layer2NX
+<span class="s3e8">auto</span> old::h() <span class="s3e8">noexcept</span> -&gt; outcome::outcome&lt;<span class="s3ee">int</span>&gt;
 {
-  <span class="s3e8">auto</span> g() <span class="s3e8">noexcept</span> -&gt; outcome::result&lt;<span class="s3ee">int</span>&gt; ;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_outcome.cpp#L19" class="code-snippet-url" target="_blank">View this code on Github</a></div>
-
-
-<p>There is another function in <code>Layer2NX</code> that has to use both <code>Layer1::f</code> and <code>Layer2NX::g</code>.
-It cannot use <code>Layer1::f</code> directly as the later may throw an exception, so it has to wrap it into a non-throwing function <code>Layer2NX::f</code>:</p>
-
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> Layer2NX
-{   
-  <span class="s3e8">auto</span> f() <span class="s3e8">noexcept</span> -&gt; outcome::outcome&lt;<span class="s3ee">int</span>&gt; 
+  OUTCOME_TRY(i, g());               <span class="s1770">// #1
+</span><span class="s1770"></span>    
   <span class="s3e8">try</span> {
-    <span class="s3e8">return</span> Layer1::f();
+    <span class="s3ee">int</span> j = f();
+    <span class="s3e8">return</span> i + j;
   }
   <span class="s3e8">catch</span> (...) {
-    <span class="s3e8">return</span> std::current_exception();
-  }
-}    
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_outcome.cpp#L34" class="code-snippet-url" target="_blank">View this code on Github</a></div>
-
-
-<p>This wrapper funciton returns type <code>outcome&lt;int&gt;</code>. If an exception is thrown, it is caught by an <code>std::exception_ptr</code>. This <code>std::exception_ptr</code> is converted to <code>outcome&lt;T&gt;</code> upon return.
-<code>outcome&lt;T, EC, EP&gt;</code> is convertible from <code>T</code>, <code>EC</code> and <code>EP</code> as long as such conversion is not ambiguous.</p>
-
-<p>Now function <code>Layer2NX::fun</code> can be implemented with non-throwing <code>Layer2NX::f</code> and <code>Layer2NX::g</code>:</p>
-
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">    
-<span class="s3e8">namespace</span> Layer2NX
-{  
-  <span class="s3e8">auto</span> fun() <span class="s3e8">noexcept</span> -&gt; outcome::outcome&lt;<span class="s3ee">double</span>&gt; 
-  {
-    Resource* resource = <span class="s3e8">new</span> (std::nothrow) Resource;
-    <span class="s3e8">if</span> (!resource)
-        <span class="s3e8">return</span> std::errc::not_enough_memory;
-      
-    outcome::outcome&lt;<span class="s3ee">int</span>&gt; fr = Layer2NX::f();
-    <span class="s3e8">if</span> (!fr) {
-      <span class="s3e8">delete</span> resource;
-      <span class="s3e8">return</span> fr.as_failure();                <span class="s1770">// #1
-</span><span class="s1770"></span>    }
-    
-    <span class="s3ee">double</span> ans = resource-&gt;use(fr.value());
-    
-    outcome::result&lt;<span class="s3ee">int</span>&gt; gr = Layer2NX::g();
-    <span class="s3e8">if</span> (!gr) {
-      <span class="s3e8">delete</span> resource;
-      <span class="s3e8">return</span> gr.as_failure();                <span class="s1770">// #2
-</span><span class="s1770"></span>    }
-    
-    ans += resource-&gt;use(gr.value());
-    
-    <span class="s3e8">delete</span> resource;
-    <span class="s3e8">return</span> ans;
-  }
+    <span class="s3e8">return</span> std::current_exception(); <span class="s1770">// #2
+</span><span class="s1770"></span>  }
 }
 </code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_outcome.cpp#L52" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_outcome.cpp#L27" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
-<p>In the example above, manually deleting <code>resource</code> represents a non-exception-safe code.
-Typically it is not recommended to manually delete memory because it is hard to get right in case exceptions are thrown.
-But when exceptions are known not to be thrown (e.g., when they are disabled) this recommendation is weakened.</p>
+<p>#1. Operator <code>TRY</code> can forward failures encoded in <code>result&lt;T, EC&gt;</code> as <code>outcome&lt;T, EC, EP&gt;</code> without any loss in information. You can also use <code>TRY</code> to forward failure from one <code>outcome&lt;&gt;</code> to another.</p>
 
-<p>#1. When we want to forward (return up) the <code>outcome&lt;&gt;</code> object representing failure, we use function <code>as_failure()</code> it returns type <code>failure_type&lt;EC, EP&gt;</code> which is convertible to any to <code>outcome&lt;T, EC, EP&gt;</code> for any <code>T</code>.</p>
-
-<p>#2. We can similarly forward a failure from <code>result&lt;&gt;</code> again by calling <code>as_failure()</code>, the result will be converted to <code>outcome&lt;&gt;</code> preserving the information about function failure.</p>
-
-<p>If the management of <code>resource</code> is automated through RAII, even with exceptions disabled, you can use <code>OUTCOME_TRY</code> to make the code more concise:</p>
-
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">    
-<span class="s3e8">namespace</span> Layer2NX
-{  
-  <span class="s3e8">auto</span> fun2() <span class="s3e8">noexcept</span> -&gt; outcome::outcome&lt;<span class="s3ee">double</span>&gt; 
-  {
-    std::unique_ptr&lt;Resource&gt; resource {<span class="s3e8">new</span> (std::nothrow) Resource};
-    <span class="s3e8">if</span> (!resource)
-      <span class="s3e8">return</span> std::errc::not_enough_memory;
-    
-    OUTCOME_TRY (fr, Layer2NX::f());
-    <span class="s3ee">double</span> ans = resource-&gt;use(fr);
-    
-    OUTCOME_TRY (gr, Layer2NX::g());
-    ans += resource-&gt;use(gr);
-    
-    <span class="s3e8">return</span> ans;
-  }
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_outcome.cpp#L83" class="code-snippet-url" target="_blank">View this code on Github</a></div>
-
-
-<p>Statement <code>OUTCOME_TRY</code> works for <code>outcome</code> and you can also use it to return failure from <code>result&lt;&gt;</code> as <code>outcome&lt;&gt;</code> as shown in the second <code>OUTCOME_TRY</code>.</p>
+<p>#2. You can store the current exception through <code>std::exception_ptr</code> inside <code>outcome&lt;T, EC, EP&gt;</code> without any loss in information
+    (provided that <code>EP</code> is <code>std::exception_ptr</code>).</p>
 
 
 <footer class=" footline" >
