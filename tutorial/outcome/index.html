@@ -514,7 +514,7 @@ But down in the implementation details, in <code>Layer1</code>, another library 
 to be able to transfer an exception thrown in <code>Layer1</code> through <code>Layer2_old</code>, which is not exception-safe,
 and be able to rethrow it in <code>Layer3</code>.</p>
 
-<p>In <code>Layer1</code> we have two functions from two libraries: one reports failures by throwin exceptions, the other by returnin <code>result&lt;&gt;</code>:</p>
+<p>In <code>Layer1</code> we have two functions from two libraries: one reports failures by throwin exceptions, the other by returning <code>result&lt;&gt;</code>:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
 <span class="s3e8">auto</span> f() -&gt; <span class="s3ee">int</span>;  <span class="s1770">// may throw

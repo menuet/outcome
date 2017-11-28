@@ -480,7 +480,7 @@
 
 
 <p>Continuing with the previous example, in <code>Layer3</code> we have function <code>z</code> which again reports failures via exceptions.
-It will call function <code>h</code>h from <code>Layer2_old</code> which returns <code>outcome&lt;int&gt;</code> (which may store a <code>double</code> or an <code>std::error_code</code> or an <code>std::exception_ptr</code>).
+It will call function <code>h</code> from <code>Layer2_old</code> which returns <code>outcome&lt;int&gt;</code> (which may store a <code>double</code> or an <code>std::error_code</code> or an <code>std::exception_ptr</code>).
 The goal is to unpack it to either the successful return value <code>int</code> or to throw an appropriate exception: if we are storing an <code>std::exception_ptr</code> just rethrow it.
 If we are storing an <code>std::error_code</code> throw it as <code>std::system_error</code>, which is designed to store <code>std::error_code</code>s:</p>
 

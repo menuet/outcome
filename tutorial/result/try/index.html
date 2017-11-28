@@ -508,9 +508,12 @@ so you can test for its presence using <code>#ifdef OUTCOME_TRYX</code>.</p>
 </div>
 
 
-<p>Macro <code>OUTCOME_TRY</code> does two things:
-1. It extracts a <code>T</code> from <code>result&lt;T&gt;</code> (or <code>outcome&lt;T&gt;</code>).
-2. It declares a dependency between statements: If the &ldquo;tried&rdquo; statement fails, the next statement is not executed.</p>
+<p>Macro <code>OUTCOME_TRY</code> does two things:</p>
+
+<ol>
+<li>It extracts a <code>T</code> from <code>result&lt;T&gt;</code> (or <code>outcome&lt;T&gt;</code>).</li>
+<li>It declares a dependency between statements: If the &ldquo;tried&rdquo; statement fails, the next statement is not executed.</li>
+</ol>
 
 <p>When you are calling functions that return <code>result&lt;void&gt;</code> the first of the two things does not make sense. You then have to use macro <code>OUTCOME_TRYV</code> instead. Let&rsquo;s use our function <code>print_half</code>:</p>
 
