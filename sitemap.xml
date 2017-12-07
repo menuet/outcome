@@ -31,6 +31,10 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/doc_all_narrow.md/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/policies/anatomy/</loc>
   </url>
   
@@ -59,6 +63,10 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_outcome.md/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/result/</loc>
   </url>
   
@@ -72,6 +80,10 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/hooks/adl_bridging/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/</loc>
   </url>
   
   <url>
@@ -99,7 +111,15 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/doc_outcome_error_code_throw_as_system_error.md/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/outcome/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_result.md/</loc>
   </url>
   
   <url>
@@ -108,6 +128,10 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/interop/app/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/doc_result_error_code_throw_as_system_error.md/</loc>
   </url>
   
   <url>
@@ -155,11 +179,27 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_try.md/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/default-actions/error-codes/</loc>
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/doc_outcome_exception_ptr_rethrow.md/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/interop/app-map-httplib2/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_success_failure.md/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/doc_result_exception_ptr_rethrow.md/</loc>
   </url>
   
   <url>
@@ -172,6 +212,18 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/constructors/metaprogrammg1/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/doc_terminate.md/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/doc_throw_bad_result_access.md/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_utils.md/</loc>
   </url>
   
   <url>
@@ -211,6 +263,10 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_convert.md/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/constructors/metaprogrammg2/</loc>
   </url>
   
@@ -227,7 +283,15 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_bad_access.md/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tutorial/policies/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_iostream_support.md/</loc>
   </url>
   
   <url>
@@ -240,6 +304,10 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/interop/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/</loc>
   </url>
   
   <url>
