@@ -31,7 +31,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/doc_all_narrow.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/policies/all_narrow/</loc>
   </url>
   
   <url>
@@ -63,7 +63,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_outcome.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/outcome/</loc>
   </url>
   
   <url>
@@ -111,7 +111,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/doc_outcome_error_code_throw_as_system_error.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/policies/outcome_error_code_throw_as_system_error/</loc>
   </url>
   
   <url>
@@ -119,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_result.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/result/</loc>
   </url>
   
   <url>
@@ -128,10 +128,6 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/interop/app/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/doc_result_error_code_throw_as_system_error.md/</loc>
   </url>
   
   <url>
@@ -179,7 +175,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_try.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/try/</loc>
   </url>
   
   <url>
@@ -187,19 +183,11 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/doc_outcome_exception_ptr_rethrow.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/policies/result_error_code_throw_as_system_error/</loc>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/interop/app-map-httplib2/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_success_failure.md/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/doc_result_exception_ptr_rethrow.md/</loc>
   </url>
   
   <url>
@@ -215,15 +203,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/doc_terminate.md/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/doc_throw_bad_result_access.md/</loc>
-  </url>
-  
-  <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_utils.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/success_failure/</loc>
   </url>
   
   <url>
@@ -236,6 +216,10 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/default-actions/exception-ptr/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/outcome_exception_ptr_rethrow/</loc>
   </url>
   
   <url>
@@ -263,11 +247,15 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_convert.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/utils/</loc>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/constructors/metaprogrammg2/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/result_exception_ptr_rethrow/</loc>
   </url>
   
   <url>
@@ -283,7 +271,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_bad_access.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/convert/</loc>
   </url>
   
   <url>
@@ -291,11 +279,19 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/doc_iostream_support.md/</loc>
+    <loc>https://ned14.github.io/outcome/reference/policies/terminate/</loc>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/tutorial/default-actions/unchecked/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/bad_access/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/throw_bad_result_access/</loc>
   </url>
   
   <url>
@@ -307,7 +303,7 @@
   </url>
   
   <url>
-    <loc>https://ned14.github.io/outcome/reference/policies/</loc>
+    <loc>https://ned14.github.io/outcome/reference/iostream_support/</loc>
   </url>
   
   <url>
@@ -319,7 +315,15 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/reference/policies/</loc>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/_header/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/reference/doc_common/</loc>
   </url>
   
   <url>
