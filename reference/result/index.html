@@ -484,7 +484,6 @@
       </a>
     </li>
         <section id="shortcuts">
-                <li class="" role=""><a href="/outcome/doxygen/namespaceoutcome__v2__xxx.html" target="_blank" rel="noopener">API reference (doxygen)</a></li>
                 <li class="" role=""><h3>More</h3><a href="https://github.com/ned14/outcome" target="_blank" rel="noopener"><i class='fa fa-github'></i> Outcome 2.0 github repo</a></li>
                 <li class="" role=""><a href="/outcome/credits" target="_blank" rel="noopener"><i class='fa fa-bullhorn'></i> Acknowledgements</a></li>
         </section>
@@ -743,10 +742,10 @@
         <span class="kwd">constexpr</span> <span class="kwd">void</span> <a href="#standardese-outcome_v2_xxx::hooks::hook_result_in_place_construction%3CT,U,Args%3E(T*,in_place_type_t%3CU%3E,Args&amp;&amp;...)"><span class="typ dec var fun">hook_result_in_place_construction</span></a><span class="pun">(</span><span class="typ dec var fun">T</span><span class="pun">*</span><span class="pun">,</span> <span class="typ dec var fun">in_place_type_t</span><span class="pun">&lt;</span>U<span class="pun">&gt;</span><span class="pun">,</span> Args &amp;&amp;...<span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
 
         <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">R</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">S</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">NoValuePolicy</span><span class="pun">&gt;</span>
-        <span class="kwd">constexpr</span> <span class="typ dec var fun">uint16_t</span> <a href="#standardese-outcome_v2_xxx::hooks::spare_storage%3CR,S,NoValuePolicy%3E(detail::result_final%3CR,S,NoValuePolicy%3Econst*)"><span class="typ dec var fun">spare_storage</span></a><span class="pun">(</span><span class="typ dec var fun">detail::result_final</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
+        <span class="kwd">constexpr</span> <span class="typ dec var fun">uint16_t</span> <a href="#standardese-outcome_v2_xxx::hooks::spare_storage%3CR,S,NoValuePolicy%3E(result_or_outcome%3CR,S,NoValuePolicy%3Econst*)"><span class="typ dec var fun">spare_storage</span></a><span class="pun">(</span><span class="typ dec var fun">result_or_outcome</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
 
         <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">R</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">S</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">NoValuePolicy</span><span class="pun">&gt;</span>
-        <span class="kwd">constexpr</span> <span class="kwd">void</span> <a href="#standardese-outcome_v2_xxx::hooks::set_spare_storage%3CR,S,NoValuePolicy%3E(detail::result_final%3CR,S,NoValuePolicy%3E*,uint16_t)"><span class="typ dec var fun">set_spare_storage</span></a><span class="pun">(</span><span class="typ dec var fun">detail::result_final</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">,</span> <span class="typ dec var fun">uint16_t</span> <span class="typ dec var fun">v</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
+        <span class="kwd">constexpr</span> <span class="kwd">void</span> <a href="#standardese-outcome_v2_xxx::hooks::set_spare_storage%3CR,S,NoValuePolicy%3E(result_or_outcome%3CR,S,NoValuePolicy%3E*,uint16_t)"><span class="typ dec var fun">set_spare_storage</span></a><span class="pun">(</span><span class="typ dec var fun">result_or_outcome</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">,</span> <span class="typ dec var fun">uint16_t</span> <span class="typ dec var fun">v</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
     <span class="pun">}</span>
 
     <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E.R"><span class="typ dec var fun">R</span></a><span class="pun">,</span> <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E.S"><span class="typ dec var fun">S</span></a><span class="pun">,</span> <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E.NoValuePolicy"><span class="typ dec var fun">NoValuePolicy</span></a><span class="pun">&gt;</span>
@@ -919,10 +918,10 @@
 
 <h3 id="function-outcome-v2-xxx-hooks-spare-storage">Function <code>outcome_v2_xxx::hooks::spare_storage</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::hooks::spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;const*)"></a></p>
+<p><a id="standardese-outcome_v2_xxx::hooks::spare_storage&lt;R,S,NoValuePolicy&gt;(result_or_outcome&lt;R,S,NoValuePolicy&gt;const*)"></a></p>
 
 <pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">R</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">S</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">NoValuePolicy</span><span class="pun">&gt;</span>
-<span class="kwd">constexpr</span> <span class="typ dec var fun">uint16_t</span> <span class="typ dec var fun">spare_storage</span><span class="pun">(</span><span class="typ dec var fun">detail::result_final</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
+<span class="kwd">constexpr</span> <span class="typ dec var fun">uint16_t</span> <span class="typ dec var fun">spare_storage</span><span class="pun">(</span><span class="typ dec var fun">result_or_outcome</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
 </code></pre>
 
 <p>Retrieves the 16 bits of spare storage in result/outcome.</p>
@@ -931,10 +930,10 @@
 
 <h3 id="function-outcome-v2-xxx-hooks-set-spare-storage">Function <code>outcome_v2_xxx::hooks::set_spare_storage</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::hooks::set_spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;*,uint16_t)"></a></p>
+<p><a id="standardese-outcome_v2_xxx::hooks::set_spare_storage&lt;R,S,NoValuePolicy&gt;(result_or_outcome&lt;R,S,NoValuePolicy&gt;*,uint16_t)"></a></p>
 
 <pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">R</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">S</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">NoValuePolicy</span><span class="pun">&gt;</span>
-<span class="kwd">constexpr</span> <span class="kwd">void</span> <span class="typ dec var fun">set_spare_storage</span><span class="pun">(</span><span class="typ dec var fun">detail::result_final</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">,</span> <span class="typ dec var fun">uint16_t</span> <span class="typ dec var fun">v</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
+<span class="kwd">constexpr</span> <span class="kwd">void</span> <span class="typ dec var fun">set_spare_storage</span><span class="pun">(</span><span class="typ dec var fun">result_or_outcome</span><span class="pun">&lt;</span>R, S, NoValuePolicy<span class="pun">&gt;</span><span class="pun">*</span> <span class="typ dec var fun">r</span><span class="pun">,</span> <span class="typ dec var fun">uint16_t</span> <span class="typ dec var fun">v</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
 </code></pre>
 
 <p>Sets the 16 bits of spare storage in result/outcome.</p>
@@ -947,7 +946,7 @@
 
 <pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E.R"><span class="typ dec var fun">R</span></a><span class="pun">,</span> <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E.S"><span class="typ dec var fun">S</span></a><span class="pun">,</span> <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E.NoValuePolicy"><span class="typ dec var fun">NoValuePolicy</span></a><span class="pun">&gt;</span>
 <span class="kwd">class</span> <span class="typ dec var fun">result</span>
-<span class="pun">:</span> <span class="kwd">public</span> <span class="typ dec var fun">detail::result_final&lt;R,S,NoValuePolicy&gt;</span>
+<span class="pun">:</span> <span class="kwd">public</span> <span class="typ dec var fun">result_or_outcome&lt;R,S,NoValuePolicy&gt;</span>
 <span class="pun">{</span>
 <span class="kwd">public</span><span class="pun">:</span>
     &#x2F;&#x2F;=== Member types ===&#x2F;&#x2F;
