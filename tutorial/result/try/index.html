@@ -574,7 +574,7 @@
 <p>In the implementation of function <code>print_half</code> we have seen the usage of the macro <code>OUTCOME_TRY</code>:</p>
 <div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">OUTCOME_TRY (i, BigInt::fromString(text));</code></pre>
 </div>
-<p>This control statement is raughly equivalent to:</p>
+<p>This control statement is roughly equivalent to:</p>
 <div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="s3e8">auto</span>&amp;&amp; __result = BigInt::fromString(text);
 <span class="s3e8">if</span> (!__result)
   <span class="s3e8">return</span> __result.as_failure();

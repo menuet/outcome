@@ -582,8 +582,8 @@ which tell you when a namespace-localised <code>outcome</code> or <code>result</
 <li>In-place constructed
 
 <ul>
-<li><code>hook_result_in_place_construction(result&lt;T, E&gt; *this, U &amp;&amp;src)</code></li>
-<li><code>hook_outcome_in_place_construction(outcome&lt;T, EC, EP&gt; *this, U &amp;&amp;src)</code></li>
+<li><code>hook_result_in_place_construction(result&lt;T, E&gt; *this, in_place_type_t&lt;T|E&gt;, Args&amp;&amp;... srcs)</code></li>
+<li><code>hook_outcome_in_place_construction(outcome&lt;T, EC, EP&gt; *this, in_place_type_t&lt;T|EC|EP&gt;, Args&amp;&amp;... srcs)</code></li>
 </ul></li>
 <li>Copied
 
@@ -594,8 +594,8 @@ which tell you when a namespace-localised <code>outcome</code> or <code>result</
 <li>Moved
 
 <ul>
-<li><code>hook_result_move_construction(result&lt;T, E&gt; *this, in_place_type_t&lt;T|E&gt;, Args&amp;&amp;... srcs)</code></li>
-<li><code>hook_outcome_move_construction(outcome&lt;T, EC, EP&gt; *this, in_place_type_t&lt;T|EC|EP&gt;, Args&amp;&amp;... srcs)</code></li>
+<li><code>hook_result_move_construction(result&lt;T, E&gt; *this, U &amp;&amp;src)</code></li>
+<li><code>hook_outcome_move_construction(outcome&lt;T, EC, EP&gt; *this, U &amp;&amp;src)</code></li>
 </ul></li>
 </ul>
 

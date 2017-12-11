@@ -329,7 +329,7 @@ namespace error_code_extended { // Specialise the result construction hook for o
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/tutorial/outcome/inspecting/</guid>
-      <description>Continuing with the previous example, in Layer3 we have function z which again reports failures via exceptions. It will call function h from Layer2_old which returns outcome&amp;lt;int&amp;gt; (which may store a double or an std::error_code or an std::exception_ptr). The goal is to unpack it to either the successful return value int or to throw an appropriate exception: if we are storing an std::exception_ptr just rethrow it. If we are storing an std::error_code throw it as std::system_error, which is designed to store std::error_codes:</description>
+      <description>Continuing with the previous example, in Layer3 we have function z which again reports failures via exceptions. It will call function h from Layer2_old which returns outcome&amp;lt;int&amp;gt; (which may store a double or an std::error_code or an std::exception_ptr). The goal is to unpack it to either the successful return value int or to throw an appropriate exception: if we are storing an std::exception_ptr just rethrow it. If we are storing an std::error_code throw it as std::system_error, which is designed to store std::error_code&amp;rsquo;s:</description>
     </item>
     
     <item>
@@ -359,7 +359,7 @@ namespace app { // Specialise an exception type for httplib errors  struct httpl
       
       <guid>https://ned14.github.io/outcome/tutorial/result/try/</guid>
       <description>In the implementation of function print_half we have seen the usage of the macro OUTCOME_TRY:
-OUTCOME_TRY (i, BigInt::fromString(text));  This control statement is raughly equivalent to:
+OUTCOME_TRY (i, BigInt::fromString(text));  This control statement is roughly equivalent to:
 auto&amp;amp;&amp;amp; __result = BigInt::fromString(text); if (!__result) return __result.as_failure(); auto&amp;amp;&amp;amp; i = __result.value();  Where __result is a unique name.
 Additionally, in GCC and Clang which provide an extension to C++ known as statement expressions it is possible to use an alternative macro: OUTCOME_TRYX, which is an expression.</description>
     </item>
@@ -694,7 +694,7 @@ template &amp;lt;class EC&amp;gt; struct throw_bad_result_access : detail::base 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/credits/</guid>
-      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }  This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation. Standardese - the API reference generator  Special thanks To Paul Bristow who proposed the name &amp;ldquo;Outcome&amp;rdquo; for the library after a very extended period of name bikeshedding on boost-dev.</description>
+      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }  This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation. Standardese - the API reference generator  Special thanks for Outcome v2 For a second time, Charley Bay stepped up as review manager.</description>
     </item>
     
   </channel>
