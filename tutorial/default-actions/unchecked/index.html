@@ -563,6 +563,22 @@
           </div>
         
         
+          <div id="tags">
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/checked">checked</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/unchecked">unchecked</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/bad_result_access">bad_result_access</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/expected">expected</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/assume_value">assume_value</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/assume_error">assume_error</a>
+            
+          </div>
+        
         <div id="body-inner">
           
             <h1>unchecked&lt;T, E&gt; and checked&lt;T, E&gt;</h1>
@@ -571,22 +587,26 @@
 
 
 
-<p>We have now covered all of the default actions in Outcome whereby <code>result&lt;T, EC&gt;</code> and <code>outcome&lt;T, EC, EP|P&gt;</code> implement
-various default actions upon no-value observation according to traits defined upon the <code>EC</code> and <code>EP|P</code> chosen.</p>
+<p>We have now covered all of the default actions in Outcome whereby <code>result&lt;T, EC&gt;</code> and <code>outcome&lt;T, EC, EP&gt;</code> implement
+various default actions upon no-value observation according to traits defined upon the <code>EC</code> and <code>EP</code> chosen.</p>
 
 <p>If you don&rsquo;t want all this clever automatic detection of traits, and just want a plain,
 always-undefined-behaviour-on-no-value-observation success-or-failure type, we provide
-a simplified template alias to <code>result&lt;T, E&gt;</code> called <code>unchecked&lt;T, E&gt;</code>. It literally does
+a simplified template alias to <code>result&lt;T, E&gt;</code> called <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx::unchecked%3CR,S%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> unchecked&lt;T, E&gt;</a>
+. It literally does
 no run time checking whatsoever, no-value observation is always undefined behaviour.</p>
 
 <p>If instead you would prefer a plain, always-throwing-logic-error-on-no-value-observation
-type, we also provide another simplified template alias to <code>result&lt;T, E&gt;</code> called <code>checked&lt;T, E&gt;</code>.
+type, we also provide another simplified template alias to <code>result&lt;T, E&gt;</code> called <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx::checked%3CR,S%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> checked&lt;T, E&gt;</a>
+.
 Similar to <code>.value()</code> in the WG21 Expected proposal or Optional, no-value observation throws
 these logic error type exceptions:</p>
 
 <ul>
-<li>No-value <code>.value()</code> observation throws <code>bad_result_access_with&lt;E&gt;</code>.</li>
-<li>No-error <code>.error()</code> observation throws <code>bad_result_access</code>.</li>
+<li>No-value <code>.value()</code> observation throws <a href="https://ned14.github.io/outcome/reference/bad_access/#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> bad_result_access_with&lt;E&gt;</a>
+.</li>
+<li>No-error <code>.error()</code> observation throws <a href="https://ned14.github.io/outcome/reference/bad_access/#standardese-outcome_v2_xxx::bad_result_access" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> bad_result_access</a>
+.</li>
 </ul>
 
 <p>If you need run time unchecked observers, <code>.assume_value()</code> and <code>.assume_error()</code> are

@@ -331,7 +331,37 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/assume_error/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/assume_value/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/bad_result_access/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/checked/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/default-actions/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/dual-api/</loc>
     <priority>0</priority>
   </url>
   
@@ -346,7 +376,22 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/expected/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/has_error_code/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/make_error_code/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -365,6 +410,11 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/payload/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tags/result/</loc>
     <priority>0</priority>
   </url>
@@ -375,7 +425,22 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/terminate/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tags/try/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/unchecked/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/undefined-behaviour/</loc>
     <priority>0</priority>
   </url>
   

@@ -558,6 +558,16 @@
           </div>
         
         
+          <div id="tags">
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/payload">payload</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/has_error_code">has_error_code</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/make_error_code">make_error_code</a>
+            
+          </div>
+        
         <div id="body-inner">
           
             <h1>Custom payloads</h1>
@@ -567,8 +577,10 @@
 
 
 <p>So far, type <code>EC</code> in <code>result&lt;T, EC&gt;</code> has always been a <code>std::error_code</code>. But it need
-in fact to merely satisfy <code>trait::has_error_code_v&lt;EC&gt;</code> for <code>EC</code> to be treated as a
-<code>std::error_code</code>.</p>
+in fact to merely satisfy
+<a href="https://ned14.github.io/outcome/reference/success_failure/#standardese-outcome_v2_xxx::trait::has_error_code%3CT%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> trait::has_error_code_v&lt;EC&gt;</a>
+
+for <code>EC</code> to be treated as a <code>std::error_code</code>.</p>
 
 <p>In turn, <code>trait::has_error_code_v&lt;EC&gt;</code> is true if there exists some ADL discovered free
 function:</p>

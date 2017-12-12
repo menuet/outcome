@@ -44,7 +44,7 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/default-actions/happens1/",
 	"title": "-- What happens?",
-	"tags": [],
+	"tags": ["undefined-behaviour"],
 	"description": "",
 	"content": "Let us run the code from the previous page:\nned@lyta:~/outcome/build_posix$ bin/outcome-snippets_udts Segmentation fault (core dumped) ned@lyta:~/outcome/build_posix$  Apparently no exception was thrown? Correct. Nor was a value printed, though this will randomly vary depending on your compiler, libraries, the wind blowing on the day \u0026hellip;\nYou will probably find this surprising. This is because the default action for a user-defined error type is undefined behaviour1.\nLet us demonstrate this by recompiling the code to use the undefined behaviour sanitiser and see what happens instead:\nned@lyta:~/outcome/build_posix$ export UBSAN_OPTIONS=print_stacktrace=1 ned@lyta:~/outcome/build_posix$ bin/outcome-snippets_udts /home/ned/outcome/doc/src/snippets/../../../include/outcome/policy/detail/common.hpp:42:9: runtime error: execution reached a __builtin_unreachable() call #0 0x42a0dc in outcome_v2_1c2d524c::policy::detail::base::_ub() (/home/ned/outcome/build_posix/bin/outcome-snippets_udts+0x42a0dc) #1 0x42a028 in void outcome_v2_1c2d524c::policy::detail::base::narrow_value_check\u0026lt;outcome_v2_1c2d524c::detail::result_value_observers\u0026lt;outcome_v2_1c2d524c::detail::result_storage\u0026lt;main::udt, main::err, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;, main::udt, outcome_v2_1c2d524c::policy::all_narrow\u0026gt; \u0026gt;(outcome_v2_1c2d524c::detail::result_value_observers\u0026lt;outcome_v2_1c2d524c::detail::result_storage\u0026lt;main::udt, main::err, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;, main::udt, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;*) (/home/ned/outcome/build_posix/bin/outcome-snippets_udts+0x42a028) #2 0x429f0c in void outcome_v2_1c2d524c::policy::all_narrow::wide_value_check\u0026lt;outcome_v2_1c2d524c::detail::result_value_observers\u0026lt;outcome_v2_1c2d524c::detail::result_storage\u0026lt;main::udt, main::err, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;, main::udt, outcome_v2_1c2d524c::policy::all_narrow\u0026gt; \u0026gt;(outcome_v2_1c2d524c::detail::result_value_observers\u0026lt;outcome_v2_1c2d524c::detail::result_storage\u0026lt;main::udt, main::err, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;, main::udt, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;*) (/home/ned/outcome/build_posix/bin/outcome-snippets_udts+0x429f0c) #3 0x4298d6 in outcome_v2_1c2d524c::detail::result_value_observers\u0026lt;outcome_v2_1c2d524c::detail::result_storage\u0026lt;main::udt, main::err, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;, main::udt, outcome_v2_1c2d524c::policy::all_narrow\u0026gt;::value() \u0026amp; (/home/ned/outcome/build_posix/bin/outcome-snippets_udts+0x4298d6) #4 0x4295f1 in main (/home/ned/outcome/build_posix/bin/outcome-snippets_udts+0x4295f1) #5 0x7f3bd59c1f44 in __libc_start_main /build/eglibc-SvCtMH/eglibc-2.19/csu/libc-start.c:287 #6 0x4030c3 in _start (/home/ned/outcome/build_posix/bin/outcome-snippets_udts+0x4030c3)  The undefined behaviour is correctly trapped at runtime by the undefined behaviour sanitiser.\n Note that this is hard undefined behaviour. The compiler (if GCC, clang, or MSVC) is explicitly told that observation of a value which is not present can never happen. The optimiser will thus generate code assuming it can never happen. This is what causes the segmentation fault above, no assembler is generated for the no-value observation case which causes corruption of the CPU registers, thus making visible early the undefined behaviour. [return]   "
 },
@@ -79,7 +79,7 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/payload/copy_file/",
 	"title": "The Filesystem TS",
-	"tags": [],
+	"tags": ["dual-api"],
 	"description": "",
 	"content": "Something which has long annoyed the purists in the C++ leadership is the problem of dual overloads in error_code capable standard library APIs.\nConsider the copy_file() API from the Filesystem TS:\nnamespace filesystem { /*! Copies the file at path `from` to path `to`. \\returns True if file was successfully copied. \\throws On failure throws `filesystem_error(ec.message(), from, to, ec)` with `ec` being the error code reported by the operating system. */ bool copy_file(const path \u0026amp;from, const path \u0026amp;to); /*! Copies the file at path `from` to path `to`. \\returns True if file was successfully copied. If false, `ec` is written with the error code reported by the operating system. \\throws Never throws. */ bool copy_file(const path \u0026amp;from, const path \u0026amp;to, std::error_code \u0026amp;ec) noexcept; }  View this code on Github Before Outcome, the common design pattern was to provide throwing and non-throwing overloads of every API. As you can see above, the throwing API throws a filesystem::filesystem_error exception type which carries additional information, specifically two paths. These paths may refer to the files which were the source of any failure. However the non-throwing overload does not provide this additional information, which can make it more annoying to use the non-throwing overload sometimes.\nWhat if we could replace these two overloads of every API in the Filesystem TS with a single API, and additionally have the non-throwing edition return the exact same additional information as the throwing edition?\n"
 },
@@ -184,7 +184,7 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/payload/copy_file2/",
 	"title": "Upgrading the Filesystem TS",
-	"tags": [],
+	"tags": ["payload"],
 	"description": "",
 	"content": "An Outcome based solution to the dual overload problem is straightforward:\nnamespace filesystem2 { // Error code + paths related to a failure. Also causes ADL discovery to check this namespace.  struct failure_info { std::error_code ec; path path1, path2; }; // Tell Outcome that failure_info is to be treated as a std::error_code  inline const std::error_code \u0026amp;make_error_code(const failure_info \u0026amp;fi) { return fi.ec; } // Localise an outcome implementation specific to this namespace. Normally would just  // be `result`, but for clarity we\u0026#39;ll use `fs_result`.  template \u0026lt;class T\u0026gt; using fs_result = outcome::result\u0026lt;T, failure_info\u0026gt;; /*! Copies the file at path `from` to path `to`. \\returns Successful if file was successfully copied, otherwise the error code reported by the operating system plus a payload of the paths involved. \\throws Never throws. */ fs_result\u0026lt;void\u0026gt; copy_file(const path \u0026amp;from, const path \u0026amp;to) noexcept; }  View this code on Github Starting at the bottom, there is now a single copy_file() function which returns a fs_result\u0026lt;void\u0026gt;. As result is either successful or not, there is no longer any point in returning a boolean, so we simply return void on success. On failure, as the template alias fs_result\u0026lt;T\u0026gt; above it shows, we are returning a failure_info structure containing an error code and the same additional information as filesystem_error provides.\nIt is important to note that the fact that failure_info is defined in namespace filesystem2 is very important. This is because Outcome uses Argument Dependent Lookup (ADL) to find the make_error_code() function, as well as other customisation point free functions. In other words, only the namespaces as defined by ADL are searched when finding a free function telling us what to do for failure_info, which includes the namespace failure_info is declared into.\n"
 },
@@ -212,7 +212,7 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/default-actions/happens2/",
 	"title": "-- What happens?",
-	"tags": [],
+	"tags": ["undefined-behaviour"],
 	"description": "",
 	"content": "Let us run the code from the previous page:\nned@lyta:~/outcome/build_posix$ bin/outcome-snippets_error_code_enums1 Segmentation fault (core dumped) ned@lyta:~/outcome/build_posix$  Also undefined behaviour. This is because Outcome doesn\u0026rsquo;t know what to do with a strongly typed enum any more than some user defined struct.\nLet us register our error code enum with the C++ standard library. This causes Outcome to treat it quite differently.\nstruct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; enum class err { success, failure1, failure2 }; // Tell the standard library that enum err is an error code enum // by specialising the is_error_code_enum trait. See // http://en.cppreference.com/w/cpp/error/error_code/is_error_code_enum namespace std { template \u0026lt;\u0026gt; struct is_error_code_enum\u0026lt;err\u0026gt; : std::true_type { }; } // We also must declare a free function make_error_code. This is // discovered via ADL by the standard library. See // http://en.cppreference.com/w/cpp/error/errc/make_error_code inline std::error_code make_error_code(err c) { // We need to inherit from std::error_category to define  // an error code domain with the standard library for  // our strongly typed enum. See  // http://en.cppreference.com/w/cpp/error/error_category  static struct err_category : std::error_category { virtual const char *name() const noexcept override final { return \u0026#34;err_category\u0026#34;; }; virtual std::string message(int c) const override final { switch(static_cast\u0026lt;err\u0026gt;(c)) { case err::success: return \u0026#34;err::success\u0026#34;; case err::failure1: return \u0026#34;err::failure1\u0026#34;; case err::failure2: return \u0026#34;err::failure2\u0026#34;; } return \u0026#34;unknown\u0026#34;; } } category; return std::error_code(static_cast\u0026lt;int\u0026gt;(c), category); }  View this code on Github "
 },
@@ -233,7 +233,7 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/payload/copy_file3/",
 	"title": "Auto-throwing filesystem_error",
-	"tags": [],
+	"tags": ["default-actions", "value"],
 	"description": "",
 	"content": "Something not mentioned at all until now (and properly described in the next section, Default actions) is that Outcome can be programmed take various actions when the user tries to observe .value() when there is no value, and so on for the other possible state observations.\nSeeing as we are replacing the throwing overload of copy_file() in the Filesystem TS with a result returning edition instead, it would make sense if an attempt to observe the value of an unsuccessful fs_result threw the exact same filesystem_error as the Filesystem TS does.\nTelling Outcome how to throw a filesystem_error with payload of the failing paths is easy:\nnamespace filesystem2 { // If we would like Outcome to do something other than the default action (see next  // section), we can declare this ADL discovered free function to customise what  // to do instead.  //  // Note that rvalue semantics are propagated internally by Outcome, so if the user  // called .value() on a rvalued result, failure_info will be moved rather than  // copied from the result. That means we can overload once with value semantics,  // and not need to overload for lvalue and rvalue situations unless we really feel  // we need to for some reason.  inline void throw_as_system_error_with_payload(failure_info fi) { // If the error code is not filesystem related e.g. ENOMEM, throw that as a standard STL exception.  outcome::try_throw_std_exception_from_error(fi.ec); // Throw the exact same filesystem_error exception which the throwing copy_file() edition does.  throw filesystem_error(fi.ec.message(), std::move(fi.path1), std::move(fi.path2), fi.ec); } }  View this code on Github Usage of our new \u0026ldquo;upgraded\u0026rdquo; Filesystem copy_file() might now be as follows:\n// Non-throwing use case  auto o = filesystem2::copy_file(\u0026#34;dontexist\u0026#34;, \u0026#34;alsodontexist\u0026#34;); if(!o) { std::cerr \u0026lt;\u0026lt; \u0026#34;Copy file failed with error \u0026#34; \u0026lt;\u0026lt; o.error().ec.message() //  \u0026lt;\u0026lt; \u0026#34; (path1 = \u0026#34; \u0026lt;\u0026lt; o.error().path1 \u0026lt;\u0026lt; \u0026#34;, path2 = \u0026#34; \u0026lt;\u0026lt; o.error().path2 \u0026lt;\u0026lt; \u0026#34;)\u0026#34; //  \u0026lt;\u0026lt; std::endl; } // Throwing use case  try { // Try to observe the successful value, thus triggering default actions which invokes  // our throw_as_system_error_with_payload() above which then throws filesystem_error  // exactly like the Filesystem TS does for its throwing overload.  filesystem2::copy_file(\u0026#34;dontexist\u0026#34;, \u0026#34;alsodontexist\u0026#34;).value(); } catch(const filesystem2::filesystem_error \u0026amp;e) { std::cerr \u0026lt;\u0026lt; \u0026#34;Copy file failed with exception \u0026#34; \u0026lt;\u0026lt; e.what() //  \u0026lt;\u0026lt; \u0026#34; (path1 = \u0026#34; \u0026lt;\u0026lt; e.path1() \u0026lt;\u0026lt; \u0026#34;, path2 = \u0026#34; \u0026lt;\u0026lt; e.path2() \u0026lt;\u0026lt; \u0026#34;)\u0026#34; //  \u0026lt;\u0026lt; std::endl; } catch(const std::exception \u0026amp;e) { std::cerr \u0026lt;\u0026lt; \u0026#34;Copy file failed with exception \u0026#34; \u0026lt;\u0026lt; e.what() //  \u0026lt;\u0026lt; std::endl; }  View this code on Github "
 },
@@ -254,9 +254,9 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/payload/",
 	"title": "Custom payloads",
-	"tags": [],
+	"tags": ["payload", "has_error_code", "make_error_code"],
 	"description": "Success-or-failure return types where extra information in addition to the error code accompanies failure.",
-	"content": "So far, type EC in result\u0026lt;T, EC\u0026gt; has always been a std::error_code. But it need in fact to merely satisfy trait::has_error_code_v\u0026lt;EC\u0026gt; for EC to be treated as a std::error_code.\nIn turn, trait::has_error_code_v\u0026lt;EC\u0026gt; is true if there exists some ADL discovered free function:\n make_error_code(EC) returning a std::error_code. make_error_code(get\u0026lt;0\u0026gt;(EC)) returning a std::error_code (i.e. EC might be pair\u0026lt;std::error_code, U\u0026gt; or tuple\u0026lt;std::error_code, ...\u0026gt;).  \u0026hellip; or if EC is implicitly convertible into a std::error_code.\nThus, we can in fact use any custom EC type we like, including one carrying additional information, or payload. This payload can carry anything you like, and you can tell Outcome to do various things with that payload under various circumstances. For example:\n If the user tries to observe an unsuccessful result, throw a custom exception containing the cause of failure with accompanying context from the payload. If the user ever constructs an outcome from a payload carrying result, set the exception ptr in the constructed outcome to a custom exception containing the cause of the failure with accompanying context from the payload. Transmit a stack backtrace specifying the exact point at which failure occurred, symbolising that into human readable text at the moment of conversion into human readable text. Upon a namespace-localised result from library A being copy/moved into a namespace-localised result from C bindings library B, set the C errno if the error code and category map onto the errno domain.  There are many, many other options of course. This tutorial can only cover a reasonable subset. This section covers Example 1 above, throwing custom exceptions with payload upon observation of an unsuccessful result.\n"
+	"content": "So far, type EC in result\u0026lt;T, EC\u0026gt; has always been a std::error_code. But it need in fact to merely satisfy  trait::has_error_code_v\u0026lt;EC\u0026gt; for EC to be treated as a std::error_code.\nIn turn, trait::has_error_code_v\u0026lt;EC\u0026gt; is true if there exists some ADL discovered free function:\n make_error_code(EC) returning a std::error_code. make_error_code(get\u0026lt;0\u0026gt;(EC)) returning a std::error_code (i.e. EC might be pair\u0026lt;std::error_code, U\u0026gt; or tuple\u0026lt;std::error_code, ...\u0026gt;).  \u0026hellip; or if EC is implicitly convertible into a std::error_code.\nThus, we can in fact use any custom EC type we like, including one carrying additional information, or payload. This payload can carry anything you like, and you can tell Outcome to do various things with that payload under various circumstances. For example:\n If the user tries to observe an unsuccessful result, throw a custom exception containing the cause of failure with accompanying context from the payload. If the user ever constructs an outcome from a payload carrying result, set the exception ptr in the constructed outcome to a custom exception containing the cause of the failure with accompanying context from the payload. Transmit a stack backtrace specifying the exact point at which failure occurred, symbolising that into human readable text at the moment of conversion into human readable text. Upon a namespace-localised result from library A being copy/moved into a namespace-localised result from C bindings library B, set the C errno if the error code and category map onto the errno domain.  There are many, many other options of course. This tutorial can only cover a reasonable subset. This section covers Example 1 above, throwing custom exceptions with payload upon observation of an unsuccessful result.\n"
 },
 {
 	"uri": "https://ned14.github.io/outcome/faq/",
@@ -387,7 +387,7 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/default-actions/",
 	"title": "Default actions",
-	"tags": [],
+	"tags": ["default-actions"],
 	"description": "The default rules for handling different categories of failure type",
 	"content": "In the last section, we observed with .value() the value of the outcome returned by copy_file() and saw that it may throw a C++ exception configured by an ADL discovered function. This behaviour is what we will call a \u0026ldquo;default action\u0026rdquo; i.e. a pre-programmed action taken by Outcome in response to no-value observation.\nSome \u0026ndash; strongly \u0026ndash; feel that these value-or-error objects should not have any \u0026ldquo;default action\u0026rdquo; other than to throw a special exception carrying as payload the cause of the no-value i.e. the error. Most with this opinion feel that the \u0026ldquo;default action\u0026rdquo; is in fact to unwind the stack, and that using an exception throw instead of a function return is basically the same thing precisely because a stack unwind occurs in both cases, and the mechanism by which that is achieved isn\u0026rsquo;t particularly important. Indeed, the Expected proposal before WG21, which intends to standardise a value-or-error object not dissimilar to Outcome\u0026rsquo;s objects, does just this (at the time of writing). Optional, which is a value-or-nothing object, similarly throws a special exception on no-value observation via .value().\nOutcome\u0026rsquo;s default is to not provide value-or-error objects. It provides success-or-failure objects. We define the difference as being \u0026ldquo;having programmable actions in response to no-value observation other than throwing a hard coded logic error type exception1\u0026rdquo;. This philosophical difference implies that throwing a C++ exception is solely used to abort the current operation with a useful-to-the-programmer default action, not as a control flow alternative to ordinary returns from function, not for reporting \u0026ldquo;recoverable\u0026rdquo; logic errors.\nYou can, of course, choose different default actions for your particular Outcome instance, implement your own default actions, and indeed configure a result and outcome which throw a logic error type exception exactly the same way as Expected or Optional does. How to do this is described later in this tutorial.\nThis section describes the default actions implemented by Outcome, which we believe will cover the large majority of users with no further configuration needed.\n I take exception to throwing logic error type exceptions as is unfortunately the case throughout the C++ standard library. What actual value to the programmer do they deliver? If used as control flow, then there are always much superior alternatives. If used for spotting a true logic error, then you just detected bad logic by the programmer or memory corruption, in which case this situation is not recoverable and you really ought to fatal exit. And then consider all the many negatives: (i) you force programmers to have to deal with exception safety, substantially increasing development costs for virtually no gain to the programmer (ii) you force the compiler to have to deal with potential exception throws, slowing down compile times and generating bloatier code just in case something which should almost never happen might occur (iii) analysis tooling can\u0026rsquo;t tell between control flow and logic error type exception throws, and thus cannot spot nor warn you when you didn\u0026rsquo;t mean them to occur.On table-based exception handling implementations, throwing an exception is assumed to be extremely rare. This allows zero performance impact on the non-throwing code paths, but at a very severe performance cost to any time that you throw and catch an exception. This is unavoidable in any table-based exception handling implementation. A throw...catch cycle is always at least thousands of times more expensive than a return statement, and always must be so, even when the throw...catch is inlined on current compiler technology. [return]   "
 },
@@ -450,7 +450,7 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/default-actions/void/",
 	"title": "void",
-	"tags": [],
+	"tags": ["terminate"],
 	"description": "",
 	"content": "What about result\u0026lt;udt, void\u0026gt;? This is absolutely legal, it means that no error state is returned when there was an error. This can help with clarifying in code the use of std::optional\u0026lt;udt\u0026gt; as Optional more logically means value-or-nothing, not necessarily value-or-error.\nIn contrast, result\u0026lt;udt, void\u0026gt; unambiguously does mean success-or-failure, just with an unspecified cause of failure.\nOutcome\u0026rsquo;s default action for EC = void is to call std::terminate:\nstruct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; result\u0026lt;udt, void\u0026gt; res(in_place_type\u0026lt;void\u0026gt;); // What happens here? What exception type is thrown?  try { std::cout \u0026lt;\u0026lt; *res.value() \u0026lt;\u0026lt; std::endl; } catch(const std::exception \u0026amp;e) { std::cerr \u0026lt;\u0026lt; \u0026#34;Exception thrown was \u0026#34; \u0026lt;\u0026lt; e.what() \u0026lt;\u0026lt; std::endl; }  View this code on Github Running this yields:\nned@lyta:~/outcome/build_posix$ bin/outcome-snippets_void_terminate terminate called without an active exception Aborted (core dumped) ned@lyta:~/outcome/build_posix$  "
 },
@@ -492,9 +492,9 @@
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/default-actions/unchecked/",
 	"title": "unchecked&lt;T, E&gt; and checked&lt;T, E&gt;",
-	"tags": [],
+	"tags": ["checked", "unchecked", "bad_result_access", "expected", "assume_value", "assume_error"],
 	"description": "",
-	"content": "We have now covered all of the default actions in Outcome whereby result\u0026lt;T, EC\u0026gt; and outcome\u0026lt;T, EC, EP|P\u0026gt; implement various default actions upon no-value observation according to traits defined upon the EC and EP|P chosen.\nIf you don\u0026rsquo;t want all this clever automatic detection of traits, and just want a plain, always-undefined-behaviour-on-no-value-observation success-or-failure type, we provide a simplified template alias to result\u0026lt;T, E\u0026gt; called unchecked\u0026lt;T, E\u0026gt;. It literally does no run time checking whatsoever, no-value observation is always undefined behaviour.\nIf instead you would prefer a plain, always-throwing-logic-error-on-no-value-observation type, we also provide another simplified template alias to result\u0026lt;T, E\u0026gt; called checked\u0026lt;T, E\u0026gt;. Similar to .value() in the WG21 Expected proposal or Optional, no-value observation throws these logic error type exceptions:\n No-value .value() observation throws bad_result_access_with\u0026lt;E\u0026gt;. No-error .error() observation throws bad_result_access.  If you need run time unchecked observers, .assume_value() and .assume_error() are always unchecked at run time.\nFinally, if you would like to implement your own default actions, you will find the tutorial section on Policies useful.\n"
+	"content": "We have now covered all of the default actions in Outcome whereby result\u0026lt;T, EC\u0026gt; and outcome\u0026lt;T, EC, EP\u0026gt; implement various default actions upon no-value observation according to traits defined upon the EC and EP chosen.\nIf you don\u0026rsquo;t want all this clever automatic detection of traits, and just want a plain, always-undefined-behaviour-on-no-value-observation success-or-failure type, we provide a simplified template alias to result\u0026lt;T, E\u0026gt; called  unchecked\u0026lt;T, E\u0026gt; . It literally does no run time checking whatsoever, no-value observation is always undefined behaviour.\nIf instead you would prefer a plain, always-throwing-logic-error-on-no-value-observation type, we also provide another simplified template alias to result\u0026lt;T, E\u0026gt; called  checked\u0026lt;T, E\u0026gt; . Similar to .value() in the WG21 Expected proposal or Optional, no-value observation throws these logic error type exceptions:\n No-value .value() observation throws  bad_result_access_with\u0026lt;E\u0026gt; . No-error .error() observation throws  bad_result_access .  If you need run time unchecked observers, .assume_value() and .assume_error() are always unchecked at run time.\nFinally, if you would like to implement your own default actions, you will find the tutorial section on Policies useful.\n"
 },
 {
 	"uri": "https://ned14.github.io/outcome/reference/bad_access/",
@@ -574,8 +574,50 @@
 	"content": " github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }  This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation. Standardese - the API reference generator  Special thanks for Outcome v2 For a second time, Charley Bay stepped up as review manager. Given how much work it was for the v1 review, I can only say thank you.\nAndrzej Krzemienski went far beyond the call of duty in the development of Outcome v2. He wrote the front page, and the start of the tutorial. He thus set the tone, pacing, style and form of the tutorial which I merely continued for the rest of the tutorial. He also volunteered considerable amounts of his time as as primary peer reviewer for the v2 design and implementation, asking many very valuable \u0026ldquo;stupid questions\u0026rdquo; at least one of which caused a major rethink and refactor. If Outcome v2 passes its second peer review, it\u0026rsquo;s because of Andrzej. Thank you.\nJonathan Müller invested countless hours in his doxygen replacement tool Standardese which Outcome uses to generate the reference API docs, and a not insignificant number of those went on fixing issues for Outcome. Thank you.\nSpecial thanks for Outcome v1 To Paul Bristow who proposed the name \u0026ldquo;Outcome\u0026rdquo; for the library after a very extended period of name bikeshedding on boost-dev. I had been minded to call the library \u0026ldquo;Boost.Donkey\u0026rdquo; just to shut everyone up because the name bike shedding was getting ridiculous. But Outcome is a lot nicer, so thank you Paul.\nMy heartfelt thanks to Charley Bay for acting as review manager for Outcome in May 2017. It is becoming ever harder to find a Boost review manager, so thank you! My thanks also to the CppCast team Rob Irving and Jason Turner for so quickly getting me on to CppCast to discuss expected\u0026lt;T, E\u0026gt; during the Outcome peer review to help publicise the review.\nMore general thanks are due to those on boost-dev, Reddit and SG14 for extensive and often very detailed feedback on the library pretty much from its beginning. You are all too numerous to remember, but certainly Tongari and Andrzej Krzemienski come to mind as having engaged in particularly long discussion threads with tons of useful feedback which clarified my thinking. Andrzej also went through the documentation with a fine toothed comb before the review, finding many small errata and confusing wording.\nFinally, my thanks to Vicente for driving Expected from its beginnings to hopefully standardisation before 2020. It\u0026rsquo;s many years of work getting something standardised, even more years than getting a library into Boost which as you can see from the history above took about three years.\n"
 },
 {
+	"uri": "https://ned14.github.io/outcome/tags/assume_error/",
+	"title": "Assume_error",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/assume_value/",
+	"title": "Assume_value",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/bad_result_access/",
+	"title": "Bad_result_access",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
 	"uri": "https://ned14.github.io/outcome/categories/",
 	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/checked/",
+	"title": "Checked",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/default-actions/",
+	"title": "Default Actions",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/dual-api/",
+	"title": "Dual Api",
 	"tags": [],
 	"description": "",
 	"content": ""
@@ -595,11 +637,32 @@
 	"content": ""
 },
 {
+	"uri": "https://ned14.github.io/outcome/tags/expected/",
+	"title": "Expected",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/has_error_code/",
+	"title": "Has_error_code",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
 	"uri": "https://ned14.github.io/outcome/",
 	"title": "Home",
 	"tags": [],
 	"description": "",
 	"content": " Outcome 2.0 library Outcome is a C++14 library for reporting and handling function failures. It can be used as a substitute for, or a complement to, the exception handling mechanism.\nOne use case is for contexts where using C++ exception handling is unsuitable for different reasons:\n The high relative cost of throwing and catching a C++ exception. Making some or all control paths explicitly detailed to aid code correctness auditing, as opposed to having hidden control paths caused by exceptions potentially thrown from any place. Company policy to compile with exceptions disabled. Maintaining a code base that was never designed with exception-safety in mind. Parts of the programs/frameworks that themselves implement exception handling and cannot afford to use exceptions, like propagating failure reports across threads, tasks, fibers\u0026hellip;  Another use case is to replace \u0026lsquo;dual\u0026rsquo; interfaces, like ones in Boost.Filesystem, where almost every function comes in two overloads, one throwing an exception, the other populating an error_code output argument. With Outcome, you can have only one function returning a composite return type, and it is through using this return value that you decide whether to handle failures locally, or to launch stack unwinding.\nOutcome can also be used to plug components that potentially throw exceptions into parts of the program that are not exception-safe whilst retaining all information from the thrown exception objects.\nSample usage Function that may need to report failure needs to reflect that in its return type:\nauto read_int_from_file(string_view path) noexcept -\u0026gt; outcome::result\u0026lt;int\u0026gt;;  View this code on Github Function read_int_from_file will either return an int or information about the reason for failure.\nIt is possible to inspect the returned state manually:\nif (auto rslt = read_int_from_file(\u0026#34;config.cfg\u0026#34;)) use_int(rslt.value()); else report_error(rslt.error()); // returns std::error_code  View this code on Github But most of the time you would inspect the object indirectly through a dedicated control statement. An implementation of read_int_from_file that has to (1) open the file, (2) read raw data to a buffer, and (3) interpret it as int, using the following three functions\nauto open_file(string_view path) noexcept -\u0026gt; outcome::result\u0026lt;Handle\u0026gt;; auto read_data(Handle\u0026amp; h) noexcept -\u0026gt; outcome::result\u0026lt;Buffer\u0026gt;; auto parse(const Buffer\u0026amp; b) noexcept -\u0026gt; outcome::result\u0026lt;int\u0026gt;;  View this code on Github will look like this:\nauto read_int_from_file(string_view path) noexcept -\u0026gt; outcome::result\u0026lt;int\u0026gt; { OUTCOME_TRY(handle, open_file(path)); // decltype(handle) == Handle  OUTCOME_TRY(buffer, read_data(handle)); // decltype(buffer) == Buffer  OUTCOME_TRY(val, parse(buffer)); // decltype(val) == int  return val; }  View this code on Github Each occurance of OUTCOME_TRY is a control statement. If the returned result\u0026lt;T\u0026gt; contains an error information, the function is immediately returned with result\u0026lt;U\u0026gt; containing the same error information; otherwise object of type T is move-constructed on the stack.\nThis is the v2 Outcome designed in response to feedback from a Boost peer review held in May 2017. This library is expected to pass a second Boost peer review in January 2018.\n "
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/make_error_code/",
+	"title": "Make_error_code",
+	"tags": [],
+	"description": "",
+	"content": ""
 },
 {
 	"uri": "https://ned14.github.io/outcome/tags/namespace/",
@@ -623,6 +686,13 @@
 	"content": ""
 },
 {
+	"uri": "https://ned14.github.io/outcome/tags/payload/",
+	"title": "Payload",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
 	"uri": "https://ned14.github.io/outcome/tags/result/",
 	"title": "Result",
 	"tags": [],
@@ -637,8 +707,29 @@
 	"content": ""
 },
 {
+	"uri": "https://ned14.github.io/outcome/tags/terminate/",
+	"title": "Terminate",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
 	"uri": "https://ned14.github.io/outcome/tags/try/",
 	"title": "Try",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/unchecked/",
+	"title": "Unchecked",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://ned14.github.io/outcome/tags/undefined-behaviour/",
+	"title": "Undefined Behaviour",
 	"tags": [],
 	"description": "",
 	"content": ""

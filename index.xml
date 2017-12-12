@@ -619,8 +619,8 @@ struct terminate : detail::base { template &amp;lt;class Impl&amp;gt; static con
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/tutorial/default-actions/unchecked/</guid>
-      <description>We have now covered all of the default actions in Outcome whereby result&amp;lt;T, EC&amp;gt; and outcome&amp;lt;T, EC, EP|P&amp;gt; implement various default actions upon no-value observation according to traits defined upon the EC and EP|P chosen.
-If you don&amp;rsquo;t want all this clever automatic detection of traits, and just want a plain, always-undefined-behaviour-on-no-value-observation success-or-failure type, we provide a simplified template alias to result&amp;lt;T, E&amp;gt; called unchecked&amp;lt;T, E&amp;gt;. It literally does no run time checking whatsoever, no-value observation is always undefined behaviour.</description>
+      <description>We have now covered all of the default actions in Outcome whereby result&amp;lt;T, EC&amp;gt; and outcome&amp;lt;T, EC, EP&amp;gt; implement various default actions upon no-value observation according to traits defined upon the EC and EP chosen.
+If you don&amp;rsquo;t want all this clever automatic detection of traits, and just want a plain, always-undefined-behaviour-on-no-value-observation success-or-failure type, we provide a simplified template alias to result&amp;lt;T, E&amp;gt; called  unchecked&amp;lt;T, E&amp;gt; . It literally does no run time checking whatsoever, no-value observation is always undefined behaviour.</description>
     </item>
     
     <item>
