@@ -596,7 +596,7 @@ the successfully constructed object, or the cause of any failure to
 construct the object.</p>
 
 <p>Finally, as a phase 3,
-some simple metaprogramming will implement a <code>construct&lt;T&gt;{}(Args...)</code>
+some simple metaprogramming will implement a <code>construct&lt;T&gt;{Args...}()</code>
 free function which will construct any object <code>T</code> by calling its
 static initialisation function with <code>Args...</code> and returning the
 <code>result</code> returned. This isn&rsquo;t as nice as calling <code>T(Args...)</code> directly,

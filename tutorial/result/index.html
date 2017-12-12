@@ -566,6 +566,16 @@
           </div>
         
         
+          <div id="tags">
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/result">result</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/try">try</a>
+            
+              <a class="label label-default" href="https://ned14.github.io/outcome//tags/namespace">namespace</a>
+            
+          </div>
+        
         <div id="body-inner">
           
             <h1>result&lt;T, EC&gt;</h1>
@@ -602,7 +612,8 @@ outcome::result&lt;<span class="s3ee">int</span>&gt; convert(<span class="s3e8">
 </div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_result.cpp#L12" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
-<p>Class template <code>result&lt;T, EC&gt;</code> has two template parameters. The first (<code>T</code>) represents the type of the object
+<p>Class template <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> result&lt;T, EC&gt;</a>
+ has two template parameters. The first (<code>T</code>) represents the type of the object
 returned from the function upon success; the second (<code>EC</code>) is the type of object containing information about the reason
 for failure when the function fails. A <code>result&lt;T, EC&gt;</code> object either stores a <code>T</code> or an <code>EC</code> at any given moment,
 and is therefore conceptually similar to <code>variant&lt;T, EC&gt;</code>. <code>EC</code> is defaulted to <code>std::error_code</code>.

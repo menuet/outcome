@@ -575,8 +575,8 @@ function:</p>
 
 <ol>
 <li><code>make_error_code(EC)</code> returning a <code>std::error_code</code>.</li>
-<li><code>make_error_code(std::get&lt;0&gt;(EC))</code> returning a <code>std::error_code</code> (i.e. EC might be
-<code>std::pair&lt;std::error_code, U&gt;</code> or <code>std::tuple&lt;std::error_code, ...&gt;</code>).</li>
+<li><code>make_error_code(get&lt;0&gt;(EC))</code> returning a <code>std::error_code</code> (i.e. EC might be
+<code>pair&lt;std::error_code, U&gt;</code> or <code>tuple&lt;std::error_code, ...&gt;</code>).</li>
 </ol>
 
 <p>&hellip; or if <code>EC</code> is implicitly convertible into a <code>std::error_code</code>.</p>

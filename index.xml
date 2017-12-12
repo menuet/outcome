@@ -358,7 +358,7 @@ namespace app { // Specialise an exception type for httplib errors  struct httpl
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/tutorial/result/try/</guid>
-      <description>In the implementation of function print_half we have seen the usage of the macro OUTCOME_TRY:
+      <description>In the implementation of function print_half we have seen the usage of the macro  OUTCOME_TRY :
 OUTCOME_TRY (i, BigInt::fromString(text));  This control statement is roughly equivalent to:
 auto&amp;amp;&amp;amp; __result = BigInt::fromString(text); if (!__result) return __result.as_failure(); auto&amp;amp;&amp;amp; i = __result.value();  Where __result is a unique name.
 Additionally, in GCC and Clang which provide an extension to C++ known as statement expressions it is possible to use an alternative macro: OUTCOME_TRYX, which is an expression.</description>

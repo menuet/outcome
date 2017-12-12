@@ -336,11 +336,51 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/error/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/exception/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/</loc>
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/namespace/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/nodiscard/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/outcome/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/result/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/try/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/value/</loc>
     <priority>0</priority>
   </url>
   
