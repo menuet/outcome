@@ -569,8 +569,9 @@
 <p>This is the final section of the tutorial, and it is unavoidably quite lengthy.</p>
 
 <p>One thing which Outcome solves &ndash; which alternatives do not &ndash; is how to
-non-intrusively tie together multiple third party libraries, each using
-Outcome with custom incommensurate <code>E</code> types, or indeed arbitrary return
+<strong>non-intrusively</strong> tie together multiple third party libraries, each using
+Outcome &ndash; or some other <code>T|E</code> implementatation like <code>std::expected&lt;T, E&gt;</code>
+&ndash; with custom incommensurate <code>E</code> types, or indeed arbitrary return
 types which are &ldquo;split&rdquo; <code>T|E</code> return types. Solving
 this well is the <em>coup de grâce</em> of Outcome against alternative approaches
 to this problem domain,
@@ -582,7 +583,7 @@ developer when <code>T|E</code> return type based code proliferates at scale,
 where dozens of libraries may be using completely incompatible <code>T|E</code> return types.</p>
 
 <p>Secondly we shall introduce the <code>ValueOrError</code> concept support in Outcome
-which implements a subset of the proposed <a href="https://wg21.link/P0786"><code>ValueOrError</code>
+which implements a subset of the proposed <a href="https://wg21.link/P0786">WG21 <code>ValueOrError</code>
 concept framework</a>.</p>
 
 <p>Finally, we shall then step through a worked example which mocks up a realistic

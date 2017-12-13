@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>Built-in policies :: Outcome documentation</title>
+    <title>Policies :: Outcome documentation</title>
     <link rel="shortcut icon" href="/outcome/images/favicon.png" type="image/x-icon" />
     <link href="/outcome/css/nucleus.css" rel="stylesheet">
     <link href="/outcome/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <link href="/outcome/css/local.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/outcome/tutorial/policies/builtin/">
+  <body class="" data-url="/outcome/tags/policies/">
     <nav id="sidebar" class=""><div class="highlightable">
   <div id="header-wrapper">
     <div id="header"> 
@@ -73,10 +73,9 @@
         <span>Decision matrix</span>
       </a>
     </li>
-    <li data-nav-id="/outcome/tutorial/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/" class="dd-item">
       <a href="/outcome/tutorial/">
-        <span>Tutorial</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Tutorial</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
     <li data-nav-id="/outcome/tutorial/result/" class="dd-item">
@@ -251,10 +250,9 @@
     </li>
         </ul>
     </li>
-    <li data-nav-id="/outcome/tutorial/policies/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/policies/" class="dd-item">
       <a href="/outcome/tutorial/policies/">
-        <span>Policies</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Policies</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
       <li data-nav-id="/outcome/tutorial/policies/anatomy/" class="dd-item">
@@ -267,7 +265,7 @@
           <span>Casting workaround</span>
         </a>
     </li>
-      <li data-nav-id="/outcome/tutorial/policies/builtin/" class="dd-item active">
+      <li data-nav-id="/outcome/tutorial/policies/builtin/" class="dd-item">
         <a href="/outcome/tutorial/policies/builtin/">
           <span>Built-in policies</span>
         </a>
@@ -515,16 +513,7 @@
         <div class="padding highlightable">
         
           <div id="top-bar">
-            
-              
-              
-              
-            <div id="top-github-link">
-              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/policies/builtin.md" target="blank">
-                <i class="fa fa-code-fork"></i>
-                Edit page
-              </a>
-            </div><div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+            <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                 <span id="sidebar-toggle-span">
                   <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
                     <i class="fa fa-bars"></i>
@@ -534,22 +523,7 @@
                 <span class="links">
                 
 
-
-
-
-
-
-
-
-
-
- <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/policies/'>Policies</a> > Built-in policies
-
- 
-
- 
-
- 
+ Policies
 
    
                 </span>
@@ -565,77 +539,43 @@
         
         <div id="body-inner">
           
-            <h1>Built-in policies</h1>
+            <h1>Policies</h1>
           
 
 
 
 
-<p>These are the precanned policies built into Outcome:</p>
-
-<dl>
-<dt><a href="https://ned14.github.io/outcome/reference/policies/all_narrow" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> all_narrow</a>
-</dt>
-<dd><p>Wide checks call their narrow check cousins only. Narrow checks
-call a function called <code>_ub()</code> which:</p>
-
-<ol>
-<li>Is marked with any compiler-specific markup to say it will never return,
-which should cause the compiler&rsquo;s optimiser to generate perfectly minimum code.</li>
-<li>Calls <code>__builtin_unreachable()</code> on compilers which support that intrinsic
-to further encourage perfectly minimum code (and to trigger the undefined
-behaviour sanitiser if execution ever reaches such a code path).</li>
-</ol></dd>
-<dt><a href="https://ned14.github.io/outcome/reference/policies/outcome_error_code_throw_as_system_error" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> error_code_throw_as_system_error&lt;T, EC, EP&gt;</a>
-</dt>
-<dd><p>Policy interpreting either <code>EC</code> as meeting the <code>std::error_code</code> contract,
-and <code>EP</code> as optionally meeting the <code>std::exception_ptr</code> contract. If
-there is no value and <code>EP</code> is set to an exception ptr, <code>.value()</code> will
-<code>std::rethrow_exception(exception)</code> or <code>std::rethrow_exception(make_exception_ptr(exception))</code>. If
-there is no value and <code>EP</code> is not set to an exception ptr, <code>.value()</code> will <code>OUTCOME_THROW_EXCEPTION(std::system_error(error))</code>
-or <code>OUTCOME_THROW_EXCEPTION(std::system_error(make_error_code(error)))</code> if
-<code>EC</code> is implicitly convertible to a <code>std::error_code</code>, or is an error code enum
-or error condition enum, otherwise it will invoke the ADL discovered free function
-<code>throw_as_system_error_with_payload(error)</code>.
-<code>.error()</code> will <code>OUTCOME_THROW_EXCEPTION(bad_result_access(&quot;no error&quot;))</code>
-or <code>OUTCOME_THROW_EXCEPTION(bad_outcome_access(&quot;no error&quot;))</code>
-if there is no error.
-<code>.exception()</code> will<code>OUTCOME_THROW_EXCEPTION(bad_outcome_access(&quot;no exception&quot;))</code>
-if there is no exception.
-The narrow checks are the same as for the <code>all_narrow</code> policy.</p></dd>
-<dt><a href="https://ned14.github.io/outcome/reference/policies/outcome_exception_ptr_rethrow" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> exception_ptr_rethrow&lt;T, EC, EP&gt;</a>
-</dt>
-<dd><p>Policy interpreting either or both <code>EC</code> and <code>EP</code> as meeting the <code>std::exception_ptr</code> contract. If
-there is no value, <code>.value()</code>
-will <code>std::rethrow_exception(error)</code> or <code>std::rethrow_exception(make_exception_ptr(error))</code>
-if <code>EP</code> is <code>void</code>, else <code>std::rethrow_exception(exception)</code> or <code>std::rethrow_exception(make_exception_ptr(exception))</code>
-or <code>std::rethrow_exception(error)</code> or <code>std::rethrow_exception(make_exception_ptr(error))</code> as appropriate.
-<code>.error()</code> will <code>OUTCOME_THROW_EXCEPTION(bad_result_access(&quot;no error&quot;))</code>
-or <code>OUTCOME_THROW_EXCEPTION(bad_outcome_access(&quot;no error&quot;))</code>
-if there is no error.
-<code>.exception()</code> will<code>OUTCOME_THROW_EXCEPTION(bad_outcome_access(&quot;no exception&quot;))</code>
-if there is no exception.
-The narrow checks are the same as for the <code>all_narrow</code> policy.</p></dd>
-<dt><a href="https://ned14.github.io/outcome/reference/policies/terminate" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> terminate</a>
-</dt>
-<dd><p>Wide checks call <code>std::terminate</code> if they fail.
-The narrow checks are the same as for the <code>all_narrow</code> policy.</p></dd>
-<dt><a href="https://ned14.github.io/outcome/reference/policies/throw_bad_result_access" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> throw_bad_result_access&lt;EC&gt;</a>
-</dt>
-<dd><p>Policy implementing throws of <code>bad_result_access_with&lt;EC&gt;</code>. <code>.value()</code>
-will <code>OUTCOME_THROW_EXCEPTION(bad_result_access_with&lt;EC&gt;(error))</code>
-if there is no value, <code>.error()</code> will <code>OUTCOME_THROW_EXCEPTION(bad_result_access(&quot;no error&quot;))</code>
-if there is no error.
-The narrow checks are the same as for the <code>all_narrow</code> policy.
-This policy can be used with <code>outcome</code>, but any <code>EP</code> state is ignored
-and will appear to the policy as if neither value nor error is set,
-so <code>.value()</code> in this situation would <code>OUTCOME_THROW_EXCEPTION(bad_result_access(&quot;no value&quot;))</code>.</p></dd>
-</dl>
 
 
 <footer class=" footline" >
 	
 </footer>
+
+
+
+	
+
+	<div class="extra-pagination inner">
+	<nav class="pagination" role="navigation">
+	
+	<span class="page-number">Page 1 of 1</span>
+	
+</nav>
+
+	</div>
+
+	
+	   
+	
+
+	<div style="margin-bottom:2rem"></div>
+
+	<nav class="pagination" role="navigation">
+	
+	<span class="page-number">Page 1 of 1</span>
+	
+</nav>
+
 
 
 
@@ -650,8 +590,7 @@ so <code>.value()</code> in this situation would <code>OUTCOME_THROW_EXCEPTION(b
     
 
     <div id="navigation">
-        <a class="nav nav-prev" href="/outcome/tutorial/policies/cast/" title="Casting workaround"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="/outcome/tutorial/c-api/" title="Using result&lt;T&gt; from C code" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-next" href="/outcome/requirements/" title="Prerequisites" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>
@@ -676,4 +615,3 @@ so <code>.value()</code> in this situation would <code>OUTCOME_THROW_EXCEPTION(b
 
   </body>
 </html>
-

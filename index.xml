@@ -161,7 +161,7 @@ class file_handle { int _fd{-1}; // file descriptor  struct stat _stat { 0 }; //
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/tutorial/hooks/adl_bridging/</guid>
-      <description>In a previous section, we used the failure_info type to create the ADL bridge into the namespace where the ADL discovered throw_as_system_error_with_payload() function was to be found.
+      <description>In a previous section, we used the failure_info type to create the ADL bridge into the namespace where the ADL discovered  throw_as_system_error_with_payload() function was to be found.
 Here we do the same, but more directly by creating a thin clone of std::error_code into the local namespace. This ensures that this namespace will be searched by the compiler when discovering the event hooks.
 namespace error_code_extended { // Use the error_code type as the ADL bridge for the hooks by creating a type here  // It can be any type that your localised result uses, including the value type but  // by localising the error code type here you prevent nasty surprises later when the  // value type you use doesn&amp;#39;t trigger the ADL bridge.</description>
     </item>
@@ -299,7 +299,7 @@ Seeing as we are replacing the throwing overload of copy_file() in the Filesyste
       
       <guid>https://ned14.github.io/outcome/tutorial/policies/builtin/</guid>
       <description>These are the precanned policies built into Outcome:
- all_narrow Wide checks call their narrow check cousins only. Narrow checks call a function called _ub() which:
+  all_narrow  Wide checks call their narrow check cousins only. Narrow checks call a function called _ub() which:
  Is marked with any compiler-specific markup to say it will never return, which should cause the compiler&amp;rsquo;s optimiser to generate perfectly minimum code. Calls __builtin_unreachable() on compilers which support that intrinsic to further encourage perfectly minimum code (and to trigger the undefined behaviour sanitiser if execution ever reaches such a code path).</description>
     </item>
     

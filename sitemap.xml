@@ -331,12 +331,22 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/adl-bridging/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tags/assume_error/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ned14.github.io/outcome/tags/assume_value/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/backtrace/</loc>
     <priority>0</priority>
   </url>
   
@@ -352,6 +362,11 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tags/checked/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/constructors/</loc>
     <priority>0</priority>
   </url>
   
@@ -390,6 +405,11 @@
   </url>
   
   <url>
+    <loc>https://ned14.github.io/outcome/tags/hooks/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ned14.github.io/outcome/tags/make_error_code/</loc>
     <priority>0</priority>
   </url>
@@ -411,6 +431,11 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tags/payload/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/policies/</loc>
     <priority>0</priority>
   </url>
   
@@ -446,6 +471,11 @@
   
   <url>
     <loc>https://ned14.github.io/outcome/tags/value/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ned14.github.io/outcome/tags/value-or-error/</loc>
     <priority>0</priority>
   </url>
   
