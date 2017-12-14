@@ -578,7 +578,7 @@
     </header>
     <section class="post-excerpt">
         <p>An Outcome based solution to the dual overload problem is straightforward:
-namespace filesystem2{// Error code + paths related to a failure. Also causes ADL discovery to check this namespace. struct failure_info{std::error_code ec;path path1, path2;};// Tell Outcome that failure_info is to be treated as a std::error_code inline const std::error_code &amp;make_error_code(const failure_info &amp;fi) { return fi.ec; }// Localise an outcome implementation specific to this namespace. <a class="read-more" href="/outcome/tutorial/payload/copy_file2/">&raquo;</a></p>
+namespace filesystem2 { // Error code + paths related to a failure. Also causes ADL discovery to check this namespace.  struct failure_info { std::error_code ec; path path1, path2; }; // Tell Outcome that failure_info is to be treated as a std::error_code  inline const std::error_code &amp;make_error_code(const failure_info &amp;fi) { return fi.ec; } // Localise an outcome implementation specific to this namespace. <a class="read-more" href="/outcome/tutorial/payload/copy_file2/">&raquo;</a></p>
     </section>
     <footer class=" footline" >
          
