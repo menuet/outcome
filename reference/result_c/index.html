@@ -7,7 +7,7 @@
     <meta name="description" content="">
 
 
-    <title>The Filesystem TS :: Outcome documentation</title>
+    <title>C API :: Outcome documentation</title>
     <link rel="shortcut icon" href="/outcome/images/favicon.png" type="image/x-icon" />
     <link href="/outcome/css/nucleus.css" rel="stylesheet">
     <link href="/outcome/css/font-awesome.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <link href="/outcome/css/local.css" rel="stylesheet">
 
   </head>
-  <body class="" data-url="/outcome/tutorial/payload/copy_file/">
+  <body class="" data-url="/outcome/reference/result_c/">
     <nav id="sidebar" class=""><div class="highlightable">
   <div id="header-wrapper">
     <div id="header"> 
@@ -73,10 +73,9 @@
         <span>Decision matrix</span>
       </a>
     </li>
-    <li data-nav-id="/outcome/tutorial/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/" class="dd-item">
       <a href="/outcome/tutorial/">
-        <span>Tutorial</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Tutorial</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
     <li data-nav-id="/outcome/tutorial/result/" class="dd-item">
@@ -108,13 +107,12 @@
     </li>
         </ul>
     </li>
-    <li data-nav-id="/outcome/tutorial/payload/" class="dd-item parent">
+    <li data-nav-id="/outcome/tutorial/payload/" class="dd-item">
       <a href="/outcome/tutorial/payload/">
-        <span>Custom payloads</span>
-            <i class="fa fa-angle-down fa-lg category-icon"></i>
+        <span>Custom payloads</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
-      <li data-nav-id="/outcome/tutorial/payload/copy_file/" class="dd-item active">
+      <li data-nav-id="/outcome/tutorial/payload/copy_file/" class="dd-item">
         <a href="/outcome/tutorial/payload/copy_file/">
           <span>The Filesystem TS</span>
         </a>
@@ -279,26 +277,6 @@
         <span>Using result&lt;T&gt; from C code</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
-      <li data-nav-id="/outcome/tutorial/c-api/limitations/" class="dd-item">
-        <a href="/outcome/tutorial/c-api/limitations/">
-          <span>Limitations</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/c-api/example/" class="dd-item">
-        <a href="/outcome/tutorial/c-api/example/">
-          <span>Example C&#43;&#43; function</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/c-api/example2/" class="dd-item">
-        <a href="/outcome/tutorial/c-api/example2/">
-          <span>Calling it from C</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/c-api/variations/" class="dd-item">
-        <a href="/outcome/tutorial/c-api/variations/">
-          <span>Variations</span>
-        </a>
-    </li>
         </ul>
     </li>
     <li data-nav-id="/outcome/tutorial/interop/" class="dd-item">
@@ -375,9 +353,10 @@
     </li>
         </ul>
     </li>
-    <li data-nav-id="/outcome/reference/" class="dd-item">
+    <li data-nav-id="/outcome/reference/" class="dd-item parent">
       <a href="/outcome/reference/">
-        <span>API reference</span><i class="fa fa-angle-right fa-lg category-icon"></i>
+        <span>API reference</span>
+            <i class="fa fa-angle-down fa-lg category-icon"></i>
       </a>
         <ul>
       <li data-nav-id="/outcome/reference/outcome/" class="dd-item">
@@ -420,7 +399,7 @@
           <span>iostream support</span>
         </a>
     </li>
-      <li data-nav-id="/outcome/reference/result_c/" class="dd-item">
+      <li data-nav-id="/outcome/reference/result_c/" class="dd-item active">
         <a href="/outcome/reference/result_c/">
           <span>C API</span>
         </a>
@@ -525,7 +504,7 @@
               
               
             <div id="top-github-link">
-              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/tutorial/payload/copy_file.md" target="blank">
+              <a class="github-link" href="https://github.com/ned14/outcome/edit/develop/doc/src/content/reference/result_c.md" target="blank">
                 <i class="fa fa-code-fork"></i>
                 Edit page
               </a>
@@ -545,12 +524,7 @@
 
 
 
-
-
-
- <a href='/outcome/'>Home</a> > <a href='/outcome/tutorial/'>Tutorial</a> > <a href='/outcome/tutorial/payload/'>Custom payloads</a> > The Filesystem TS
-
- 
+ <a href='/outcome/'>Home</a> > <a href='/outcome/reference/'>API reference</a> > C API
 
  
 
@@ -561,65 +535,178 @@
             </div>
             <div class="progress">
     <div class="wrapper">
-
+<nav id="TableOfContents">
+<ul>
+<li><a href="#header-file-result-c">Header file <code>result_c</code></a>
+<ul>
+<li><a href="#struct-cxx-error-code">Struct <code>cxx_error_code</code></a></li>
+<li><a href="#macro-cxx-declare-result">Macro <code>CXX_DECLARE_RESULT</code></a></li>
+<li><a href="#macro-cxx-declare-result-ec">Macro <code>CXX_DECLARE_RESULT_EC</code></a></li>
+<li><a href="#macro-cxx-result">Macro <code>CXX_RESULT</code></a></li>
+<li><a href="#macro-cxx-result-ec">Macro <code>CXX_RESULT_EC</code></a></li>
+<li><a href="#macro-cxx-result-has-value">Macro <code>CXX_RESULT_HAS_VALUE</code></a></li>
+<li><a href="#macro-cxx-result-has-error">Macro <code>CXX_RESULT_HAS_ERROR</code></a></li>
+<li><a href="#macro-cxx-result-error-is-errno">Macro <code>CXX_RESULT_ERROR_IS_ERRNO</code></a></li>
+<li><a href="#macro-cxx-result-error">Macro <code>CXX_RESULT_ERROR</code></a></li>
+<li><a href="#macro-cxx-result-set-errno">Macro <code>CXX_RESULT_SET_ERRNO</code></a></li>
+</ul></li>
+</ul>
+</nav>
     </div>
 </div>
 
           </div>
         
         
-          <div id="tags">
-            
-              <a class="label label-default" href="https://ned14.github.io/outcome//tags/dual-api">dual-api</a>
-            
-          </div>
-        
         <div id="body-inner">
           
-            <h1>The Filesystem TS</h1>
+            <h1>C API</h1>
           
 
 
 
 
-<p>Something which has long annoyed the purists in the C++ leadership is the problem of dual
-overloads in <code>error_code</code> capable standard library APIs.</p>
 
-<p>Consider the
-<a href="http://en.cppreference.com/w/cpp/filesystem/copy_file"><code>copy_file()</code></a>
-API from the Filesystem TS:</p>
 
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> filesystem
-{
-  <span class="s1770">/*! Copies the file at path `from` to path `to`.
-</span><span class="s1770">  \returns True if file was successfully copied.
-</span><span class="s1770">  \throws On failure throws `filesystem_error(ec.message(), from, to, ec)` with
-</span><span class="s1770">  `ec` being the error code reported by the operating system.
-</span><span class="s1770">  */</span>
-  <span class="s3ee">bool</span> copy_file(<span class="s3e8">const</span> path &amp;from, <span class="s3e8">const</span> path &amp;to);
+<h1 id="header-file-result-c">Header file <code>result_c</code></h1>
 
-  <span class="s1770">/*! Copies the file at path `from` to path `to`.
-</span><span class="s1770">  \returns True if file was successfully copied. If false, `ec` is written with
-</span><span class="s1770">  the error code reported by the operating system.
-</span><span class="s1770">  \throws Never throws.
-</span><span class="s1770">  */</span>
-  <span class="s3ee">bool</span> copy_file(<span class="s3e8">const</span> path &amp;from, <span class="s3e8">const</span> path &amp;to, std::error_code &amp;ec) <span class="s3e8">noexcept</span>;
-}
+<p><a id="standardese-result.h"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <a href="#standardese-cxx_error_code"><span class="typ dec var fun">cxx_error_code</span></a><span class="pun">;</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_DECLARE_RESULT"><span class="typ dec var fun">CXX_DECLARE_RESULT</span></a><span class="pre">(</span><span class="pre">R,RD,S,SD</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_DECLARE_RESULT_EC"><span class="typ dec var fun">CXX_DECLARE_RESULT_EC</span></a><span class="pre">(</span><span class="pre">R,RD</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_RESULT"><span class="typ dec var fun">CXX_RESULT</span></a><span class="pre">(</span><span class="pre">R,S</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_RESULT_EC"><span class="typ dec var fun">CXX_RESULT_EC</span></a><span class="pre">(</span><span class="pre">R</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_RESULT_HAS_VALUE"><span class="typ dec var fun">CXX_RESULT_HAS_VALUE</span></a><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_RESULT_HAS_ERROR"><span class="typ dec var fun">CXX_RESULT_HAS_ERROR</span></a><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_RESULT_ERROR_IS_ERRNO"><span class="typ dec var fun">CXX_RESULT_ERROR_IS_ERRNO</span></a><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_RESULT_ERROR"><span class="typ dec var fun">CXX_RESULT_ERROR</span></a><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+
+<span class="pre">#define</span> <a href="#standardese-CXX_RESULT_SET_ERRNO"><span class="typ dec var fun">CXX_RESULT_SET_ERRNO</span></a><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
 </code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/outcome_payload.cpp#L19" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
+<h2 id="struct-cxx-error-code">Struct <code>cxx_error_code</code></h2>
 
-<p>Before Outcome, the common design pattern was to provide throwing and non-throwing overloads
-of every API. As you can see above, the throwing API throws a <a href="http://en.cppreference.com/w/cpp/filesystem/filesystem_error"><code>filesystem::filesystem_error</code></a>
-exception type which carries additional information, specifically two paths. These paths may
-refer to the files which were the source of any failure. However the non-throwing overload
-does <strong>not</strong> provide this additional information, which can make it more annoying to use the
-non-throwing overload sometimes.</p>
+<p><a id="standardese-cxx_error_code"></a></p>
 
-<p>What if we could replace these two overloads of every API in the Filesystem TS with a single API,
-and additionally have the non-throwing edition return the exact same additional information
-as the throwing edition?</p>
+<pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <span class="typ dec var fun">cxx_error_code</span>
+<span class="pun">{</span>
+    <span class="kwd">int</span> <span class="typ dec var fun">code</span><span class="pun">;</span>
+
+    <span class="kwd">void</span><span class="pun">*</span> <span class="typ dec var fun">category</span><span class="pun">;</span>
+<span class="pun">};</span>
+</code></pre>
+
+<p>A C struct representation of <code>std::error_code</code>.</p>
+
+<hr />
+
+<h2 id="macro-cxx-declare-result">Macro <code>CXX_DECLARE_RESULT</code></h2>
+
+<p><a id="standardese-CXX_DECLARE_RESULT"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_DECLARE_RESULT</span><span class="pre">(</span><span class="pre">R,RD,S,SD</span><span class="pre">)</span>
+</code></pre>
+
+<p>Declares a C struct representation of <code>result&lt;R, S&gt;</code>.</p>
+
+<hr />
+
+<h2 id="macro-cxx-declare-result-ec">Macro <code>CXX_DECLARE_RESULT_EC</code></h2>
+
+<p><a id="standardese-CXX_DECLARE_RESULT_EC"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_DECLARE_RESULT_EC</span><span class="pre">(</span><span class="pre">R,RD</span><span class="pre">)</span>
+</code></pre>
+
+<p>Declares a C struct representation of <code>result&lt;R, std::error_code&gt;</code>.</p>
+
+<hr />
+
+<h2 id="macro-cxx-result">Macro <code>CXX_RESULT</code></h2>
+
+<p><a id="standardese-CXX_RESULT"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT</span><span class="pre">(</span><span class="pre">R,S</span><span class="pre">)</span>
+</code></pre>
+
+<p>A reference to a previously declared struct by <code>CXX_DECLARE_RESULT(R, RD, S, SD)</code></p>
+
+<hr />
+
+<h2 id="macro-cxx-result-ec">Macro <code>CXX_RESULT_EC</code></h2>
+
+<p><a id="standardese-CXX_RESULT_EC"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_EC</span><span class="pre">(</span><span class="pre">R</span><span class="pre">)</span>
+</code></pre>
+
+<p>A reference to a previously declared struct by <code>CXX_DECLARE_RESULT_EC(R, RD)</code></p>
+
+<hr />
+
+<h2 id="macro-cxx-result-has-value">Macro <code>CXX_RESULT_HAS_VALUE</code></h2>
+
+<p><a id="standardese-CXX_RESULT_HAS_VALUE"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_VALUE</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+</code></pre>
+
+<p>True if a result struct has a valid value</p>
+
+<hr />
+
+<h2 id="macro-cxx-result-has-error">Macro <code>CXX_RESULT_HAS_ERROR</code></h2>
+
+<p><a id="standardese-CXX_RESULT_HAS_ERROR"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_ERROR</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+</code></pre>
+
+<p>True if a result struct has a valid error</p>
+
+<hr />
+
+<h2 id="macro-cxx-result-error-is-errno">Macro <code>CXX_RESULT_ERROR_IS_ERRNO</code></h2>
+
+<p><a id="standardese-CXX_RESULT_ERROR_IS_ERRNO"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_ERROR_IS_ERRNO</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+</code></pre>
+
+<p>True if a result struct’s <code>error</code> or <code>code</code> is an <code>errno</code> domain code suitable for setting <code>errno</code> with.</p>
+
+<hr />
+
+<h2 id="macro-cxx-result-error">Macro <code>CXX_RESULT_ERROR</code></h2>
+
+<p><a id="standardese-CXX_RESULT_ERROR"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_ERROR</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+</code></pre>
+
+<p>C11 generic selecting a result struct’s <code>error</code> or <code>code</code> integer member.</p>
+
+<hr />
+
+<h2 id="macro-cxx-result-set-errno">Macro <code>CXX_RESULT_SET_ERRNO</code></h2>
+
+<p><a id="standardese-CXX_RESULT_SET_ERRNO"></a></p>
+
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_SET_ERRNO</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span>
+</code></pre>
+
+<p>Convenience macro setting <code>errno</code> to a result struct’s <code>errno</code> compatible error if present, or <code>EAGAIN</code> if errored but incompatible.</p>
+
+<hr />
 
 
 <footer class=" footline" >
@@ -639,8 +726,8 @@ as the throwing edition?</p>
     
 
     <div id="navigation">
-        <a class="nav nav-prev" href="/outcome/tutorial/payload/" title="Custom payloads"> <i class="fa fa-chevron-left"></i></a>
-        <a class="nav nav-next" href="/outcome/tutorial/payload/copy_file2/" title="Upgrading the Filesystem TS" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+        <a class="nav nav-prev" href="/outcome/reference/iostream_support/" title="iostream support"> <i class="fa fa-chevron-left"></i></a>
+        <a class="nav nav-next" href="/outcome/reference/policies/" title="Policies" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
     </div>
 
     </section>

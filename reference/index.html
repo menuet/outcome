@@ -419,6 +419,11 @@
           <span>iostream support</span>
         </a>
     </li>
+      <li data-nav-id="/outcome/reference/result_c/" class="dd-item">
+        <a href="/outcome/reference/result_c/">
+          <span>C API</span>
+        </a>
+    </li>
     <li data-nav-id="/outcome/reference/policies/" class="dd-item">
       <a href="/outcome/reference/policies/">
         <span>Policies</span><i class="fa fa-angle-right fa-lg category-icon"></i>
@@ -576,23 +581,23 @@
 <h1 id="project-index">Project index</h1>
 
 <ul>
-<li><p><a href="result#standardese-CXX_DECLARE_RESULT"><code>CXX_DECLARE_RESULT</code></a> &mdash; Declares a C struct representation of <code>result&lt;R, S&gt;</code>.</p></li>
+<li><p><a href="result_c#standardese-CXX_DECLARE_RESULT"><code>CXX_DECLARE_RESULT</code></a> &mdash; Declares a C struct representation of <code>result&lt;R, S&gt;</code>.</p></li>
 
-<li><p><a href="result#standardese-CXX_DECLARE_RESULT_EC"><code>CXX_DECLARE_RESULT_EC</code></a> &mdash; Declares a C struct representation of <code>result&lt;R, std::error_code&gt;</code>.</p></li>
+<li><p><a href="result_c#standardese-CXX_DECLARE_RESULT_EC"><code>CXX_DECLARE_RESULT_EC</code></a> &mdash; Declares a C struct representation of <code>result&lt;R, std::error_code&gt;</code>.</p></li>
 
-<li><p><a href="result#standardese-CXX_RESULT"><code>CXX_RESULT</code></a> &mdash; A reference to a previously declared struct by <code>CXX_DECLARE_RESULT(R, RD, S, SD)</code></p></li>
+<li><p><a href="result_c#standardese-CXX_RESULT"><code>CXX_RESULT</code></a> &mdash; A reference to a previously declared struct by <code>CXX_DECLARE_RESULT(R, RD, S, SD)</code></p></li>
 
-<li><p><a href="result#standardese-CXX_RESULT_EC"><code>CXX_RESULT_EC</code></a> &mdash; A reference to a previously declared struct by <code>CXX_DECLARE_RESULT_EC(R, RD)</code></p></li>
+<li><p><a href="result_c#standardese-CXX_RESULT_EC"><code>CXX_RESULT_EC</code></a> &mdash; A reference to a previously declared struct by <code>CXX_DECLARE_RESULT_EC(R, RD)</code></p></li>
 
-<li><p><a href="result#standardese-CXX_RESULT_ERROR"><code>CXX_RESULT_ERROR</code></a> &mdash; C11 generic selecting a result struct’s <code>error</code> or <code>code</code> integer member.</p></li>
+<li><p><a href="result_c#standardese-CXX_RESULT_ERROR"><code>CXX_RESULT_ERROR</code></a> &mdash; C11 generic selecting a result struct’s <code>error</code> or <code>code</code> integer member.</p></li>
 
-<li><p><a href="result#standardese-CXX_RESULT_ERROR_IS_ERRNO"><code>CXX_RESULT_ERROR_IS_ERRNO</code></a> &mdash; True if a result struct’s <code>error</code> or <code>code</code> is an <code>errno</code> domain code suitable for setting <code>errno</code> with.</p></li>
+<li><p><a href="result_c#standardese-CXX_RESULT_ERROR_IS_ERRNO"><code>CXX_RESULT_ERROR_IS_ERRNO</code></a> &mdash; True if a result struct’s <code>error</code> or <code>code</code> is an <code>errno</code> domain code suitable for setting <code>errno</code> with.</p></li>
 
-<li><p><a href="result#standardese-CXX_RESULT_HAS_ERROR"><code>CXX_RESULT_HAS_ERROR</code></a> &mdash; True if a result struct has a valid error</p></li>
+<li><p><a href="result_c#standardese-CXX_RESULT_HAS_ERROR"><code>CXX_RESULT_HAS_ERROR</code></a> &mdash; True if a result struct has a valid error</p></li>
 
-<li><p><a href="result#standardese-CXX_RESULT_HAS_VALUE"><code>CXX_RESULT_HAS_VALUE</code></a> &mdash; True if a result struct has a valid value</p></li>
+<li><p><a href="result_c#standardese-CXX_RESULT_HAS_VALUE"><code>CXX_RESULT_HAS_VALUE</code></a> &mdash; True if a result struct has a valid value</p></li>
 
-<li><p><a href="result#standardese-CXX_RESULT_SET_ERRNO"><code>CXX_RESULT_SET_ERRNO</code></a> &mdash; Convenience macro setting <code>errno</code> to a result struct’s <code>errno</code> compatible error if present, or <code>EAGAIN</code> if errored but incompatible.</p></li>
+<li><p><a href="result_c#standardese-CXX_RESULT_SET_ERRNO"><code>CXX_RESULT_SET_ERRNO</code></a> &mdash; Convenience macro setting <code>errno</code> to a result struct’s <code>errno</code> compatible error if present, or <code>EAGAIN</code> if errored but incompatible.</p></li>
 
 <li><p><a href="utils#standardese-utils.hpp"><code>OUTCOME_ERROR_FROM_EXCEPTION_HPP</code></a></p></li>
 
@@ -612,7 +617,7 @@
 
 <li><p><a href="try#standardese-try.hpp"><code>OUTCOME_TRY_UNIQUE_NAME</code></a></p></li>
 
-<li><p><a href="result#standardese-cxx_error_code"><code>cxx_error_code</code></a> &mdash; A C struct representation of <code>std::error_code</code>.</p></li>
+<li><p><a href="result_c#standardese-cxx_error_code"><code>cxx_error_code</code></a> &mdash; A C struct representation of <code>std::error_code</code>.</p></li>
 
 <li><h2 id="namespace-outcome-v2-xxx-convert">Namespace <code>outcome_v2_xxx::convert</code></h2>
 

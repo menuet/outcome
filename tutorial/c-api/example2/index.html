@@ -420,6 +420,11 @@
           <span>iostream support</span>
         </a>
     </li>
+      <li data-nav-id="/outcome/reference/result_c/" class="dd-item">
+        <a href="/outcome/reference/result_c/">
+          <span>C API</span>
+        </a>
+    </li>
     <li data-nav-id="/outcome/reference/policies/" class="dd-item">
       <a href="/outcome/reference/policies/">
         <span>Policies</span><i class="fa fa-angle-right fa-lg category-icon"></i>
@@ -574,10 +579,10 @@
 <p>Now let us call our <code>result</code> returning C++ function from C:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s17d4">#include</span> <span class="s17d4">&lt;stdio.h&gt;</span><span class="s17d4">
-</span><span class="s17d4">#include</span> <span class="s17d4">&lt;string.h&gt;  // for strerror</span><span class="s17d4">
+<span class="s17d4">#include</span> <span class="s17d4">&lt;stdio.h&gt;</span><span class="s17d4">
+</span><span class="s17d4">#include</span> <span class="s17d4">&lt;string.h&gt;  // for strerror</span><span class="s17d4">
 </span><span class="s17d4"></span><span class="s1770">// This header in Outcome is pure C, it provides a suite of C helper macros
-</span><span class="s1770"></span><span class="s17d4">#include</span> <span class="s17d4">&#34;../../../include/outcome/result.h&#34;</span><span class="s17d4">
+</span><span class="s1770"></span><span class="s17d4">#include</span> <span class="s17d4">&#34;../../../include/outcome/result.h&#34;</span><span class="s17d4">
 </span><span class="s17d4"></span>
 <span class="s1770">// Declare our C++ function&#39;s returning result type. Only needs to be done once.
 </span><span class="s1770"></span>CXX_DECLARE_RESULT_EC(size_t, size_t);

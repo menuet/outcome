@@ -420,6 +420,11 @@
           <span>iostream support</span>
         </a>
     </li>
+      <li data-nav-id="/outcome/reference/result_c/" class="dd-item">
+        <a href="/outcome/reference/result_c/">
+          <span>C API</span>
+        </a>
+    </li>
     <li data-nav-id="/outcome/reference/policies/" class="dd-item">
       <a href="/outcome/reference/policies/">
         <span>Policies</span><i class="fa fa-angle-right fa-lg category-icon"></i>
@@ -586,13 +591,15 @@ being mangled, and thus give it the C rather than C++ ABI.</li>
 <ul>
 <li><a href="http://en.cppreference.com/w/cpp/types/is_standard_layout"><code>std::is_standard_layout_v&lt;T&gt;</code></a></li>
 <li><a href="http://en.cppreference.com/w/cpp/types/is_trivially_copyable"><code>std::is_trivially_copyable_v&lt;T&gt;</code></a></li>
+<li>Note that <code>std::is_trivially_copyable_v&lt;T&gt;</code> also requires trivial destruction, but NOT trivial construction.
+This means that C++ can do non-trivial construction of otherwise trivial types.</li>
 </ul></li>
 <li>Your C++ function should return either a <code>result&lt;T, E&gt;</code> or a <code>result&lt;T&gt;</code> i.e. with the <code>EC</code> defaulted
 to <code>std::error_code</code> or something with equal layout. Note that <code>std::error_code</code>
 has standard layout, and is trivially copyable, and thus is a legal type in C.</li>
 </ol>
 
-<p>These might seem to be showstoppers to C++ programmers, but with a bit of
+<p>These type limitations might seem to be showstoppers to C++ programmers, but with a bit of
 care during library design, you can actually express a lot of
 complex C++ and still meet these requirements. For example, more than 80%
 of the APIs in my C++ 17 <a href="https://ned14.github.io/afio/">AFIO</a> library (which I hope to propose
