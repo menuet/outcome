@@ -60,7 +60,7 @@ Let us demonstrate this by recompiling the code to use the undefined behaviour s
 #include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; #include &amp;lt;utility&amp;gt; namespace outcome_v2_xxx { namespace policy { struct all_narrow; } }  
 
 Struct outcome_v2_xxx::policy::all_narrow 
-struct all_narrow : detail::base { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy which treats wide checks as narrow checks.
+struct all_narrow { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy which treats wide checks as narrow checks.
 Can be used in both result and outcome.</description>
     </item>
     
@@ -236,7 +236,7 @@ namespace filesystem2 { // Error code + paths related to a failure. Also causes 
 #include &amp;quot;result_error_code_throw_as_system_error.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct error_code_throw_as_system_error; } }  
 
 Struct outcome_v2_xxx::policy::error_code_throw_as_system_error 
-template &amp;lt;class T, class EC, class E&amp;gt; struct error_code_throw_as_system_error : detail::base { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC as a type for which trait::has_error_code_v&amp;lt;EC&amp;gt; is true.</description>
+template &amp;lt;class T, class EC, class E&amp;gt; struct error_code_throw_as_system_error { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC as a type for which trait::has_error_code_v&amp;lt;EC&amp;gt; is true.</description>
     </item>
     
     <item>
@@ -397,7 +397,7 @@ result&amp;lt;udt /*, std::error_code */&amp;gt; res(err::failure1); // What hap
 #include &amp;quot;..&amp;#x2F;bad_access.hpp&amp;quot; #include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; #include &amp;lt;system_error&amp;gt; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC&amp;gt; struct error_code_throw_as_system_error&amp;lt;T, EC, void&amp;gt;; } }  
 
 Struct outcome_v2_xxx::policy::error_code_throw_as_system_error 
-template &amp;lt;class T, class EC&amp;gt; struct error_code_throw_as_system_error&amp;lt;T, EC, void&amp;gt; : detail::base { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC as a type for which trait::has_error_code_v&amp;lt;EC&amp;gt; is true.</description>
+template &amp;lt;class T, class EC&amp;gt; struct error_code_throw_as_system_error&amp;lt;T, EC, void&amp;gt; { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC as a type for which trait::has_error_code_v&amp;lt;EC&amp;gt; is true.</description>
     </item>
     
     <item>
@@ -483,7 +483,7 @@ struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int ope
 #include &amp;quot;result_exception_ptr_rethrow.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow; } }  
 
 Struct outcome_v2_xxx::policy::exception_ptr_rethrow 
-template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow : detail::base { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC or E as a type for which trait::has_exception_ptr_v&amp;lt;EC|E&amp;gt; is true.</description>
+template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC or E as a type for which trait::has_exception_ptr_v&amp;lt;EC|E&amp;gt; is true.</description>
     </item>
     
     <item>
@@ -610,7 +610,8 @@ template &amp;lt;class T, class U&amp;gt; struct value_or_error { static constex
 #include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; #include &amp;lt;system_error&amp;gt; namespace outcome_v2_xxx { namespace policy { struct terminate; } }  
 
 Struct outcome_v2_xxx::policy::terminate 
-struct terminate : detail::base { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self) noexcept; template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy implementing any wide attempt to access the successful state as calling std::terminate</description>
+struct terminate { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self) noexcept; template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy implementing any wide attempt to access the successful state as calling std::terminate
+Can be used in both result and outcome.</description>
     </item>
     
     <item>
@@ -647,7 +648,8 @@ template &amp;lt;class S&amp;gt; class bad_result_access_with : public bad_resul
 #include &amp;quot;..&amp;#x2F;bad_access.hpp&amp;quot; #include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class EC&amp;gt; struct throw_bad_result_access; } }  
 
 Struct outcome_v2_xxx::policy::throw_bad_result_access 
-template &amp;lt;class EC&amp;gt; struct throw_bad_result_access : detail::base { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy which throws bad_result_access_with&amp;lt;EC&amp;gt; or bad_result_access during wide checks.</description>
+template &amp;lt;class EC&amp;gt; struct throw_bad_result_access { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy which throws bad_result_access_with&amp;lt;EC&amp;gt; or bad_result_access during wide checks.
+Can be used in result only.</description>
     </item>
     
     <item>
@@ -709,7 +711,7 @@ Macro CXX_DECLARE_RESULT_EC
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ned14.github.io/outcome/credits/</guid>
-      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }  This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation. Standardese - the API reference generator  Special thanks for Outcome v2 For a second time, Charley Bay stepped up as review manager.</description>
+      <description>github contributors .ghContributors{ display:flex; flex-flow: wrap; align-content: flex-start } .ghContributors  div{ width: 50% ; display: inline-flex; margin-bottom: 5px; } .ghContributors  div label{ padding-left: 4px ; } .ghContributors  div span{ font-size: x-small; padding-left: 4px ; }   @ned14 769 commits   @akrzemi1 16 commits   @jenkins-nedprod 1 commits   This pretty, modern C++ documentation  Hugo - static website generator of this documentation. hugo-theme-docdock - the Hugo theme used by this documentation.</description>
     </item>
     
   </channel>
