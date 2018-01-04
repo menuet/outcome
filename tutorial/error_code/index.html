@@ -649,8 +649,14 @@ The list is:</p>
   };
 }
 
+<span class="s1770">// Define the linkage for this function to be used by external code.
+</span><span class="s1770">// This would be the usual __declspec(dllexport) or __declspec(dllimport)
+</span><span class="s1770">// if we were in a Windows DLL etc. But for this example use a global
+</span><span class="s1770">// instance but with inline linkage so multiple definitions do not collide.
+</span><span class="s1770"></span><span class="s17d4">#define THIS_MODULE_API_DECL extern inline
+</span><span class="s17d4"></span>
 <span class="s1770">// Declare a global function returning a static instance of the custom category
-</span><span class="s1770"></span><span class="s3e8">extern</span> <span class="s3e8">const</span> detail::ConversionErrc_category &amp;ConversionErrc_category()
+</span><span class="s1770"></span>THIS_MODULE_API_DECL <span class="s3e8">const</span> detail::ConversionErrc_category &amp;ConversionErrc_category()
 {
   <span class="s3e8">static</span> detail::ConversionErrc_category c;
   <span class="s3e8">return</span> c;
