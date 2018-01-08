@@ -728,15 +728,15 @@
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx::operator!=&lt;T,U,V,R,S,P,N,&gt;(result&lt;T,U,V&gt;const&amp;,outcome&lt;R,S,P,N&gt;const&amp;)"><code>operator!=</code></a> &mdash; True if the result is not equal to the outcome</p></li>
 
-<li><p><a href="iostream_support#standardese-outcome_v2_xxx::operator&lt;&lt;&lt;R,S,P&gt;(std::ostream&amp;,result&lt;R,S,P&gt;const&amp;)"><code>operator&lt;&lt;</code></a> &mdash; Serialise a result</p></li>
+<li><p><a href="iostream_support#standardese-outcome_v2_xxx::operator&lt;&lt;&lt;R,S,P&gt;(std::ostream&amp;,result&lt;R,S,P&gt;const&amp;)"><code>operator&lt;&lt;</code></a> &mdash; Serialise a result. Format is <code>(unsigned) status; &quot; &quot;; value if value present; error if error present&quot;</code>. Spare storage is preserved.</p></li>
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx::operator==&lt;T,U,V,R,S,P,N,&gt;(result&lt;T,U,V&gt;const&amp;,outcome&lt;R,S,P,N&gt;const&amp;)"><code>operator==</code></a> &mdash; True if the result is equal to the outcome</p></li>
 
-<li><p><a href="iostream_support#standardese-outcome_v2_xxx::operator&gt;&gt;&lt;R,S,P&gt;(std::istream&amp;,result&lt;R,S,P&gt;&amp;)"><code>operator&gt;&gt;</code></a> &mdash; Deserialise a result</p></li>
+<li><p><a href="iostream_support#standardese-outcome_v2_xxx::operator&gt;&gt;&lt;R,S,P&gt;(std::istream&amp;,result&lt;R,S,P&gt;&amp;)"><code>operator&gt;&gt;</code></a> &mdash; Deserialise a result. Format is <code>(unsigned) status; &quot; &quot;; value if value present; error if error present&quot;</code>. Spare storage is preserved.</p></li>
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy"><code>outcome</code></a> &mdash; Used to return from functions one of (i) a successful value (ii) a cause of failure, with optional additional information. <code>constexpr</code> capable.</p></li>
 
-<li><p><a href="iostream_support#standardese-outcome_v2_xxx::print&lt;R,S,P&gt;(result_or_outcome&lt;R,S,P&gt;const&amp;)"><code>print</code></a> &mdash; Debug print a result</p></li>
+<li><p><a href="iostream_support#standardese-outcome_v2_xxx::print&lt;R,S,P&gt;(result_or_outcome&lt;R,S,P&gt;const&amp;)"><code>print</code></a> &mdash; Debug print a result into a form suitable for human reading. Format is <code>value|error</code>. If the error type is <code>error_code</code>, appends <code>&quot; (ec.message())&quot;</code> afterwards.</p></li>
 
 <li><p><a href="result#standardese-outcome_v2_xxx::result&lt;R,S,NoValuePolicy"><code>result</code></a> &mdash; Used to return from functions either (i) a successful value (ii) a cause of failure. <code>constexpr</code> capable.</p></li>
 
