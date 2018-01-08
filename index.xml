@@ -371,10 +371,11 @@ Additionally, in GCC and Clang which provide an extension to C++ known as statem
       
       <guid>https://ned14.github.io/outcome/reference/try/</guid>
       <description>Header file try.hpp 
-#include &amp;quot;success_failure.hpp&amp;quot; namespace outcome_v2_xxx { template &amp;lt;class T&amp;gt; auto try_operation_return_as(T&amp;amp;&amp;amp; v); } #define OUTCOME_TRY_GLUE2(x,y) #define OUTCOME_TRY_GLUE(x,y) #define OUTCOME_TRY_UNIQUE_NAME #define OUTCOME_TRYV2(unique,...) #define OUTCOME_TRY2(unique,v,...) #define OUTCOME_TRYV(...) #define OUTCOME_TRYX(...) #define OUTCOME_TRY(v,...)  
+#include &amp;quot;success_failure.hpp&amp;quot; namespace outcome_v2_xxx { template &amp;lt;class T&amp;gt; auto try_operation_return_as(T&amp;amp;&amp;amp; v); } #define OUTCOME_TRYV(...) #define OUTCOME_TRYX(...) #define OUTCOME_TRY(v,...)  
 Function outcome_v2_xxx::try_operation_return_as 
 template &amp;lt;class T&amp;gt; auto try_operation_return_as(T&amp;amp;&amp;amp; v);  Customisation point for changing what the OUTCOME_TRY macros do. This function defaults to returning std::forward&amp;lt;T&amp;gt;(v).as_failure().
-Effects: Extracts any state apart from value into a failure_type.</description>
+Effects: Extracts any state apart from value into a failure_type.
+Requires: The input value to have a .as_failure() member function.</description>
     </item>
     
     <item>
@@ -522,7 +523,7 @@ namespace app { outcome&amp;lt;void&amp;gt; go() // NOT noexcept, this can throw
       
       <guid>https://ned14.github.io/outcome/reference/utils/</guid>
       <description>Header file utils.hpp 
-#include &amp;quot;config.hpp&amp;quot; #include &amp;lt;exception&amp;gt; #include &amp;lt;system_error&amp;gt; #define OUTCOME_ERROR_FROM_EXCEPTION_HPP namespace outcome_v2_xxx { std::error_code error_from_exception(std::exception_ptr&amp;amp;&amp;amp; ep = std::current_exception(, std::error_code not_matched = std::make_error_code(std::errc::resource_unavailable_try_again) noexcept; void try_throw_std_exception_from_error(std::error_code ec, std::string const&amp;amp; msg = std::string{); }  
+#include &amp;quot;config.hpp&amp;quot; #include &amp;lt;exception&amp;gt; #include &amp;lt;system_error&amp;gt; namespace outcome_v2_xxx { std::error_code error_from_exception(std::exception_ptr&amp;amp;&amp;amp; ep = std::current_exception(, std::error_code not_matched = std::make_error_code(std::errc::resource_unavailable_try_again) noexcept; void try_throw_std_exception_from_error(std::error_code ec, std::string const&amp;amp; msg = std::string{); }  
 Function outcome_v2_xxx::error_from_exception 
 std::error_code error_from_exception(std::exception_ptr&amp;amp;&amp;amp; ep = std::current_exception(, std::error_code not_matched = std::make_error_code(std::errc::resource_unavailable_try_again) noexcept;  Utility function which tries to match the exception in the pointer provided to an equivalent error code. Ought to work for all standard STL types.</description>
     </item>
@@ -672,9 +673,8 @@ Can be used in result only.</description>
 struct cxx_error_code; #define CXX_DECLARE_RESULT(R,RD,S,SD) #define CXX_DECLARE_RESULT_EC(R,RD) #define CXX_RESULT(R,S) #define CXX_RESULT_EC(R) #define CXX_RESULT_HAS_VALUE(r) #define CXX_RESULT_HAS_ERROR(r) #define CXX_RESULT_ERROR_IS_ERRNO(r) #define CXX_RESULT_ERROR(r) #define CXX_RESULT_SET_ERRNO(r)  Struct cxx_error_code 
 struct cxx_error_code { int code; void* category; };  A C struct representation of std::error_code.
 Macro CXX_DECLARE_RESULT 
-#define CXX_DECLARE_RESULT(R,RD,S,SD)  Declares a C struct representation of result&amp;lt;R, S&amp;gt;.
-Macro CXX_DECLARE_RESULT_EC 
-#define CXX_DECLARE_RESULT_EC(R,RD)  Declares a C struct representation of result&amp;lt;R, std::error_code&amp;gt;.</description>
+#define CXX_DECLARE_RESULT(R,RD,S,SD) struct result_##R##_##S { RD value; unsigned flags; SD error; }  Declares a C struct representation of result&amp;lt;R, S&amp;gt;.
+Macro CXX_DECLARE_RESULT_EC</description>
     </item>
     
     <item>
