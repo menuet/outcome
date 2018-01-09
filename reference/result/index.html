@@ -561,8 +561,6 @@
 <ul>
 <li>
 <ul>
-<li><a href="#struct-outcome-v2-xxx-no-value-type">Struct <code>outcome_v2_xxx::no_value_type</code></a></li>
-<li><a href="#struct-outcome-v2-xxx-no-error-type">Struct <code>outcome_v2_xxx::no_error_type</code></a></li>
 <li><a href="#alias-template-outcome-v2-xxx-policy-default-policy">Alias template <code>outcome_v2_xxx::policy::default_policy</code></a></li>
 <li><a href="#alias-template-outcome-v2-xxx-is-result">Alias template <code>outcome_v2_xxx::is_result</code></a></li>
 <li><a href="#unexposed-entity-outcome-v2-xxx-is-result-v">Unexposed entity <code>outcome_v2_xxx::is_result_v</code></a></li>
@@ -717,10 +715,6 @@
 
 <span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
 <span class="pun">{</span>
-    <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::no_value_type"><span class="typ dec var fun">no_value_type</span></a><span class="pun">;</span>
-
-    <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::no_error_type"><span class="typ dec var fun">no_error_type</span></a><span class="pun">;</span>
-
     <span class="kwd">namespace</span> <a href="standardese_entities.md#standardese-outcome_v2_xxx::policy"><span class="typ dec var fun">policy</span></a>
     <span class="pun">{</span>
         <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">EC</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">E</span><span class="pun">&gt;</span>
@@ -772,34 +766,6 @@
 </code></pre>
 
 <p><a id="standardese-outcome_v2_xxx"></a></p>
-
-<h3 id="struct-outcome-v2-xxx-no-value-type">Struct <code>outcome_v2_xxx::no_value_type</code></h3>
-
-<p><a id="standardese-outcome_v2_xxx::no_value_type"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <span class="typ dec var fun">no_value_type</span>
-<span class="pun">{</span>
-    <span class="typ dec var fun">no_value_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">delete</span><span class="pun">;</span>
-<span class="pun">};</span>
-</code></pre>
-
-<p>Placeholder type to indicate there is no value type</p>
-
-<hr />
-
-<h3 id="struct-outcome-v2-xxx-no-error-type">Struct <code>outcome_v2_xxx::no_error_type</code></h3>
-
-<p><a id="standardese-outcome_v2_xxx::no_error_type"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <span class="typ dec var fun">no_error_type</span>
-<span class="pun">{</span>
-    <span class="typ dec var fun">no_error_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">delete</span><span class="pun">;</span>
-<span class="pun">};</span>
-</code></pre>
-
-<p>Placeholder type to indicate there is no error type</p>
-
-<hr />
 
 <p><a id="standardese-outcome_v2_xxx::policy"></a></p>
 
@@ -963,8 +929,8 @@
 
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E::error_type_if_enabled"><span class="typ dec var fun">error_type_if_enabled</span></a> <span class="pun">=</span> typename base::_error_type<span class="pun">;</span>
 
-    <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">&gt;</span>
-    <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E::rebind%3CT,U%3E"><span class="typ dec var fun">rebind</span></a> <span class="pun">=</span> <span class="typ dec var fun">result</span><span class="pun">&lt;</span>T, U<span class="pun">&gt;</span><span class="pun">;</span>
+    <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span> <span class="pun">=</span> policy::default_policy&lt;T,U,void&gt;<span class="pun">&gt;</span>
+    <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E::rebind%3CT,U,V%3E"><span class="typ dec var fun">rebind</span></a> <span class="pun">=</span> <span class="typ dec var fun">result</span><span class="pun">&lt;</span>T, U, V<span class="pun">&gt;</span><span class="pun">;</span>
 
 <span class="kwd">protected</span><span class="pun">:</span>
     <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E::predicate"><span class="typ dec var fun">predicate</span></a><span class="pun">;</span>
@@ -1040,6 +1006,8 @@
 
 <p>Used to return from functions either (i) a successful value (ii) a cause of failure. <code>constexpr</code> capable.</p>
 
+<p>Any <code>R</code> (<code>value_type</code>) state can be observed using the member functions <code>.value()</code> and <code>.assume_value()</code>. Any <code>S</code> (<code>error_type</code>) state can be observed using the member functions <code>.error()</code> and <code>.assume_error()</code>.</p>
+
 <p><code>NoValuePolicy</code> defaults to a policy selected according to the characteristics of type <code>S</code>:</p>
 
 <ol>
@@ -1049,7 +1017,7 @@
 <!-- end list -->
 
 <ul>
-<li><p>If <code>trait::has_error_code_v&lt;S&gt;</code> is true, then <code>throw std::system_error(error()|make_error_code(error()))</code> [<code>policy::error_code_throw_as_system_error&lt;S&gt;</code>]</p></li>
+<li><p>If <code>trait::has_error_code_v&lt;S&gt;</code> is true, then <code>throw std::system_error(error()|make_error_code(error()))</code> [\verbatim {{&lt;api “policies/result_error_code_throw_as_system_error” “policy::error_code_throw_as_system_error&lt;S&gt;”&gt;}} \endverbatim]</p></li>
 
 <li><p>If <code>trait::has_exception_ptr_v&lt;S&gt;</code>, then <code>std::rethrow_exception(error()|make_exception_ptr(error()))</code> [<code>policy::exception_ptr_rethrow&lt;R, S, void&gt;</code>]</p></li>
 
@@ -1148,10 +1116,10 @@
 
 <h3 id="alias-template-rebind">Alias template <code>rebind</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::result&lt;R,S,NoValuePolicy&gt;::rebind&lt;T,U&gt;"></a></p>
+<p><a id="standardese-outcome_v2_xxx::result&lt;R,S,NoValuePolicy&gt;::rebind&lt;T,U,V&gt;"></a></p>
 
-<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">&gt;</span>
-<span class="kwd">using</span> <span class="typ dec var fun">rebind</span> <span class="pun">=</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E"><span class="typ dec var fun">result</span></a><span class="pun">&lt;</span>T, U<span class="pun">&gt;</span><span class="pun">;</span>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span> <span class="pun">=</span> policy::default_policy&lt;T,U,void&gt;<span class="pun">&gt;</span>
+<span class="kwd">using</span> <span class="typ dec var fun">rebind</span> <span class="pun">=</span> <a href="#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E"><span class="typ dec var fun">result</span></a><span class="pun">&lt;</span>T, U, V<span class="pun">&gt;</span><span class="pun">;</span>
 </code></pre>
 
 <p>Used to rebind this result to a different result type.</p>

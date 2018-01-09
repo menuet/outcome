@@ -561,7 +561,6 @@
 <ul>
 <li>
 <ul>
-<li><a href="#struct-outcome-v2-xxx-no-exception-type">Struct <code>outcome_v2_xxx::no_exception_type</code></a></li>
 <li><a href="#alias-template-outcome-v2-xxx-is-outcome">Alias template <code>outcome_v2_xxx::is_outcome</code></a></li>
 <li><a href="#unexposed-entity-outcome-v2-xxx-is-outcome-v">Unexposed entity <code>outcome_v2_xxx::is_outcome_v</code></a></li>
 <li><a href="#function-outcome-v2-xxx-hooks-hook-outcome-construction">Function <code>outcome_v2_xxx::hooks::hook_outcome_construction</code></a>
@@ -759,8 +758,6 @@
 
 <span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
 <span class="pun">{</span>
-    <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::no_exception_type"><span class="typ dec var fun">no_exception_type</span></a><span class="pun">;</span>
-
     <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::is_outcome%3CT%3E"><span class="typ dec var fun">is_outcome</span></a> <span class="pun">=</span> <span class="typ dec var fun">detail::is_outcome</span><span class="pun">&lt;</span>std::decay_t&lt;T&gt;<span class="pun">&gt;</span><span class="pun">;</span>
 
@@ -805,20 +802,6 @@
 </code></pre>
 
 <p><a id="standardese-outcome_v2_xxx"></a></p>
-
-<h3 id="struct-outcome-v2-xxx-no-exception-type">Struct <code>outcome_v2_xxx::no_exception_type</code></h3>
-
-<p><a id="standardese-outcome_v2_xxx::no_exception_type"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <span class="typ dec var fun">no_exception_type</span>
-<span class="pun">{</span>
-    <span class="typ dec var fun">no_exception_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">delete</span><span class="pun">;</span>
-<span class="pun">};</span>
-</code></pre>
-
-<p>Placeholder type to indicate there is no exception type</p>
-
-<hr />
 
 <h3 id="alias-template-outcome-v2-xxx-is-outcome">Alias template <code>outcome_v2_xxx::is_outcome</code></h3>
 
@@ -953,8 +936,8 @@
 
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::outcome%3CR,S,P,NoValuePolicy%3E::exception_type"><span class="typ dec var fun">exception_type</span></a> <span class="pun">=</span> <a href="#standardese-outcome_v2_xxx::outcome%3CR,S,P,NoValuePolicy%3E.P"><span class="typ dec var fun">P</span></a><span class="pun">;</span>
 
-    <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span> <span class="pun">=</span> P<span class="pun">&gt;</span>
-    <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::outcome%3CR,S,P,NoValuePolicy%3E::rebind%3CT,U,V%3E"><span class="typ dec var fun">rebind</span></a> <span class="pun">=</span> <span class="typ dec var fun">outcome</span><span class="pun">&lt;</span>T, U, P<span class="pun">&gt;</span><span class="pun">;</span>
+    <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span> <span class="pun">=</span> P<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">W</span> <span class="pun">=</span> policy::default_policy&lt;T,U,V&gt;<span class="pun">&gt;</span>
+    <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::outcome%3CR,S,P,NoValuePolicy%3E::rebind%3CT,U,V,W%3E"><span class="typ dec var fun">rebind</span></a> <span class="pun">=</span> <span class="typ dec var fun">outcome</span><span class="pun">&lt;</span>T, U, V, W<span class="pun">&gt;</span><span class="pun">;</span>
 
 <span class="kwd">protected</span><span class="pun">:</span>
     <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::outcome%3CR,S,P,NoValuePolicy%3E::predicate"><span class="typ dec var fun">predicate</span></a><span class="pun">;</span>
@@ -1057,64 +1040,48 @@
 <span class="pun">};</span>
 </code></pre>
 
-<p>Used to return from functions one of (i) a successful value (ii) a cause of failure, with optional additional information. <code>constexpr</code> capable.</p>
+<p>Used to return from functions one of (i) a successful value (ii) a cause of failure (ii) a different cause of failure. <code>constexpr</code> capable.</p>
 
-<p>This is an extension of <code>result&lt;T, E&gt;</code> and it comes in two variants:</p>
+<p>This is an extension of <code>result&lt;R, S&gt;</code> and it allows an alternative failure to be stored of type <code>P</code>, which can be observed with the member functions <code>.exception()</code> and <code>.assume_exception()</code>. The <code>P</code> state takes precedence during no-value observation over any <code>S</code> state, and it is possible to store <code>S + P</code> simultaneously such that <code>outcome</code> could have any one the states:</p>
 
 <ol>
-<li><p><code>outcome&lt;T, E, P&gt;</code>: simply as if a <code>result&lt;T, E + P&gt;</code> i.e. if a failure result, there may be an additional arbitrary payload of type <code>P</code>. In this form, <code>.payload()</code> returns the payload and there is no <code>.exception()</code>.</p></li>
+<li><p><code>R</code> (<code>value_type</code>)</p></li>
 
-<li><p><code>outcome&lt;T, EC, EP&gt;</code>: Failure cause can be <code>EC</code> (<code>.error()</code>), or <code>EP</code> (<code>.exception()</code>) or <code>EC + EP</code> i.e. both together. In this form, there is no <code>.payload()</code>.</p></li>
+<li><p><code>S</code> (<code>error_type</code>)</p></li>
+
+<li><p><code>P</code> (<code>exception_type</code>)</p></li>
+
+<li><p><code>S + P</code> (<code>error_type + exception_type</code>)</p></li>
 </ol>
-
-<p>Which variant is chosen depends on <code>trait::is_exception_ptr&lt;P&gt;</code>. If it is true, you get the second form, if it is false you get the first form.</p>
 
 <p>Similarly to <code>result</code>, <code>NoValuePolicy</code> defaults to a policy selected according to the characteristics of types <code>S</code> and <code>P</code>:</p>
 
 <ol>
-<li>If <code>.value()</code> called when there is no <code>value_type</code>:</li>
+<li>If <code>.value()</code> called when there is no <code>value_type</code> but there is an <code>exception_type</code>:</li>
 </ol>
 
 <!-- end list -->
 
 <ul>
-<li><p>If <code>std::is_error_code_enum_v&lt;S&gt;</code> or <code>std::is_error_condition_enum_v&lt;S&gt;</code> is true:</p>
-
-<ul>
-<li><p>If <code>trait::is_exception_ptr&lt;P&gt;</code> is true, if an exception is set, then <code>std::rethrow_exception(exception())</code>, else <code>throw std::system_error(make_error_code(error()))</code> [<code>policy::error_enum_throw_as_system_error_exception_rethrow&lt;R, S, P&gt;</code>]</p></li>
-
-<li><p>If <code>trait::is_exception_ptr&lt;P&gt;</code> is false, if a payload is set, then <code>throw_as_system_error_with_payload()</code>, else <code>throw std::system_error(make_error_code(error()))</code> [<code>policy::error_enum_throw_as_system_error_with_payload&lt;R, S, P&gt;</code>]</p></li>
-</ul></li>
-
-<li><p>If <code>trait::is_error_code&lt;S&gt;</code>, then:</p>
-
-<ul>
-<li><p>If <code>trait::is_exception_ptr&lt;P&gt;</code> is true, if an exception is set, then <code>std::rethrow_exception(exception())</code>, else <code>throw std::system_error(error())</code> [<code>policy::error_code_throw_as_system_error_exception_rethrow&lt;R, S, P&gt;</code>]</p></li>
-
-<li><p>If <code>trait::is_exception_ptr&lt;P&gt;</code> is false, if an exception is set, then <code>throw_as_system_error_with_payload()</code>, else <code>throw std::system_error(error())</code> [<code>policy::error_code_throw_as_system_error_with_payload&lt;R, S, P&gt;</code>]</p></li>
-</ul></li>
-
-<li><p>If <code>trait::is_exception_ptr&lt;S&gt;</code>, then <code>throw_exception_ptr_with_payload()</code> [<code>policy::exception_ptr_rethrow_with_payload&lt;R, S, P&gt;</code>]</p></li>
-
-<li><p>If <code>trait::is_exception_ptr&lt;P&gt;</code>, then <code>std::rethrow_exception(exception())</code> [<code>policy::exception_ptr_rethrow&lt;R, S, P&gt;</code>]</p></li>
-
-<li><p>If <code>S</code> is <code>void</code>, call <code>std::terminate()</code> [<code>policy::terminate</code>]</p></li>
-
-<li><p>If <code>S</code> is none of the above, then it is undefined behaviour [<code>policy::all_narrow</code>]</p></li>
+<li>If <code>trait::has_exception_ptr_v&lt;P&gt;</code>, then <code>std::rethrow_exception(exception()|make_exception_ptr(exception()))</code> [<code>policy::exception_ptr_rethrow&lt;R, S, P&gt;</code>]</li>
 </ul>
 
 <!-- end list -->
 
 <ol>
-<li>If <code>.error()</code> called when there is no <code>error_type</code>:</li>
+<li>If <code>.value()</code> called when there is no <code>value_type</code> but there is an <code>error_type</code>:</li>
 </ol>
 
 <!-- end list -->
 
 <ul>
-<li><p>For any of the policies above apart from <code>policy::all_narrow</code>, <code>throw bad_outcome_access()</code></p></li>
+<li><p>If <code>trait::has_error_code_v&lt;S&gt;</code> is true, then <code>throw std::system_error(error()|make_error_code(error()))</code> [\verbatim {{&lt;api “policies/result_error_code_throw_as_system_error” “policy::error_code_throw_as_system_error&lt;S&gt;”&gt;}} \endverbatim]</p></li>
 
-<li><p>For <code>policy::all_narrow</code>, it is undefined behaviour [<code>policy::all_narrow</code>]</p></li>
+<li><p>If <code>trait::has_exception_ptr_v&lt;S&gt;</code>, then <code>std::rethrow_exception(error()|make_exception_ptr(error()))</code> [<code>policy::exception_ptr_rethrow&lt;R, S, void&gt;</code>]</p></li>
+
+<li><p>If <code>S</code> is <code>void</code>, call <code>std::terminate()</code> [<code>policy::terminate</code>]</p></li>
+
+<li><p>If <code>S</code> is none of the above, then it is undefined behaviour [<code>policy::all_narrow</code>]</p></li>
 </ul>
 
 <!-- end list -->
@@ -1126,23 +1093,23 @@
 <!-- end list -->
 
 <ul>
-<li><p>For any of the policies above apart from <code>policy::all_narrow</code>, <code>throw bad_outcome_access()</code></p></li>
+<li><p>If <code>trait::has_exception_ptr_v&lt;P&gt;</code>, or if <code>P</code> is <code>void</code>, do <code>throw bad_outcome_access()</code></p></li>
 
-<li><p>For <code>policy::all_narrow</code>, it is undefined behaviour [<code>policy::all_narrow</code>]</p></li>
+<li><p>If <code>P</code> is none of the above, then it is undefined behaviour [<code>policy::all_narrow</code>]</p></li>
 </ul>
 
 <!-- end list -->
 
 <ol>
-<li>If <code>.payload()</code> called when there is no <code>payload_type</code>:</li>
+<li>If <code>.error()</code> called when there is no <code>error_type</code>:</li>
 </ol>
 
 <!-- end list -->
 
 <ul>
-<li><p>For any of the policies above apart from <code>policy::all_narrow</code>, <code>throw bad_outcome_access()</code></p></li>
+<li><p>If <code>trait::has_error_code_v&lt;S&gt;</code>, or if <code>trait::has_exception_ptr_v&lt;S&gt;</code>, or if <code>S</code> is <code>void</code>, do <code>throw bad_outcome_access()</code></p></li>
 
-<li><p>For <code>policy::all_narrow</code>, it is undefined behaviour [<code>policy::all_narrow</code>]</p></li>
+<li><p>If <code>S</code> is none of the above, then it is undefined behaviour [<code>policy::all_narrow</code>]</p></li>
 </ul>
 
 <h4 id="template-parameters">Template parameters</h4>
@@ -1169,7 +1136,7 @@
 
 <pre><code class="standardese-language-cpp"><span class="kwd">class</span> <span class="typ dec var fun">S</span></code></pre>
 
-<p>The optional type of the failure result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>.</p>
+<p>The optional type of the first failure result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>.</p>
 
 <p>Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</p>
 
@@ -1181,7 +1148,7 @@
 
 <pre><code class="standardese-language-cpp"><span class="kwd">class</span> <span class="typ dec var fun">P</span></code></pre>
 
-<p>The optional type of the payload/exception result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>.</p>
+<p>The optional type of the second failure result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>.</p>
 
 <p>Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</p>
 
@@ -1222,10 +1189,10 @@
 
 <h3 id="alias-template-rebind">Alias template <code>rebind</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy&gt;::rebind&lt;T,U,V&gt;"></a></p>
+<p><a id="standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy&gt;::rebind&lt;T,U,V,W&gt;"></a></p>
 
-<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span> <span class="pun">=</span> P<span class="pun">&gt;</span>
-<span class="kwd">using</span> <span class="typ dec var fun">rebind</span> <span class="pun">=</span> <a href="#standardese-outcome_v2_xxx::outcome%3CR,S,P,NoValuePolicy%3E"><span class="typ dec var fun">outcome</span></a><span class="pun">&lt;</span>T, U, P<span class="pun">&gt;</span><span class="pun">;</span>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span> <span class="pun">=</span> S<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span> <span class="pun">=</span> P<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">W</span> <span class="pun">=</span> policy::default_policy&lt;T,U,V&gt;<span class="pun">&gt;</span>
+<span class="kwd">using</span> <span class="typ dec var fun">rebind</span> <span class="pun">=</span> <a href="#standardese-outcome_v2_xxx::outcome%3CR,S,P,NoValuePolicy%3E"><span class="typ dec var fun">outcome</span></a><span class="pun">&lt;</span>T, U, V, W<span class="pun">&gt;</span><span class="pun">;</span>
 </code></pre>
 
 <p>Used to rebind this outcome to a different outcome type</p>
