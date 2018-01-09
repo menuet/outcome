@@ -584,9 +584,6 @@
 <ul>
 <li><a href="#template-parameters">Template parameters</a></li>
 </ul></li>
-<li><a href="#template-parameter-r">Template parameter <code>R</code></a></li>
-<li><a href="#template-parameter-s">Template parameter <code>S</code></a></li>
-<li><a href="#template-parameter-p">Template parameter <code>P</code></a></li>
 <li><a href="#type-alias-value-type">Type alias <code>value_type</code></a></li>
 <li><a href="#type-alias-error-type">Type alias <code>error_type</code></a></li>
 <li><a href="#type-alias-exception-type">Type alias <code>exception_type</code></a></li>
@@ -1115,44 +1112,11 @@
 <h4 id="template-parameters">Template parameters</h4>
 
 <ul>
+<li><code>R</code> &mdash; The optional type of the successful result (use <code>void</code> to disable). Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</li>
+<li><code>S</code> &mdash; The optional type of the first failure result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>. Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</li>
+<li><code>P</code> &mdash; The optional type of the second failure result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>. Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</li>
 <li><code>NoValuePolicy</code> &mdash; Policy on how to interpret types <code>S</code> and <code>P</code> when a wide observation of a not present value occurs.</li>
 </ul>
-
-<h3 id="template-parameter-r">Template parameter <code>R</code></h3>
-
-<p><a id="standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy&gt;.R"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">class</span> <span class="typ dec var fun">R</span></code></pre>
-
-<p>The optional type of the successful result (use <code>void</code> to disable).</p>
-
-<p>Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</p>
-
-<hr />
-
-<h3 id="template-parameter-s">Template parameter <code>S</code></h3>
-
-<p><a id="standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy&gt;.S"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">class</span> <span class="typ dec var fun">S</span></code></pre>
-
-<p>The optional type of the first failure result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>.</p>
-
-<p>Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</p>
-
-<hr />
-
-<h3 id="template-parameter-p">Template parameter <code>P</code></h3>
-
-<p><a id="standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy&gt;.P"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">class</span> <span class="typ dec var fun">P</span></code></pre>
-
-<p>The optional type of the second failure result (use <code>void</code> to disable). Must be either <code>void</code> or <code>DefaultConstructible</code>.</p>
-
-<p>Cannot be a reference, a <code>in_place_type_t&lt;&gt;</code>, <code>success&lt;&gt;</code>, <code>failure&lt;&gt;</code>, an array, a function or non-destructible.</p>
-
-<hr />
 
 <h3 id="type-alias-value-type">Type alias <code>value_type</code></h3>
 
