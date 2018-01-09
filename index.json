@@ -368,7 +368,7 @@
 	"title": "Videos",
 	"tags": [],
 	"description": "",
-	"content": " Outcome has been presented at some of the major C++ conferences as it has evolved. As the older content is less relevant to Outcome today, this list is given in reverse chronological order.\nMeeting C++ 2017 \u0026ldquo;Introduction to proposed std::expected\u0026lt;T, E\u0026gt;\u0026ldquo; Literature review of the several WG21 papers relating to std::expected.\nAwaiting video\n ACCU 2017 \u0026ldquo;Mongrel Monads, Dirty, dirty, dirty\u0026rdquo; Covers the history of error handling in C++, and how the LEWG Expected works.\n(Note that the Expected presented here no longer exists, it was substantially changed after the Outcome v1 peer review. Furthermore the Outcome presented here no longer exists, the peer review demanded a complete rebuild)\n   "
+	"content": " Outcome has been presented at some of the major C++ conferences as it has evolved. As the older content is less relevant to Outcome today, this list is given in reverse chronological order.\nMeeting C++ 2017 \u0026ldquo;Introduction to proposed std::expected\u0026lt;T, E\u0026gt;\u0026ldquo; Literature review of the several WG21 papers relating to std::expected.\n   ACCU 2017 \u0026ldquo;Mongrel Monads, Dirty, dirty, dirty\u0026rdquo; Covers the history of error handling in C++, and how the LEWG Expected works.\n(Note that the Expected presented here no longer exists, it was substantially changed after the Outcome v1 peer review. Furthermore the Outcome presented here no longer exists, the peer review demanded a complete rebuild)\n   "
 },
 {
 	"uri": "https://ned14.github.io/outcome/tutorial/default-actions/exception-ptr/",
