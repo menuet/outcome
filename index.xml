@@ -57,11 +57,13 @@ Let us demonstrate this by recompiling the code to use the undefined behaviour s
       
       <guid>https://ned14.github.io/outcome/reference/policies/all_narrow/</guid>
       <description>Header file all_narrow.hpp 
-#include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; #include &amp;lt;utility&amp;gt; namespace outcome_v2_xxx { namespace policy { struct all_narrow; } }  
+namespace outcome_v2_xxx { namespace policy { struct all_narrow; } }  
 
 Struct outcome_v2_xxx::policy::all_narrow 
 struct all_narrow { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy which treats wide checks as narrow checks.
-Can be used in both result and outcome.</description>
+Can be used in both result and outcome.
+Function wide_value_check 
+template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self);  Performs a wide check of state, used in the value() functions.</description>
     </item>
     
     <item>
@@ -133,7 +135,7 @@ Let us imagine that the HTTP library has the following public interface:
       
       <guid>https://ned14.github.io/outcome/reference/outcome/</guid>
       <description>Header file outcome.hpp 
-#include &amp;quot;detail&amp;#x2F;outcome_exception_observers.hpp&amp;quot; #include &amp;quot;detail&amp;#x2F;outcome_failure_observers.hpp&amp;quot; #include &amp;quot;result.hpp&amp;quot; #include &amp;lt;memory&amp;gt; #include &amp;quot;detail&amp;#x2F;outcome_exception_observers_impl.hpp&amp;quot; #include &amp;quot;policy&amp;#x2F;outcome_error_code_throw_as_system_error.hpp&amp;quot; #include &amp;quot;policy&amp;#x2F;outcome_exception_ptr_rethrow.hpp&amp;quot; namespace outcome_v2_xxx { template &amp;lt;class T&amp;gt; using is_outcome = detail::is_outcome&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt;; template &amp;lt;class T&amp;gt;static constexpr bool is_outcome_v = detail::is_outcome&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt;::value; namespace hooks { template &amp;lt;class T, class U&amp;gt; constexpr void hook_outcome_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_outcome_copy_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_outcome_move_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U, class .</description>
+namespace outcome_v2_xxx { template &amp;lt;class T&amp;gt; using is_outcome = &amp;#x27;hidden&amp;#x27;; template &amp;lt;class T&amp;gt;static constexpr bool is_outcome_v = detail::is_outcome&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt;::value; namespace hooks { template &amp;lt;class T, class U&amp;gt; constexpr void hook_outcome_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_outcome_copy_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_outcome_move_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U, class ... Args&amp;gt; constexpr void hook_outcome_in_place_construction(T*, in_place_type_t&amp;lt;U&amp;gt;, Args &amp;amp;&amp;amp;...) noexcept; template &amp;lt;class R, class S, class P, class NoValuePolicy, class U&amp;gt; constexpr void override_outcome_exception(outcome&amp;lt;R, S, P, NoValuePolicy&amp;gt;* o, U&amp;amp;&amp;amp; v) noexcept; } template &amp;lt;class R, class S, class P, class NoValuePolicy&amp;gt; class outcome; template &amp;lt;class T, class U, class V, class R, class S, class P, class N&amp;gt; constexpr bool operator==(result&amp;lt;T, U, V&amp;gt; const&amp;amp; a, outcome&amp;lt;R, S, P, N&amp;gt; const&amp;amp; b) noexcept(&amp;#x27;hidden&amp;#x27;); template &amp;lt;class T, class U, class V, class R, class S, class P, class N&amp;gt; constexpr bool operator!</description>
     </item>
     
     <item>
@@ -233,7 +235,7 @@ namespace filesystem2 { // Error code + paths related to a failure. Also causes 
       
       <guid>https://ned14.github.io/outcome/reference/policies/outcome_error_code_throw_as_system_error/</guid>
       <description>Header file outcome_error_code_throw_as_system_error.hpp 
-#include &amp;quot;result_error_code_throw_as_system_error.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct error_code_throw_as_system_error; } }  
+namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct error_code_throw_as_system_error; } }  
 
 Struct outcome_v2_xxx::policy::error_code_throw_as_system_error 
 template &amp;lt;class T, class EC, class E&amp;gt; struct error_code_throw_as_system_error { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC as a type for which trait::has_error_code_v&amp;lt;EC&amp;gt; is true.</description>
@@ -246,7 +248,7 @@ template &amp;lt;class T, class EC, class E&amp;gt; struct error_code_throw_as_s
       
       <guid>https://ned14.github.io/outcome/reference/result/</guid>
       <description>Header file result.hpp 
-#include &amp;quot;convert.hpp&amp;quot; #include &amp;quot;detail&amp;#x2F;result_final.hpp&amp;quot; #include &amp;quot;policy&amp;#x2F;all_narrow.hpp&amp;quot; #include &amp;quot;policy&amp;#x2F;result_error_code_throw_as_system_error.hpp&amp;quot; #include &amp;quot;policy&amp;#x2F;result_exception_ptr_rethrow.hpp&amp;quot; #include &amp;quot;policy&amp;#x2F;terminate.hpp&amp;quot; #include &amp;quot;policy&amp;#x2F;throw_bad_result_access.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; using default_policy = std::conditional_t&amp;lt;std::is_void&amp;lt;EC&amp;gt;::value &amp;amp;&amp;amp; std::is_void&amp;lt;E&amp;gt;::value, terminate, std::conditional_t&amp;lt;trait::has_error_code_v&amp;lt;EC&amp;gt;, error_code_throw_as_system_error&amp;lt;T, EC, E&amp;gt;, std::conditional_t&amp;lt;trait::has_exception_ptr_v&amp;lt;EC&amp;gt; || trait::has_exception_ptr_v&amp;lt;E&amp;gt;, exception_ptr_rethrow&amp;lt;T, EC, E&amp;gt;, all_narrow&amp;gt; &amp;gt;&amp;gt;; } template &amp;lt;class T&amp;gt; using is_result = detail::is_result&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt;; template &amp;lt;class T&amp;gt;static constexpr bool is_result_v = detail::is_result&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt;::value; namespace hooks { template &amp;lt;class T, class U&amp;gt; constexpr void hook_result_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_result_copy_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_result_move_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U, class .</description>
+namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; using default_policy = std::conditional_t&amp;lt;std::is_void&amp;lt;EC&amp;gt;::value &amp;amp;&amp;amp; std::is_void&amp;lt;E&amp;gt;::value, terminate, std::conditional_t&amp;lt;trait::has_error_code_v&amp;lt;EC&amp;gt;, error_code_throw_as_system_error&amp;lt;T, EC, E&amp;gt;, std::conditional_t&amp;lt;trait::has_exception_ptr_v&amp;lt;EC&amp;gt; || trait::has_exception_ptr_v&amp;lt;E&amp;gt;, exception_ptr_rethrow&amp;lt;T, EC, E&amp;gt;, all_narrow&amp;gt; &amp;gt;&amp;gt;; } template &amp;lt;class T&amp;gt; using is_result = &amp;#x27;hidden&amp;#x27;; template &amp;lt;class T&amp;gt;static constexpr bool is_result_v = detail::is_result&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt;::value; namespace hooks { template &amp;lt;class T, class U&amp;gt; constexpr void hook_result_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_result_copy_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U&amp;gt; constexpr void hook_result_move_construction(T*, U&amp;amp;&amp;amp;) noexcept; template &amp;lt;class T, class U, class .</description>
     </item>
     
     <item>
@@ -371,11 +373,12 @@ Additionally, in GCC and Clang which provide an extension to C++ known as statem
       
       <guid>https://ned14.github.io/outcome/reference/try/</guid>
       <description>Header file try.hpp 
-#include &amp;quot;success_failure.hpp&amp;quot; namespace outcome_v2_xxx { template &amp;lt;class T&amp;gt; auto try_operation_return_as(T&amp;amp;&amp;amp; v); } #define OUTCOME_TRYV(...) #define OUTCOME_TRYX(...) #define OUTCOME_TRY(v,...)  
+namespace outcome_v2_xxx { template &amp;lt;class T&amp;gt; auto try_operation_return_as(T&amp;amp;&amp;amp; v); } #define OUTCOME_TRYV(...) #define OUTCOME_TRYX(...) #define OUTCOME_TRY(v,...)  
 Function outcome_v2_xxx::try_operation_return_as 
 template &amp;lt;class T&amp;gt; auto try_operation_return_as(T&amp;amp;&amp;amp; v);  Customisation point for changing what the OUTCOME_TRY macros do. This function defaults to returning std::forward&amp;lt;T&amp;gt;(v).as_failure().
 Effects: Extracts any state apart from value into a failure_type.
-Requires: The input value to have a .as_failure() member function.</description>
+Requires: The input value to have a .as_failure() member function.
+Macro OUTCOME_TRYV</description>
     </item>
     
     <item>
@@ -395,10 +398,11 @@ result&amp;lt;udt /*, std::error_code */&amp;gt; res(err::failure1); // What hap
       
       <guid>https://ned14.github.io/outcome/reference/policies/result_error_code_throw_as_system_error/</guid>
       <description>Header file result_error_code_throw_as_system_error.hpp 
-#include &amp;quot;..&amp;#x2F;bad_access.hpp&amp;quot; #include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; #include &amp;lt;system_error&amp;gt; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC&amp;gt; struct error_code_throw_as_system_error&amp;lt;T, EC, void&amp;gt;; } }  
+namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC&amp;gt; struct error_code_throw_as_system_error&amp;lt;T, EC, void&amp;gt;; } }  
 
 Struct outcome_v2_xxx::policy::error_code_throw_as_system_error 
-template &amp;lt;class T, class EC&amp;gt; struct error_code_throw_as_system_error&amp;lt;T, EC, void&amp;gt; { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC as a type for which trait::has_error_code_v&amp;lt;EC&amp;gt; is true.</description>
+template &amp;lt;class T, class EC&amp;gt; struct error_code_throw_as_system_error&amp;lt;T, EC, void&amp;gt; { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC as a type for which trait::has_error_code_v&amp;lt;EC&amp;gt; is true.
+Any wide attempt to access the successful state where there is none causes:</description>
     </item>
     
     <item>
@@ -450,7 +454,7 @@ outcome::result&amp;lt;file_handle&amp;gt; fh2 = construct&amp;lt;file_handle&am
       
       <guid>https://ned14.github.io/outcome/reference/success_failure/</guid>
       <description>Header file success_failure.hpp 
-#include &amp;quot;config.hpp&amp;quot; #include &amp;lt;exception&amp;gt; #include &amp;lt;system_error&amp;gt; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T&amp;gt; constexpr auto error_code(T&amp;amp;&amp;amp; v); template &amp;lt;class T&amp;gt; constexpr auto exception_ptr(T&amp;amp;&amp;amp; v); template &amp;lt;class Error&amp;gt; constexpr void throw_as_system_error_with_payload(Error const&amp;amp; error); } namespace trait { template &amp;lt;class T&amp;gt; struct has_error_code; template &amp;lt;class T&amp;gt;constexpr bool has_error_code_v = has_error_code&amp;lt;T&amp;gt;::value; template &amp;lt;class T&amp;gt; struct has_exception_ptr; template &amp;lt;class T&amp;gt;constexpr bool has_exception_ptr_v = has_exception_ptr&amp;lt;T&amp;gt;::value; } template &amp;lt;class T&amp;gt; struct success_type; template &amp;lt;&amp;gt; struct success_type&amp;lt;void&amp;gt;; constexpr success_type&amp;lt;void&amp;gt; success() noexcept; template &amp;lt;class T&amp;gt; constexpr success_type&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt; success(T&amp;amp;&amp;amp; v); template &amp;lt;class EC = std::error_code, class E = void&amp;gt; struct failure_type; template &amp;lt;class EC&amp;gt; struct failure_type&amp;lt;EC, void&amp;gt;; template &amp;lt;class E&amp;gt; struct failure_type&amp;lt;void, E&amp;gt;; template &amp;lt;class EC&amp;gt; constexpr failure_type&amp;lt;std::decay_t&amp;lt;EC&amp;gt;&amp;gt; failure(EC&amp;amp;&amp;amp; v); template &amp;lt;class EC, class E&amp;gt; constexpr failure_type&amp;lt;std::decay_t&amp;lt;EC&amp;gt;, std::decay_t&amp;lt;E&amp;gt;&amp;gt; failure(EC&amp;amp;&amp;amp; v, E&amp;amp;&amp;amp; w); }</description>
+namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T&amp;gt; constexpr auto error_code(T&amp;amp;&amp;amp; v); template &amp;lt;class T&amp;gt; constexpr auto exception_ptr(T&amp;amp;&amp;amp; v); template &amp;lt;class Error&amp;gt; constexpr void throw_as_system_error_with_payload(Error const&amp;amp; error); } namespace trait { template &amp;lt;class T&amp;gt; struct has_error_code; template &amp;lt;class T&amp;gt;constexpr bool has_error_code_v = has_error_code&amp;lt;T&amp;gt;::value; template &amp;lt;class T&amp;gt; struct has_exception_ptr; template &amp;lt;class T&amp;gt;constexpr bool has_exception_ptr_v = has_exception_ptr&amp;lt;T&amp;gt;::value; } template &amp;lt;class T&amp;gt; struct success_type; template &amp;lt;&amp;gt; struct success_type&amp;lt;void&amp;gt;; constexpr success_type&amp;lt;void&amp;gt; success() noexcept; template &amp;lt;class T&amp;gt; constexpr success_type&amp;lt;std::decay_t&amp;lt;T&amp;gt;&amp;gt; success(T&amp;amp;&amp;amp; v); template &amp;lt;class EC = std::error_code, class E = void&amp;gt; struct failure_type; template &amp;lt;class EC&amp;gt; struct failure_type&amp;lt;EC, void&amp;gt;; template &amp;lt;class E&amp;gt; struct failure_type&amp;lt;void, E&amp;gt;; template &amp;lt;class EC&amp;gt; constexpr failure_type&amp;lt;std::decay_t&amp;lt;EC&amp;gt;&amp;gt; failure(EC&amp;amp;&amp;amp; v); template &amp;lt;class EC, class E&amp;gt; constexpr failure_type&amp;lt;std::decay_t&amp;lt;EC&amp;gt;, std::decay_t&amp;lt;E&amp;gt;&amp;gt; failure(EC&amp;amp;&amp;amp; v, E&amp;amp;&amp;amp; w); }</description>
     </item>
     
     <item>
@@ -481,7 +485,7 @@ struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int ope
       
       <guid>https://ned14.github.io/outcome/reference/policies/outcome_exception_ptr_rethrow/</guid>
       <description>Header file outcome_exception_ptr_rethrow.hpp 
-#include &amp;quot;result_exception_ptr_rethrow.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow; } }  
+namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow; } }  
 
 Struct outcome_v2_xxx::policy::exception_ptr_rethrow 
 template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy interpreting EC or E as a type for which trait::has_exception_ptr_v&amp;lt;EC|E&amp;gt; is true.</description>
@@ -523,9 +527,10 @@ namespace app { outcome&amp;lt;void&amp;gt; go() // NOT noexcept, this can throw
       
       <guid>https://ned14.github.io/outcome/reference/utils/</guid>
       <description>Header file utils.hpp 
-#include &amp;quot;config.hpp&amp;quot; #include &amp;lt;exception&amp;gt; #include &amp;lt;system_error&amp;gt; namespace outcome_v2_xxx { std::error_code error_from_exception(std::exception_ptr&amp;amp;&amp;amp; ep = std::current_exception(, std::error_code not_matched = std::make_error_code(std::errc::resource_unavailable_try_again) noexcept; void try_throw_std_exception_from_error(std::error_code ec, std::string const&amp;amp; msg = std::string{); }  
+namespace outcome_v2_xxx { std::error_code error_from_exception(std::exception_ptr&amp;amp;&amp;amp; ep = std::current_exception(, std::error_code not_matched = std::make_error_code(std::errc::resource_unavailable_try_again) noexcept; void try_throw_std_exception_from_error(std::error_code ec, std::string const&amp;amp; msg = std::string{); }  
 Function outcome_v2_xxx::error_from_exception 
-std::error_code error_from_exception(std::exception_ptr&amp;amp;&amp;amp; ep = std::current_exception(, std::error_code not_matched = std::make_error_code(std::errc::resource_unavailable_try_again) noexcept;  Utility function which tries to match the exception in the pointer provided to an equivalent error code. Ought to work for all standard STL types.</description>
+std::error_code error_from_exception(std::exception_ptr&amp;amp;&amp;amp; ep = std::current_exception(, std::error_code not_matched = std::make_error_code(std::errc::resource_unavailable_try_again) noexcept;  Utility function which tries to match the exception in the pointer provided to an equivalent error code. Ought to work for all standard STL types.
+Effects: Rethrows the exception in the pointer, and via a long sequence of catch clauses attempts to match the equivalent error code.</description>
     </item>
     
     <item>
@@ -547,7 +552,7 @@ template &amp;lt;&amp;gt; struct construct&amp;lt;file_handle&amp;gt; { file_han
       
       <guid>https://ned14.github.io/outcome/reference/policies/result_exception_ptr_rethrow/</guid>
       <description>Header file result_exception_ptr_rethrow.hpp 
-#include &amp;quot;..&amp;#x2F;bad_access.hpp&amp;quot; #include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow; template &amp;lt;class T, class EC&amp;gt; struct exception_ptr_rethrow&amp;lt;T, EC, void&amp;gt;; } }  
+namespace outcome_v2_xxx { namespace policy { template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow; template &amp;lt;class T, class EC&amp;gt; struct exception_ptr_rethrow&amp;lt;T, EC, void&amp;gt;; } }  
 
 Struct outcome_v2_xxx::policy::exception_ptr_rethrow 
 template &amp;lt;class T, class EC, class E&amp;gt; struct exception_ptr_rethrow;  Policy interpreting EC or E as a type for which trait::has_exception_ptr_v&amp;lt;EC|E&amp;gt; is true.
@@ -595,7 +600,7 @@ template&amp;lt;class... Args&amp;gt; inline outcome::result&amp;lt;file_handle&
       
       <guid>https://ned14.github.io/outcome/reference/convert/</guid>
       <description>Header file convert.hpp 
-#include &amp;quot;detail&amp;#x2F;result_storage.hpp&amp;quot; namespace outcome_v2_xxx { namespace convert { template &amp;lt;class U&amp;gt;static constexpr bool ValueOrNone = detail::ValueOrNone&amp;lt;U&amp;gt;; template &amp;lt;class U&amp;gt;static constexpr bool ValueOrError = detail::ValueOrError&amp;lt;U&amp;gt;; template &amp;lt;class T, class U&amp;gt; struct value_or_error; } }  
+namespace outcome_v2_xxx { namespace convert { template &amp;lt;class U&amp;gt;static constexpr bool ValueOrNone = detail::ValueOrNone&amp;lt;U&amp;gt;; template &amp;lt;class U&amp;gt;static constexpr bool ValueOrError = detail::ValueOrError&amp;lt;U&amp;gt;; template &amp;lt;class T, class U&amp;gt; struct value_or_error; } }  
 
 Struct outcome_v2_xxx::convert::value_or_error 
 template &amp;lt;class T, class U&amp;gt; struct value_or_error { static constexpr bool const enable_result_inputs; static constexpr bool const enable_outcome_inputs; template &amp;lt;class X, typename = std::enable_if_t&amp;lt;std::is_same&amp;lt;U,std::decay_t&amp;lt;X&amp;gt;&amp;gt;::value&amp;amp;&amp;amp;ValueOrError&amp;lt;U&amp;gt;&amp;amp;&amp;amp;(std::is_void&amp;lt;typename std::decay_t&amp;lt;X&amp;gt;::value_type&amp;gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&amp;lt;typename T::value_type,typename std::decay_t&amp;lt;X&amp;gt;::value_type&amp;gt;)&amp;amp;&amp;amp;(std::is_void&amp;lt;typename std::decay_t&amp;lt;X&amp;gt;::error_type&amp;gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&amp;lt;typename T::error_type,typename std::decay_t&amp;lt;X&amp;gt;::error_type&amp;gt;)&amp;gt;&amp;gt; constexpr T operator()(X&amp;amp;&amp;amp; v); };  Default converter for types matching the ValueOrError concept.</description>
@@ -608,7 +613,7 @@ template &amp;lt;class T, class U&amp;gt; struct value_or_error { static constex
       
       <guid>https://ned14.github.io/outcome/reference/policies/terminate/</guid>
       <description>Header file terminate.hpp 
-#include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; #include &amp;lt;system_error&amp;gt; namespace outcome_v2_xxx { namespace policy { struct terminate; } }  
+namespace outcome_v2_xxx { namespace policy { struct terminate; } }  
 
 Struct outcome_v2_xxx::policy::terminate 
 struct terminate { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self) noexcept; template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy implementing any wide attempt to access the successful state as calling std::terminate
@@ -632,7 +637,7 @@ If you don&amp;rsquo;t want all this clever automatic detection of traits, and j
       
       <guid>https://ned14.github.io/outcome/reference/bad_access/</guid>
       <description>Header file bad_access.hpp 
-#include &amp;quot;config.hpp&amp;quot; #include &amp;lt;stdexcept&amp;gt; namespace outcome_v2_xxx { class bad_result_access; template &amp;lt;class S&amp;gt; class bad_result_access_with; class bad_outcome_access; }  
+namespace outcome_v2_xxx { class bad_result_access; template &amp;lt;class S&amp;gt; class bad_result_access_with; class bad_outcome_access; }  
 Class outcome_v2_xxx::bad_result_access 
 class bad_result_access : public std::logic_error { public: explicit bad_result_access(char const* what); };  Thrown when you try to access state in a result&amp;lt;R, S&amp;gt; which isn’t present.
 Class outcome_v2_xxx::bad_result_access_with 
@@ -646,7 +651,7 @@ template &amp;lt;class S&amp;gt; class bad_result_access_with : public bad_resul
       
       <guid>https://ned14.github.io/outcome/reference/policies/throw_bad_result_access/</guid>
       <description>Header file throw_bad_result_access.hpp 
-#include &amp;quot;..&amp;#x2F;bad_access.hpp&amp;quot; #include &amp;quot;detail&amp;#x2F;common.hpp&amp;quot; namespace outcome_v2_xxx { namespace policy { template &amp;lt;class EC&amp;gt; struct throw_bad_result_access; } }  
+namespace outcome_v2_xxx { namespace policy { template &amp;lt;class EC&amp;gt; struct throw_bad_result_access; } }  
 
 Struct outcome_v2_xxx::policy::throw_bad_result_access 
 template &amp;lt;class EC&amp;gt; struct throw_bad_result_access { template &amp;lt;class Impl&amp;gt; static constexpr void wide_value_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_error_check(Impl&amp;amp;&amp;amp; self); template &amp;lt;class Impl&amp;gt; static constexpr void wide_exception_check(Impl&amp;amp;&amp;amp; self); };  Policy which throws bad_result_access_with&amp;lt;EC&amp;gt; or bad_result_access during wide checks.
@@ -660,7 +665,7 @@ Can be used in result only.</description>
       
       <guid>https://ned14.github.io/outcome/reference/iostream_support/</guid>
       <description>Header file iostream_support.hpp 
-#include &amp;quot;outcome.hpp&amp;quot; #include &amp;lt;iostream&amp;gt; #include &amp;lt;sstream&amp;gt; namespace outcome_v2_xxx { template &amp;lt;class R, class S, class P&amp;gt; std::istream&amp;amp; operator&amp;gt;&amp;gt;(std::istream&amp;amp; s, result&amp;lt;R, S, P&amp;gt;&amp;amp; v); template &amp;lt;class R, class S, class P&amp;gt; std::ostream&amp;amp; operator&amp;lt;&amp;lt;(std::ostream&amp;amp; s, result&amp;lt;R, S, P&amp;gt; const&amp;amp; v); template &amp;lt;class R, class S, class P&amp;gt; std::string print(detail::result_final&amp;lt;R, S, P&amp;gt; const&amp;amp; v); template &amp;lt;class S, class P&amp;gt; std::string print(detail::result_final&amp;lt;void, S, P&amp;gt; const&amp;amp; v); template &amp;lt;class R, class P&amp;gt; std::string print(detail::result_final&amp;lt;R, void, P&amp;gt; const&amp;amp; v); template &amp;lt;class P&amp;gt; std::string print(detail::result_final&amp;lt;void, void, P&amp;gt; const&amp;amp; v); template &amp;lt;class R, class S, class P, class N&amp;gt; std::istream&amp;amp; operator&amp;gt;&amp;gt;(std::istream&amp;amp; s, outcome&amp;lt;R, S, P, N&amp;gt;&amp;amp; v); template &amp;lt;class R, class S, class P, class N&amp;gt; std::ostream&amp;amp; operator&amp;lt;&amp;lt;(std::ostream&amp;amp; s, outcome&amp;lt;R, S, P, N&amp;gt; const&amp;amp; v); template &amp;lt;class R, class S, class P, class N&amp;gt; std::string print(outcome&amp;lt;R, S, P, N&amp;gt; const&amp;amp; v); }</description>
+namespace outcome_v2_xxx { template &amp;lt;class R, class S, class P&amp;gt; std::istream&amp;amp; operator&amp;gt;&amp;gt;(std::istream&amp;amp; s, result&amp;lt;R, S, P&amp;gt;&amp;amp; v); template &amp;lt;class R, class S, class P&amp;gt; std::ostream&amp;amp; operator&amp;lt;&amp;lt;(std::ostream&amp;amp; s, result&amp;lt;R, S, P&amp;gt; const&amp;amp; v); template &amp;lt;class R, class S, class P&amp;gt; std::string print(detail::result_final&amp;lt;R, S, P&amp;gt; const&amp;amp; v); template &amp;lt;class S, class P&amp;gt; std::string print(detail::result_final&amp;lt;void, S, P&amp;gt; const&amp;amp; v); template &amp;lt;class R, class P&amp;gt; std::string print(detail::result_final&amp;lt;R, void, P&amp;gt; const&amp;amp; v); template &amp;lt;class P&amp;gt; std::string print(detail::result_final&amp;lt;void, void, P&amp;gt; const&amp;amp; v); template &amp;lt;class R, class S, class P, class N&amp;gt; std::istream&amp;amp; operator&amp;gt;&amp;gt;(std::istream&amp;amp; s, outcome&amp;lt;R, S, P, N&amp;gt;&amp;amp; v); template &amp;lt;class R, class S, class P, class N&amp;gt; std::ostream&amp;amp; operator&amp;lt;&amp;lt;(std::ostream&amp;amp; s, outcome&amp;lt;R, S, P, N&amp;gt; const&amp;amp; v); template &amp;lt;class R, class S, class P, class N&amp;gt; std::string print(outcome&amp;lt;R, S, P, N&amp;gt; const&amp;amp; v); }</description>
     </item>
     
     <item>
@@ -702,7 +707,7 @@ Macro CXX_DECLARE_RESULT_EC</description>
       
       <guid>https://ned14.github.io/outcome/reference/doc_common/</guid>
       <description>Header file common.hpp 
-#include &amp;quot;..&amp;#x2F;..&amp;#x2F;config.hpp&amp;quot; #include &amp;lt;cassert&amp;gt; namespace outcome_v2_xxx { namespace policy { } }</description>
+namespace outcome_v2_xxx { namespace policy { } }</description>
     </item>
     
     <item>
