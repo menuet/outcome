@@ -646,9 +646,9 @@
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::override_outcome_exception&lt;R,S,P,NoValuePolicy,U&gt;(outcome&lt;R,S,P,NoValuePolicy&gt;*,U&amp;&amp;)"><code>override_outcome_exception</code></a> &mdash; Used in hook implementations to override the payload/exception to something other than what was constructed.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::set_spare_storage&lt;R,S,NoValuePolicy&gt;(result_or_outcome&lt;R,S,NoValuePolicy&gt;*,uint16_t)"><code>set_spare_storage</code></a> &mdash; Sets the 16 bits of spare storage in result/outcome.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx::hooks::set_spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;*,uint16_t)"><code>set_spare_storage</code></a> &mdash; Sets the 16 bits of spare storage in result/outcome.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::spare_storage&lt;R,S,NoValuePolicy&gt;(result_or_outcome&lt;R,S,NoValuePolicy&gt;const*)"><code>spare_storage</code></a> &mdash; Retrieves the 16 bits of spare storage in result/outcome.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx::hooks::spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;const*)"><code>spare_storage</code></a> &mdash; Retrieves the 16 bits of spare storage in result/outcome.</p></li>
 </ul></li>
 
 <li><h2 id="namespace-outcome-v2-xxx-policy">Namespace <code>outcome_v2_xxx::policy</code></h2>
@@ -730,7 +730,7 @@
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy"><code>outcome</code></a> &mdash; Used to return from functions one of (i) a successful value (ii) a cause of failure (ii) a different cause of failure. <code>constexpr</code> capable.</p></li>
 
-<li><p><a href="iostream_support#standardese-outcome_v2_xxx::print&lt;R,S,P&gt;(result_or_outcome&lt;R,S,P&gt;const&amp;)"><code>print</code></a> &mdash; Debug print a result into a form suitable for human reading. Format is <code>value|error</code>. If the error type is <code>error_code</code>, appends <code>&quot; (ec.message())&quot;</code> afterwards.</p></li>
+<li><p><a href="iostream_support#standardese-outcome_v2_xxx::print&lt;R,S,P&gt;(detail::result_final&lt;R,S,P&gt;const&amp;)"><code>print</code></a> &mdash; Debug print a result into a form suitable for human reading. Format is <code>value|error</code>. If the error type is <code>error_code</code>, appends <code>&quot; (ec.message())&quot;</code> afterwards.</p></li>
 
 <li><p><a href="result#standardese-outcome_v2_xxx::result&lt;R,S,NoValuePolicy"><code>result</code></a> &mdash; Used to return from functions either (i) a successful value (ii) a cause of failure. <code>constexpr</code> capable.</p></li>
 
