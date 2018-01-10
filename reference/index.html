@@ -625,7 +625,7 @@
 
 <p><a id="standardese-outcome_v2_xxx::hooks"></a></p>
 
-<p>Namespace for ADL discovered hooks into events in <code>result</code> and <code>outcome</code>.</p>
+<p>Namespace containing hooks used for intercepting and manipulating result/outcome</p>
 
 <ul>
 <li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::hook_outcome_construction&lt;T,U&gt;(T*,U&amp;&amp;)"><code>hook_outcome_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is first created by conversion from one of its possible types. Does nothing.</p></li>
@@ -646,9 +646,9 @@
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::override_outcome_exception&lt;R,S,P,NoValuePolicy,U&gt;(outcome&lt;R,S,P,NoValuePolicy&gt;*,U&amp;&amp;)"><code>override_outcome_exception</code></a> &mdash; Used in hook implementations to override the payload/exception to something other than what was constructed.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::set_spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;*,uint16_t)"><code>set_spare_storage</code></a> &mdash; Sets the 16 bits of spare storage in result/outcome.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx::hooks::set_spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;*,uint16_t)"><code>set_spare_storage</code></a> &mdash; Sets the sixteen bits of spare storage in a <code>result</code> or <code>outcome</code>.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;const*)"><code>spare_storage</code></a> &mdash; Retrieves the 16 bits of spare storage in result/outcome.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx::hooks::spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;const*)"><code>spare_storage</code></a> &mdash; Get the sixteen bits of spare storage in a <code>result</code> or <code>outcome</code>.</p></li>
 </ul></li>
 
 <li><h2 id="namespace-outcome-v2-xxx-policy">Namespace <code>outcome_v2_xxx::policy</code></h2>
@@ -711,6 +711,10 @@
 <li><p><a href="success_failure#standardese-outcome_v2_xxx::failure&lt;EC&gt;(EC&amp;&amp;)"><code>failure</code></a> &mdash; Returns type sugar for implicitly constructing a <code>result&lt;T&gt;</code> with a failure state.</p></li>
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx::failure_type&lt;EC,E"><code>failure_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a failure state of error code and exception.</p></li>
+
+<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx::in_place_type"><code>in_place_type</code></a> &mdash; Aliases <code>std::in_place_type&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
+
+<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx::in_place_type_t&lt;T"><code>in_place_type_t</code></a> &mdash; Aliases <code>std::in_place_type_t&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx::is_outcome&lt;T"><code>is_outcome</code></a> &mdash; True if an outcome</p></li>
 
