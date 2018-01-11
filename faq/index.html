@@ -555,6 +555,7 @@
 <ul>
 <li><a href="#is-outcome-safe-to-use-in-extern-apis">Is Outcome safe to use in extern APIs?</a></li>
 <li><a href="#does-outcome-have-a-stable-abi-and-api">Does Outcome have a stable ABI and API?</a></li>
+<li><a href="#why-two-types-result-and-outcome-rather-than-just-one">Why two types <code>result&lt;&gt;</code>  and <code>outcome&lt;&gt;</code> rather than just one?</a></li>
 <li><a href="#how-badly-will-including-outcome-in-my-public-interface-affect-compile-times">How badly will including Outcome in my public interface affect compile times?</a></li>
 <li><a href="#is-outcome-suitable-for-fixed-latency-predictable-execution-coding-such-as-for-high-frequency-trading-or-audio">Is Outcome suitable for fixed latency/predictable execution coding such as for high frequency trading or audio?</a></li>
 <li><a href="#what-kind-of-performance-benefits-will-using-outcome-in-my-code-bring">What kind of performance benefits will using Outcome in my code bring?</a></li>
@@ -586,6 +587,7 @@
 <ul>
 <li><a href="#is-outcome-safe-to-use-in-extern-apis">Is Outcome safe to use in extern APIs?</a></li>
 <li><a href="#does-outcome-have-a-stable-abi-and-api">Does Outcome have a stable ABI and API?</a></li>
+<li><a href="#why-two-types-result-and-outcome-rather-than-just-one">Why two types <code>result&lt;&gt;</code>  and <code>outcome&lt;&gt;</code> rather than just one?</a></li>
 <li><a href="#how-badly-will-including-outcome-in-my-public-interface-affect-compile-times">How badly will including Outcome in my public interface affect compile times?</a></li>
 <li><a href="#is-outcome-suitable-for-fixed-latency-predictable-execution-coding-such-as-for-high-frequency-trading-or-audio">Is Outcome suitable for fixed latency/predictable execution coding such as for high frequency trading or audio?</a></li>
 <li><a href="#what-kind-of-performance-benefits-will-using-outcome-in-my-code-bring">What kind of performance benefits will using Outcome in my code bring?</a></li>
@@ -620,6 +622,23 @@ will be run per-commit to ensure Outcome&rsquo;s ABI and API remains stable.</p>
 <p>Note that the stable ABI and API guarantee will only apply to standalone Outcome, not to Boost.Outcome.
 Boost.Outcome has dependencies on other parts of Boost which are not stable across releases.</p>
 
+<h2 id="why-two-types-result-and-outcome-rather-than-just-one">Why two types <code>result&lt;&gt;</code>  and <code>outcome&lt;&gt;</code> rather than just one?</h2>
+
+<p>The two types represent slightly different things. Using two types allows expressing programmer&rsquo;s intentions more directly.</p>
+
+<p>Function signature <code>result&lt;T&gt; f() noexcept</code> means that any failures in <code>f</code> are exclusively reported by returning an error code.</p>
+
+<p>Similarly, signature <code>result&lt;T&gt; f()</code> means that in addition to the above, some failures in <code>f</code> are signalled by throwing exceptions.</p>
+
+<p>Now, signature <code>outcome&lt;T&gt; g() noexcept</code> means that in the lower layers of the implementation we have two kinds of libraries/modules: some report failures via error codes, and some by throwing exceptions. But at the level of our interface we do not want to throw exceptions; so we forward both error codes and exceptions unaltered. The callers can easily tell which type of failure reporting was chosen, and extract it appropriately.</p>
+
+<p>Additionally, <code>outcome&lt;T&gt;</code> can store both <code>EC</code> and <code>EP</code> at the same time. The caller of the function can choose whether to inspect the exception that provides more information and context, or to go with the error code which can be processed faster and in a more uniform way.</p>
+
+<p>This implies that <code>outcome&lt;&gt;</code> has different interface that allows you to ask whether we are storing an exception or an error code to rethrow the stored exception but to return by value the error code, etc.</p>
+
+<p>There is one additional possibility. When you know there will be no error codes returned &ndash; only exceptions thrown, but at some layer you want to temporarily change the stack unwinding into returning failures through return values, you can use signature:</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">result&lt;T, std::exception_ptr&gt; f() <span class="s3e8">noexcept</span>;</code></pre>
+</div>
 <h2 id="how-badly-will-including-outcome-in-my-public-interface-affect-compile-times">How badly will including Outcome in my public interface affect compile times?</h2>
 
 <p>Outcome is dependent on <code>&lt;system_error&gt;</code>, which unfortunately includes <code>&lt;string&gt;</code> and thus

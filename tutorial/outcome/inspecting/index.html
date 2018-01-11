@@ -594,7 +594,7 @@ The goal is to unpack it to either the successful return value <code>int</code> 
 If we are storing an <code>std::error_code</code> throw it as <code>std::system_error</code>, which is designed to store <code>std::error_code</code>&rsquo;s:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">auto</span> z() -&gt; <span class="s3ee">int</span> <span class="s1770">// may throw
+<span class="s3e8">auto</span> z() -&gt; <span class="s3ee">int</span> <span class="s1770">// throws on failure
 </span><span class="s1770"></span>{
   <span class="s3e8">if</span> (outcome::outcome&lt;<span class="s3ee">int</span>&gt; o = old::h())
     <span class="s3e8">return</span> o.value();
