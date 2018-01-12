@@ -594,7 +594,7 @@
 <ul>
 <li><code>EC</code> represents a failue from lower-layer function which was retured through <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx::result%3CR,S,NoValuePolicy%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> result&lt;T, EC&gt;</a>
 .</li>
-<li><code>EP</code> represents pointer to an exception thrown in a lower-layer function to signal a failure; but at the current level we do not want to proceed with stck unwinding.</li>
+<li><code>EP</code> represents pointer to an exception thrown in a lower-layer function to signal a failure; but at the current level we do not want to proceed with stack unwinding.</li>
 </ul>
 
 <p><code>outcome&lt;T, EC, EP&gt;</code> is useful for transporting exceptions across layers of the program that were never designed with exception safety in mind.</p>
