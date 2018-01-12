@@ -637,7 +637,7 @@
 <span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">void</span> <span class="typ dec var fun">wide_value_check</span><span class="pun">(</span><span class="typ dec var fun">Impl</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">self</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre>
 
-<p>Performs a wide check of state, used in the value() functions.</p>
+<p>Performs a wide check of state, used in the value() functions. Calls <code>narrow_value_check()</code> and does nothing else.</p>
 
 <p><em>Effects:</em> None.</p>
 
@@ -651,7 +651,7 @@
 <span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">void</span> <span class="typ dec var fun">wide_error_check</span><span class="pun">(</span><span class="typ dec var fun">Impl</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">self</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre>
 
-<p>Performs a wide check of state, used in the error() functions</p>
+<p>Performs a wide check of state, used in the error() functions. Calls <code>narrow_error_check()</code> and does nothing else.</p>
 
 <p><em>Effects:</em> None.</p>
 
@@ -665,9 +665,9 @@
 <span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">void</span> <span class="typ dec var fun">wide_exception_check</span><span class="pun">(</span><span class="typ dec var fun">Impl</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">self</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre>
 
-<p>Performs a wide check of state, used in the exception() functions</p>
+<p>Performs a wide check of state, used in the exception() functions. Calls <code>narrow_exception_check()</code> and does nothing else.</p>
 
-<p><em>Effects:</em> If outcome does not have an exception, calls <code>std::terminate()</code>.</p>
+<p><em>Effects:</em> None.</p>
 
 <hr />
 
