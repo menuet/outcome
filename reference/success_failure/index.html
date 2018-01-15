@@ -582,6 +582,7 @@
 <li><a href="#constructor-failure-type-2">Constructor <code>failure_type</code></a></li>
 <li><a href="#constructor-failure-type-3">Constructor <code>failure_type</code></a></li>
 <li><a href="#function-error">Function <code>error</code></a></li>
+<li><a href="#function-exception">Function <code>exception</code></a></li>
 <li><a href="#struct-outcome-v2-xxx-failure-type-1">Struct <code>outcome_v2_xxx::failure_type</code></a></li>
 <li><a href="#type-alias-error-type-1">Type alias <code>error_type</code></a></li>
 <li><a href="#type-alias-exception-type-1">Type alias <code>exception_type</code></a></li>
@@ -597,7 +598,7 @@
 <li><a href="#constructor-failure-type-9">Constructor <code>failure_type</code></a></li>
 <li><a href="#constructor-failure-type-10">Constructor <code>failure_type</code></a></li>
 <li><a href="#constructor-failure-type-11">Constructor <code>failure_type</code></a></li>
-<li><a href="#function-exception">Function <code>exception</code></a></li>
+<li><a href="#function-exception-1">Function <code>exception</code></a></li>
 <li><a href="#function-outcome-v2-xxx-failure">Function <code>outcome_v2_xxx::failure</code></a></li>
 <li><a href="#function-outcome-v2-xxx-failure-1">Function <code>outcome_v2_xxx::failure</code></a></li>
 </ul></li>
@@ -622,7 +623,8 @@
 
 <h1 id="header-file-success-failure-hpp">Header file <code>success_failure.hpp</code></h1>
 
-<p><a id="standardese-success_failure.hpp"></a><pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
+<p><a id="standardese-success_failure.hpp"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
 <span class="pun">{</span>
     <span class="kwd">namespace</span> <span class="typ dec var fun">policy</span>
     <span class="pun">{</span>
@@ -685,7 +687,8 @@
 
 <h3 id="function-outcome-v2-xxx-policy-error-code">Function <code>outcome_v2_xxx::policy::error_code</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::policy::error_code&lt;T&gt;(T&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::policy::error_code&lt;T&gt;(T&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="kwd">auto</span> <span class="typ dec var fun">error_code</span><span class="pun">(</span><span class="typ dec var fun">T</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -695,7 +698,8 @@
 
 <h3 id="function-outcome-v2-xxx-policy-exception-ptr">Function <code>outcome_v2_xxx::policy::exception_ptr</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::policy::exception_ptr&lt;T&gt;(T&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::policy::exception_ptr&lt;T&gt;(T&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="kwd">auto</span> <span class="typ dec var fun">exception_ptr</span><span class="pun">(</span><span class="typ dec var fun">T</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -705,7 +709,8 @@
 
 <h3 id="function-outcome-v2-xxx-policy-throw-as-system-error-with-payload">Function <code>outcome_v2_xxx::policy::throw_as_system_error_with_payload</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::policy::throw_as_system_error_with_payload&lt;Error&gt;(Errorconst&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">Error</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::policy::throw_as_system_error_with_payload&lt;Error&gt;(Errorconst&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">Error</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="kwd">void</span> <span class="typ dec var fun">throw_as_system_error_with_payload</span><span class="pun">(</span><span class="typ dec var fun">Error</span> <span class="kwd">const</span><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -717,7 +722,8 @@
 
 <h3 id="struct-outcome-v2-xxx-trait-has-error-code">Struct <code>outcome_v2_xxx::trait::has_error_code</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::trait::has_error_code&lt;T&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::trait::has_error_code&lt;T&gt;"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
 <span class="kwd">struct</span> <span class="typ dec var fun">has_error_code</span>
 <span class="pun">{</span>
 <span class="pun">};</span>
@@ -731,7 +737,8 @@
 
 <h3 id="unexposed-entity-outcome-v2-xxx-trait-has-error-code-v">Unexposed entity <code>outcome_v2_xxx::trait::has_error_code_v</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::trait::has_error_code_v"></a><pre><code class="standardese-language-cpp"><span class="typ dec var fun">template</span> <span class="pun">&lt;</span><span class="typ dec var fun">class</span> <span class="kwd">T</span><span class="pun">&gt;</span><span class="typ dec var fun">constexpr</span> <span class="typ dec var fun">bool</span> <span class="kwd">has_error_code_v</span> <span class="pun">=</span> <span class="kwd">has_error_code</span><span class="pun">&lt;</span><span class="kwd">T</span><span class="pun">&gt;</span><span class="pun">::</span><span class="kwd">value</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::trait::has_error_code_v"></a>
+<pre><code class="standardese-language-cpp"><span class="typ dec var fun">template</span> <span class="pun">&lt;</span><span class="typ dec var fun">class</span> <span class="kwd">T</span><span class="pun">&gt;</span><span class="typ dec var fun">constexpr</span> <span class="typ dec var fun">bool</span> <span class="kwd">has_error_code_v</span> <span class="pun">=</span> <span class="kwd">has_error_code</span><span class="pun">&lt;</span><span class="kwd">T</span><span class="pun">&gt;</span><span class="pun">::</span><span class="kwd">value</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Trait for whether a free function <code>make_error_code(T)</code> returning a <code>std::error_code</code> exists or not.</p>
@@ -742,7 +749,8 @@
 
 <h3 id="struct-outcome-v2-xxx-trait-has-exception-ptr">Struct <code>outcome_v2_xxx::trait::has_exception_ptr</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::trait::has_exception_ptr&lt;T&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::trait::has_exception_ptr&lt;T&gt;"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
 <span class="kwd">struct</span> <span class="typ dec var fun">has_exception_ptr</span>
 <span class="pun">{</span>
 <span class="pun">};</span>
@@ -756,7 +764,8 @@
 
 <h3 id="unexposed-entity-outcome-v2-xxx-trait-has-exception-ptr-v">Unexposed entity <code>outcome_v2_xxx::trait::has_exception_ptr_v</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::trait::has_exception_ptr_v"></a><pre><code class="standardese-language-cpp"><span class="typ dec var fun">template</span> <span class="pun">&lt;</span><span class="typ dec var fun">class</span> <span class="kwd">T</span><span class="pun">&gt;</span><span class="typ dec var fun">constexpr</span> <span class="typ dec var fun">bool</span> <span class="kwd">has_exception_ptr_v</span> <span class="pun">=</span> <span class="kwd">has_exception_ptr</span><span class="pun">&lt;</span><span class="kwd">T</span><span class="pun">&gt;</span><span class="pun">::</span><span class="kwd">value</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::trait::has_exception_ptr_v"></a>
+<pre><code class="standardese-language-cpp"><span class="typ dec var fun">template</span> <span class="pun">&lt;</span><span class="typ dec var fun">class</span> <span class="kwd">T</span><span class="pun">&gt;</span><span class="typ dec var fun">constexpr</span> <span class="typ dec var fun">bool</span> <span class="kwd">has_exception_ptr_v</span> <span class="pun">=</span> <span class="kwd">has_exception_ptr</span><span class="pun">&lt;</span><span class="kwd">T</span><span class="pun">&gt;</span><span class="pun">::</span><span class="kwd">value</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Trait for whether a free function <code>make_exception_ptr(T)</code> returning a <code>std::exception_ptr</code> exists or not.</p>
@@ -767,7 +776,8 @@
 
 <h3 id="struct-outcome-v2-xxx-success-type">Struct <code>outcome_v2_xxx::success_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
 <span class="kwd">struct</span> <span class="typ dec var fun">success_type</span>
 <span class="pun">{</span>
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E::value_type"><span class="typ dec var fun">value_type</span></a> <span class="pun">=</span> <span class="typ dec var fun">T</span><span class="pun">;</span></p>
@@ -799,7 +809,8 @@
 
 <h3 id="type-alias-value-type">Type alias <code>value_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::value_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">value_type</span> <span class="pun">=</span> <span class="typ dec var fun">T</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::value_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">value_type</span> <span class="pun">=</span> <span class="typ dec var fun">T</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the successful state.</p>
@@ -808,7 +819,8 @@
 
 <h3 id="constructor-success-type">Constructor <code>success_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type()"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">success_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type()"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">success_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Default constructor</p>
@@ -817,7 +829,8 @@
 
 <h3 id="constructor-success-type-1">Constructor <code>success_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type(constsuccess_type&lt;T&gt;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">success_type</span><span class="pun">(</span>const success_type&lt;T&gt;<span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type(constsuccess_type&lt;T&gt;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">success_type</span><span class="pun">(</span>const success_type&lt;T&gt;<span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Copy constructor</p>
@@ -826,7 +839,8 @@
 
 <h3 id="constructor-success-type-2">Constructor <code>success_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type(success_type&lt;T&gt;&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">success_type</span><span class="pun">(</span>success_type&lt;T&gt;<span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type(success_type&lt;T&gt;&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">success_type</span><span class="pun">(</span>success_type&lt;T&gt;<span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Move constructor</p>
@@ -835,7 +849,8 @@
 
 <h3 id="constructor-success-type-3">Constructor <code>success_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type&lt;U&gt;(U&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::success_type&lt;U&gt;(U&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="typ dec var fun">success_type</span><span class="pun">(</span><span class="typ dec var fun">U</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -845,7 +860,8 @@
 
 <h3 id="function-value">Function <code>value</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::value()&amp;"></a><pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E::value_type"><span class="typ dec var fun">value_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">value</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+<p><a id="standardese-outcome_v2_xxx::success_type&lt;T&gt;::value()&amp;"></a>
+<pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E::value_type"><span class="typ dec var fun">value_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">value</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
 <p>(2) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E::value_type"><span class="typ dec var fun">value_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">value</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
@@ -872,7 +888,8 @@
 
 <h3 id="struct-outcome-v2-xxx-success-type-1">Struct <code>outcome_v2_xxx::success_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&gt;"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="pun">&gt;</span>
 <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E"><span class="typ dec var fun">success_type</span></a><span class="pun">&lt;</span><span class="typ dec var fun">void</span><span class="pun">&gt;</span>
 <span class="pun">{</span>
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::success_type%3E::value_type"><span class="typ dec var fun">value_type</span></a> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span>
@@ -883,7 +900,8 @@
 
 <h3 id="type-alias-value-type-1">Type alias <code>value_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success_type&gt;::value_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">value_type</span> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::success_type&gt;::value_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">value_type</span> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the successful state.</p>
@@ -894,7 +912,8 @@
 
 <h3 id="function-outcome-v2-xxx-success">Function <code>outcome_v2_xxx::success</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success()"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E"><span class="typ dec var fun">success_type</span></a><span class="pun">&lt;</span>void<span class="pun">&gt;</span> <span class="typ dec var fun">success</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::success()"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E"><span class="typ dec var fun">success_type</span></a><span class="pun">&lt;</span>void<span class="pun">&gt;</span> <span class="typ dec var fun">success</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Returns type sugar for implicitly constructing a <code>result&lt;T&gt;</code> with a successful state, default constructing <code>T</code> if necessary.</p>
@@ -903,7 +922,8 @@
 
 <h3 id="function-outcome-v2-xxx-success-1">Function <code>outcome_v2_xxx::success</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::success&lt;T&gt;(T&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::success&lt;T&gt;(T&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::success_type%3CT%3E"><span class="typ dec var fun">success_type</span></a><span class="pun">&lt;</span>std::decay_t&lt;T&gt;<span class="pun">&gt;</span> <span class="typ dec var fun">success</span><span class="pun">(</span><span class="typ dec var fun">T</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -915,7 +935,8 @@
 
 <h3 id="struct-outcome-v2-xxx-failure-type">Struct <code>outcome_v2_xxx::failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span> <span class="pun">=</span> std::error_code<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">E</span> <span class="pun">=</span> void<span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span> <span class="pun">=</span> std::error_code<span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">E</span> <span class="pun">=</span> void<span class="pun">&gt;</span>
 <span class="kwd">struct</span> <span class="typ dec var fun">failure_type</span>
 <span class="pun">{</span>
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::error_type"><span class="typ dec var fun">error_type</span></a> <span class="pun">=</span> <span class="typ dec var fun">EC</span><span class="pun">;</span></p>
@@ -941,13 +962,15 @@
 &lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;error_type&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;doc_result_error_observers.md#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::error()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;error&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;error_type&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;doc_result_error_observers.md#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::error()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;error&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
 
-&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&amp;#x2F;&amp;#x2F;=== exception ===&amp;#x2F;&amp;#x2F;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception_type&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;&amp;#x27;hidden&amp;#x27;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;a href=&quot;doc_outcome_exception_observers.md#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;&amp;#x27;hidden&amp;#x27;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;a href=&quot;doc_outcome_exception_observers.md#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;&amp;#x27;hidden&amp;#x27;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;doc_outcome_exception_observers.md#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;&amp;#x27;hidden&amp;#x27;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;doc_outcome_exception_observers.md#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception()&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;exception&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
 </code></pre>
 
 <p><span class="pun">};</span>
@@ -957,7 +980,8 @@
 
 <h3 id="type-alias-error-type">Type alias <code>error_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::error_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">error_type</span> <span class="pun">=</span> <span class="typ dec var fun">EC</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::error_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">error_type</span> <span class="pun">=</span> <span class="typ dec var fun">EC</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the error code</p>
@@ -966,7 +990,8 @@
 
 <h3 id="type-alias-exception-type">Type alias <code>exception_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::exception_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">exception_type</span> <span class="pun">=</span> <span class="typ dec var fun">E</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::exception_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">exception_type</span> <span class="pun">=</span> <span class="typ dec var fun">E</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the exception</p>
@@ -975,7 +1000,8 @@
 
 <h3 id="constructor-failure-type">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type()"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type()"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Default constructor</p>
@@ -984,7 +1010,8 @@
 
 <h3 id="constructor-failure-type-1">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type(constfailure_type&lt;EC,E&gt;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span>const failure_type&lt;EC, E&gt;<span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type(constfailure_type&lt;EC,E&gt;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span>const failure_type&lt;EC, E&gt;<span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Copy constructor</p>
@@ -993,7 +1020,8 @@
 
 <h3 id="constructor-failure-type-2">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type(failure_type&lt;EC,E&gt;&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span>failure_type&lt;EC, E&gt;<span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type(failure_type&lt;EC,E&gt;&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span>failure_type&lt;EC, E&gt;<span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Move constructor</p>
@@ -1002,7 +1030,8 @@
 
 <h3 id="constructor-failure-type-3">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type&lt;U,V&gt;(U&amp;&amp;,V&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::failure_type&lt;U,V&gt;(U&amp;&amp;,V&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">V</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="typ dec var fun">U</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">u</span><span class="pun">,</span> <span class="typ dec var fun">V</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -1012,7 +1041,8 @@
 
 <h3 id="function-error">Function <code>error</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::error()&amp;"></a><pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::error_type"><span class="typ dec var fun">error_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::error()&amp;"></a>
+<pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::error_type"><span class="typ dec var fun">error_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
 <p>(2) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::error_type"><span class="typ dec var fun">error_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
@@ -1035,11 +1065,38 @@
 
 <hr />
 
+<h3 id="function-exception">Function <code>exception</code></h3>
+
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC,E&gt;::exception()&amp;"></a>
+<pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type"><span class="typ dec var fun">exception_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+
+<p>(2) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type"><span class="typ dec var fun">exception_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+
+<p>(3) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type"><span class="typ dec var fun">exception_type</span></a><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span></p>
+
+<p>(4) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E::exception_type"><span class="typ dec var fun">exception_type</span></a><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span></p>
+
+<p>(5) <span class="kwd">constexpr</span> <span class="typ dec var fun">&#x27;hidden&#x27;</span><span class="pun">&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+
+<p>(6) <span class="kwd">constexpr</span> <span class="typ dec var fun">&#x27;hidden&#x27;</span><span class="pun">&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+
+<p>(7) <span class="kwd">constexpr</span> <span class="typ dec var fun">&#x27;hidden&#x27;</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span></p>
+
+<p>(8) <span class="kwd">constexpr</span> <span class="typ dec var fun">&#x27;hidden&#x27;</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span>
+</code></pre></p>
+
+<p>Access exception.</p>
+
+<p><em>Returns:</em> Reference to the held <code>exception_type</code> according to overload.</p>
+
+<hr />
+
 <hr />
 
 <h3 id="struct-outcome-v2-xxx-failure-type-1">Struct <code>outcome_v2_xxx::failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span><span class="pun">&gt;</span>
 <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span><span class="kwd">EC</span><span class="pun">,</span> <span class="typ dec var fun">void</span><span class="pun">&gt;</span>
 <span class="pun">{</span>
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC%3E::error_type"><span class="typ dec var fun">error_type</span></a> <span class="pun">=</span> <span class="typ dec var fun">EC</span><span class="pun">;</span></p>
@@ -1069,7 +1126,8 @@
 
 <h3 id="type-alias-error-type-1">Type alias <code>error_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::error_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">error_type</span> <span class="pun">=</span> <span class="typ dec var fun">EC</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::error_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">error_type</span> <span class="pun">=</span> <span class="typ dec var fun">EC</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the error code</p>
@@ -1078,7 +1136,8 @@
 
 <h3 id="type-alias-exception-type-1">Type alias <code>exception_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::exception_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">exception_type</span> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::exception_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">exception_type</span> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the exception</p>
@@ -1087,7 +1146,8 @@
 
 <h3 id="constructor-failure-type-4">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type()"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type()"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Default constructor</p>
@@ -1096,7 +1156,8 @@
 
 <h3 id="constructor-failure-type-5">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type(failure_type&lt;type-parameter-0-0,void&gt;const&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>type-parameter-0-0, void<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type(failure_type&lt;type-parameter-0-0,void&gt;const&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>type-parameter-0-0, void<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Copy constructor</p>
@@ -1105,7 +1166,8 @@
 
 <h3 id="constructor-failure-type-6">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type(failure_type&lt;type-parameter-0-0,void&gt;&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>type-parameter-0-0, void<span class="pun">&gt;</span><span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type(failure_type&lt;type-parameter-0-0,void&gt;&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>type-parameter-0-0, void<span class="pun">&gt;</span><span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Move constructor</p>
@@ -1114,7 +1176,8 @@
 
 <h3 id="constructor-failure-type-7">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type&lt;U&gt;(U&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::failure_type&lt;U&gt;(U&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="typ dec var fun">U</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">u</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -1124,7 +1187,8 @@
 
 <h3 id="function-error-1">Function <code>error</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::error()&amp;"></a><pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC%3E::error_type"><span class="typ dec var fun">error_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;EC&gt;::error()&amp;"></a>
+<pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC%3E::error_type"><span class="typ dec var fun">error_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
 <p>(2) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC%3E::error_type"><span class="typ dec var fun">error_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
@@ -1143,7 +1207,8 @@
 
 <h3 id="struct-outcome-v2-xxx-failure-type-2">Struct <code>outcome_v2_xxx::failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">E</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">E</span><span class="pun">&gt;</span>
 <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span><span class="typ dec var fun">void</span><span class="pun">,</span> <span class="kwd">E</span><span class="pun">&gt;</span>
 <span class="pun">{</span>
     <span class="kwd">using</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CE%3E::error_type"><span class="typ dec var fun">error_type</span></a> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span></p>
@@ -1173,7 +1238,8 @@
 
 <h3 id="type-alias-error-type-2">Type alias <code>error_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::error_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">error_type</span> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::error_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">error_type</span> <span class="pun">=</span> <span class="kwd">void</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the error code</p>
@@ -1182,7 +1248,8 @@
 
 <h3 id="type-alias-exception-type-2">Type alias <code>exception_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::exception_type"></a><pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">exception_type</span> <span class="pun">=</span> <span class="typ dec var fun">E</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::exception_type"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">using</span> <span class="typ dec var fun">exception_type</span> <span class="pun">=</span> <span class="typ dec var fun">E</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>The type of the exception</p>
@@ -1191,7 +1258,8 @@
 
 <h3 id="constructor-failure-type-8">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type()"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type()"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Default constructor</p>
@@ -1200,7 +1268,8 @@
 
 <h3 id="constructor-failure-type-9">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type(failure_type&lt;void,type-parameter-0-0&gt;const&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>void, type-parameter-0-0<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type(failure_type&lt;void,type-parameter-0-0&gt;const&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>void, type-parameter-0-0<span class="pun">&gt;</span> <span class="kwd">const</span><span class="pun">&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Copy constructor</p>
@@ -1209,7 +1278,8 @@
 
 <h3 id="constructor-failure-type-10">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type(failure_type&lt;void,type-parameter-0-0&gt;&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>void, type-parameter-0-0<span class="pun">&gt;</span><span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type(failure_type&lt;void,type-parameter-0-0&gt;&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>void, type-parameter-0-0<span class="pun">&gt;</span><span class="pun">&amp;&amp;</span><span class="pun">)</span> <span class="pun">=</span> <span class="kwd">default</span><span class="pun">;</span>
 </code></pre></p>
 
 <p>Move constructor</p>
@@ -1218,7 +1288,8 @@
 
 <h3 id="constructor-failure-type-11">Constructor <code>failure_type</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type&lt;V&gt;(V&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">V</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::failure_type&lt;V&gt;(V&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">V</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="typ dec var fun">failure_type</span><span class="pun">(</span><span class="typ dec var fun">V</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -1226,9 +1297,10 @@
 
 <hr />
 
-<h3 id="function-exception">Function <code>exception</code></h3>
+<h3 id="function-exception-1">Function <code>exception</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::exception()&amp;"></a><pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CE%3E::exception_type"><span class="typ dec var fun">exception_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+<p><a id="standardese-outcome_v2_xxx::failure_type&lt;E&gt;::exception()&amp;"></a>
+<pre><code class="standardese-language-cpp">(1) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CE%3E::exception_type"><span class="typ dec var fun">exception_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
 <p>(2) <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CE%3E::exception_type"><span class="typ dec var fun">exception_type</span></a><span class="pun">&amp;</span> <span class="typ dec var fun">exception</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
 
@@ -1247,7 +1319,8 @@
 
 <h3 id="function-outcome-v2-xxx-failure">Function <code>outcome_v2_xxx::failure</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure&lt;EC&gt;(EC&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure&lt;EC&gt;(EC&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>std::decay_t&lt;EC&gt;<span class="pun">&gt;</span> <span class="typ dec var fun">failure</span><span class="pun">(</span><span class="typ dec var fun">EC</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -1259,7 +1332,8 @@
 
 <h3 id="function-outcome-v2-xxx-failure-1">Function <code>outcome_v2_xxx::failure</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::failure&lt;EC,E&gt;(EC&amp;&amp;,E&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">E</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::failure&lt;EC,E&gt;(EC&amp;&amp;,E&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">EC</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">E</span><span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <a href="#standardese-outcome_v2_xxx::failure_type%3CEC,E%3E"><span class="typ dec var fun">failure_type</span></a><span class="pun">&lt;</span>std::decay_t&lt;EC&gt;, std::decay_t&lt;E&gt;<span class="pun">&gt;</span> <span class="typ dec var fun">failure</span><span class="pun">(</span><span class="typ dec var fun">EC</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">,</span> <span class="typ dec var fun">E</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">w</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 

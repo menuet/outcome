@@ -582,7 +582,8 @@
 
 <h1 id="header-file-try-hpp">Header file <code>try.hpp</code></h1>
 
-<p><a id="standardese-try.hpp"></a><pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
+<p><a id="standardese-try.hpp"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
 <span class="pun">{</span>
     <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
     <span class="kwd">auto</span> <a href="#standardese-outcome_v2_xxx::try_operation_return_as%3CT%3E(T&amp;&amp;)"><span class="typ dec var fun">try_operation_return_as</span></a><span class="pun">(</span><span class="typ dec var fun">T</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
@@ -599,7 +600,8 @@
 
 <h3 id="function-outcome-v2-xxx-try-operation-return-as">Function <code>outcome_v2_xxx::try_operation_return_as</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::try_operation_return_as&lt;T&gt;(T&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::try_operation_return_as&lt;T&gt;(T&amp;&amp;)"></a>
+<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">&gt;</span>
 <span class="kwd">auto</span> <span class="typ dec var fun">try_operation_return_as</span><span class="pun">(</span><span class="typ dec var fun">T</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre></p>
 
@@ -613,7 +615,8 @@
 
 <h2 id="macro-outcome-tryv">Macro <code>OUTCOME_TRYV</code></h2>
 
-<p><a id="standardese-OUTCOME_TRYV"></a><pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">OUTCOME_TRYV</span><span class="pre">(</span><span class="pre">&hellip;</span><span class="pre">)</span> <span class="pre">OUTCOME_TRYV2(OUTCOME_TRY_UNIQUE_NAME, <strong>VA_ARGS</strong>)</span>
+<p><a id="standardese-OUTCOME_TRYV"></a>
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">OUTCOME_TRYV</span><span class="pre">(</span><span class="pre">&hellip;</span><span class="pre">)</span> <span class="pre">OUTCOME_TRYV2(OUTCOME_TRY_UNIQUE_NAME, <strong>VA_ARGS</strong>)</span>
 </code></pre></p>
 
 <p>If the outcome returned by expression … is not valued, propagate any failure by immediately returning that failure state immediately</p>
@@ -622,7 +625,8 @@
 
 <h2 id="macro-outcome-tryx">Macro <code>OUTCOME_TRYX</code></h2>
 
-<p><a id="standardese-OUTCOME_TRYX"></a><pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">OUTCOME_TRYX</span><span class="pre">(</span><span class="pre">&hellip;</span><span class="pre">)</span> <span class="pre">({ auto &amp;&amp;res = (<strong>VA_ARGS</strong>); if(!res.has_value()) return OUTCOME_V2_NAMESPACE::try_operation_return_as(std::forward&lt;decltype(res)&gt;(res)); std::forward&lt;decltype(res)&gt;(res).value(); })</span>
+<p><a id="standardese-OUTCOME_TRYX"></a>
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">OUTCOME_TRYX</span><span class="pre">(</span><span class="pre">&hellip;</span><span class="pre">)</span> <span class="pre">({ auto &amp;&amp;res = (<strong>VA_ARGS</strong>); if(!res.has_value()) return OUTCOME_V2_NAMESPACE::try_operation_return_as(std::forward&lt;decltype(res)&gt;(res)); std::forward&lt;decltype(res)&gt;(res).value(); })</span>
 </code></pre></p>
 
 <p>If the outcome returned by expression … is not valued, propagate any failure by immediately returning that failure state immediately, else become the unwrapped value as an expression. This makes <code>OUTCOME_TRYX(expr)</code> an expression which can be used exactly like the <code>try</code> operator in other languages.</p>
@@ -633,7 +637,8 @@
 
 <h2 id="macro-outcome-try">Macro <code>OUTCOME_TRY</code></h2>
 
-<p><a id="standardese-OUTCOME_TRY"></a><pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">OUTCOME_TRY</span><span class="pre">(</span><span class="pre">v,&hellip;</span><span class="pre">)</span> <span class="pre">OUTCOME_TRY2(OUTCOME_TRY_UNIQUE_NAME, v, <strong>VA_ARGS</strong>)</span>
+<p><a id="standardese-OUTCOME_TRY"></a>
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">OUTCOME_TRY</span><span class="pre">(</span><span class="pre">v,&hellip;</span><span class="pre">)</span> <span class="pre">OUTCOME_TRY2(OUTCOME_TRY_UNIQUE_NAME, v, <strong>VA_ARGS</strong>)</span>
 </code></pre></p>
 
 <p>If the outcome returned by expression … is not valued, propagate any failure by immediately returning that failure immediately, else set <em>v</em> to the unwrapped value.</p>
