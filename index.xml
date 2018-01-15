@@ -708,15 +708,6 @@ Declares a C struct representation of result&amp;lt;R, S&amp;gt;.</description>
     </item>
     
     <item>
-      <title></title>
-      <link>https://ned14.github.io/outcome/reference/doc_common/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ned14.github.io/outcome/reference/doc_common/</guid>
-      <description>Header file common.hpp namespace outcome_v2_xxx { namespace policy { } }</description>
-    </item>
-    
-    <item>
       <title>Acknowledgements</title>
       <link>https://ned14.github.io/outcome/credits/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

@@ -466,11 +466,6 @@
     </li>
         </ul>
     </li>
-      <li data-nav-id="/outcome/reference/doc_common/" class="dd-item">
-        <a href="/outcome/reference/doc_common/">
-          <span></span>
-        </a>
-    </li>
         </ul>
     </li>
     <li data-nav-id="/outcome/faq/" class="dd-item">
@@ -664,7 +659,7 @@
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx::policy::error_code&lt;T&gt;(T&amp;&amp;)"><code>error_code</code></a> &mdash; Used by policies to extract a <code>std::error_code</code> from some input <code>T</code> via ADL discovery of some <code>make_error_code(T)</code> function.</p></li>
 
-<li><p><a href="policies/outcome_error_code_throw_as_system_error#standardese-outcome_v2_xxx::policy::error_code_throw_as_system_error&lt;T,EC,E"><code>error_code_throw_as_system_error</code></a> &mdash; Policy interpreting <code>EC</code> as a type for which <code>trait::has_error_code_v&lt;EC&gt;</code> is true.</p></li>
+<li><p><a href="policies/result_error_code_throw_as_system_error#standardese-outcome_v2_xxx::policy::error_code_throw_as_system_error&lt;T,EC"><code>error_code_throw_as_system_error</code></a> &mdash; Policy interpreting <code>EC</code> as a type for which <code>trait::has_error_code_v&lt;EC&gt;</code> is true.</p></li>
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx::policy::exception_ptr&lt;T&gt;(T&amp;&amp;)"><code>exception_ptr</code></a> &mdash; Used by policies to extract a <code>std::exception_ptr</code> from some input <code>T</code> via ADL discovery of some <code>make_exception_ptr(T)</code> function.</p></li>
 
@@ -742,7 +737,7 @@
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx::success_type&lt;T"><code>success_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a successful state.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::swap&lt;R,S,P,N&gt;(outcome&lt;R,S,P,N&gt;&amp;,outcome&lt;R,S,P,N&gt;&amp;)"><code>swap</code></a> &mdash; Specialise swap for outcome.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx::swap&lt;R,S,P&gt;(result&lt;R,S,P&gt;&amp;,result&lt;R,S,P&gt;&amp;)"><code>swap</code></a> &mdash; Specialise swap for result.</p></li>
 
 <li><p><a href="try#standardese-outcome_v2_xxx::try_operation_return_as&lt;T&gt;(T&amp;&amp;)"><code>try_operation_return_as</code></a> &mdash; Customisation point for changing what the <code>OUTCOME_TRY</code> macros do. This function defaults to returning <code>std::forward&lt;T&gt;(v).as_failure()</code>.</p></li>
 
