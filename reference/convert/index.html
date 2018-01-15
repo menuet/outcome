@@ -587,21 +587,21 @@
 
 <h1 id="header-file-convert-hpp">Header file <code>convert.hpp</code></h1>
 
-<p><a id="standardese-convert.hpp"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
+<p><a id="standardese-convert.hpp"></a><pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
 <span class="pun">{</span>
     <span class="kwd">namespace</span> <a href="standardese_entities.md#standardese-outcome_v2_xxx::convert"><span class="typ dec var fun">convert</span></a>
     <span class="pun">{</span>
-        <span class="typ dec var fun">template</span> <span class="pun">&lt;</span><span class="typ dec var fun">class</span> <span class="kwd">U</span><span class="pun">&gt;</span><span class="typ dec var fun">static</span> <span class="typ dec var fun">constexpr</span> <span class="typ dec var fun">bool</span> <span class="kwd">ValueOrNone</span> <span class="pun">=</span> <span class="kwd">detail</span><span class="pun">::</span><span class="kwd">ValueOrNone</span><span class="pun">&lt;</span><span class="kwd">U</span><span class="pun">&gt;</span><span class="pun">;</span>
+        <span class="typ dec var fun">template</span> <span class="pun">&lt;</span><span class="typ dec var fun">class</span> <span class="kwd">U</span><span class="pun">&gt;</span><span class="typ dec var fun">static</span> <span class="typ dec var fun">constexpr</span> <span class="typ dec var fun">bool</span> <span class="kwd">ValueOrNone</span> <span class="pun">=</span> <span class="kwd">detail</span><span class="pun">::</span><span class="kwd">ValueOrNone</span><span class="pun">&lt;</span><span class="kwd">U</span><span class="pun">&gt;</span><span class="pun">;</span></p>
 
-        <span class="typ dec var fun">template</span> <span class="pun">&lt;</span><span class="typ dec var fun">class</span> <span class="kwd">U</span><span class="pun">&gt;</span><span class="typ dec var fun">static</span> <span class="typ dec var fun">constexpr</span> <span class="typ dec var fun">bool</span> <span class="kwd">ValueOrError</span> <span class="pun">=</span> <span class="kwd">detail</span><span class="pun">::</span><span class="kwd">ValueOrError</span><span class="pun">&lt;</span><span class="kwd">U</span><span class="pun">&gt;</span><span class="pun">;</span>
+<pre><code>    &lt;span class=&quot;typ dec var fun&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;U&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;ValueOrError&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;detail&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;ValueOrError&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;U&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
 
-        <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">&gt;</span>
-        <span class="kwd">struct</span> <a href="#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E"><span class="typ dec var fun">value_or_error</span></a><span class="pun">;</span>
-    <span class="pun">}</span>
-<span class="pun">}</span>
+    &lt;span class=&quot;kwd&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;U&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;kwd&quot;&gt;struct&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;value_or_error&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;pun&quot;&gt;}&lt;/span&gt;
 </code></pre>
+
+<p><span class="pun">}</span>
+</code></pre></p>
 
 <p><a id="standardese-outcome_v2_xxx"></a></p>
 
@@ -609,19 +609,19 @@
 
 <h3 id="struct-outcome-v2-xxx-convert-value-or-error">Struct <code>outcome_v2_xxx::convert::value_or_error</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">T</span><span class="pun">,</span> <span class="kwd">class</span> <span class="typ dec var fun">U</span><span class="pun">&gt;</span>
 <span class="kwd">struct</span> <span class="typ dec var fun">value_or_error</span>
 <span class="pun">{</span>
-    <span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">bool</span> <span class="kwd">const</span> <a href="#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E::enable_result_inputs"><span class="typ dec var fun">enable_result_inputs</span></a><span class="pun">;</span>
+    <span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">bool</span> <span class="kwd">const</span> <a href="#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E::enable_result_inputs"><span class="typ dec var fun">enable_result_inputs</span></a><span class="pun">;</span></p>
 
-    <span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">bool</span> <span class="kwd">const</span> <a href="#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E::enable_outcome_inputs"><span class="typ dec var fun">enable_outcome_inputs</span></a><span class="pun">;</span>
+<pre><code>&lt;span class=&quot;kwd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E::enable_outcome_inputs&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;enable_outcome_inputs&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
 
-    <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">X</span><span class="pun">,</span> <span class="kwd">typename</span> <span class="pun">=</span> std::enable_if_t&lt;std::is_same&lt;U,std::decay_t&lt;X&gt;&gt;::value&amp;&amp;ValueOrError&lt;U&gt;&amp;&amp;(std::is_void&lt;typename std::decay_t&lt;X&gt;::value_type&gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&lt;typename T::value_type,typename std::decay_t&lt;X&gt;::value_type&gt;)&amp;&amp;(std::is_void&lt;typename std::decay_t&lt;X&gt;::error_type&gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&lt;typename T::error_type,typename std::decay_t&lt;X&gt;::error_type&gt;)&gt;<span class="pun">&gt;</span>
-    <span class="kwd">constexpr</span> <span class="typ dec var fun">T</span> <a href="#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E::operator()%3CX,%3E(X&amp;&amp;)"><span class="typ dec var fun">operator()</span></a><span class="pun">(</span><span class="typ dec var fun">X</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
-<span class="pun">};</span>
+&lt;span class=&quot;kwd&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;=&lt;/span&gt; std::enable_if_t&amp;lt;std::is_same&amp;lt;U,std::decay_t&amp;lt;X&amp;gt;&amp;gt;::value&amp;amp;&amp;amp;ValueOrError&amp;lt;U&amp;gt;&amp;amp;&amp;amp;(std::is_void&amp;lt;typename std::decay_t&amp;lt;X&amp;gt;::value_type&amp;gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&amp;lt;typename T::value_type,typename std::decay_t&amp;lt;X&amp;gt;::value_type&amp;gt;)&amp;amp;&amp;amp;(std::is_void&amp;lt;typename std::decay_t&amp;lt;X&amp;gt;::error_type&amp;gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&amp;lt;typename T::error_type,typename std::decay_t&amp;lt;X&amp;gt;::error_type&amp;gt;)&amp;gt;&lt;span class=&quot;pun&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;kwd&quot;&gt;constexpr&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;T&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::convert::value_or_error%3CT,U%3E::operator()%3CX,%3E(X&amp;amp;&amp;amp;)&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;operator()&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
 </code></pre>
+
+<p><span class="pun">};</span>
+</code></pre></p>
 
 <p>Default converter for types matching the <code>ValueOrError</code> concept.</p>
 
@@ -629,10 +629,8 @@
 
 <h3 id="variable-enable-result-inputs">Variable <code>enable_result_inputs</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;::enable_result_inputs"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">bool</span> <span class="kwd">const</span> <span class="typ dec var fun">enable_result_inputs</span><span class="pun">;</span>
-</code></pre>
+<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;::enable_result_inputs"></a><pre><code class="standardese-language-cpp"><span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">bool</span> <span class="kwd">const</span> <span class="typ dec var fun">enable_result_inputs</span><span class="pun">;</span>
+</code></pre></p>
 
 <p>False to indicate that this converter wants <code>result</code>/<code>outcome</code> to reject all other <code>result</code></p>
 
@@ -640,10 +638,8 @@
 
 <h3 id="variable-enable-outcome-inputs">Variable <code>enable_outcome_inputs</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;::enable_outcome_inputs"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">bool</span> <span class="kwd">const</span> <span class="typ dec var fun">enable_outcome_inputs</span><span class="pun">;</span>
-</code></pre>
+<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;::enable_outcome_inputs"></a><pre><code class="standardese-language-cpp"><span class="kwd">static</span> <span class="kwd">constexpr</span> <span class="kwd">bool</span> <span class="kwd">const</span> <span class="typ dec var fun">enable_outcome_inputs</span><span class="pun">;</span>
+</code></pre></p>
 
 <p>False to indicate that this converter wants <code>outcome</code> to reject all other <code>outcome</code></p>
 
@@ -651,11 +647,9 @@
 
 <h3 id="function-operator">Function <code>operator()</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;::operator()&lt;X,&gt;(X&amp;&amp;)"></a></p>
-
-<pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">X</span><span class="pun">,</span> <span class="kwd">typename</span> <span class="pun">=</span> std::enable_if_t&lt;std::is_same&lt;U,std::decay_t&lt;X&gt;&gt;::value&amp;&amp;ValueOrError&lt;U&gt;&amp;&amp;(std::is_void&lt;typename std::decay_t&lt;X&gt;::value_type&gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&lt;typename T::value_type,typename std::decay_t&lt;X&gt;::value_type&gt;)&amp;&amp;(std::is_void&lt;typename std::decay_t&lt;X&gt;::error_type&gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&lt;typename T::error_type,typename std::decay_t&lt;X&gt;::error_type&gt;)&gt;<span class="pun">&gt;</span>
+<p><a id="standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U&gt;::operator()&lt;X,&gt;(X&amp;&amp;)"></a><pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">X</span><span class="pun">,</span> <span class="kwd">typename</span> <span class="pun">=</span> std::enable_if_t&lt;std::is_same&lt;U,std::decay_t&lt;X&gt;&gt;::value&amp;&amp;ValueOrError&lt;U&gt;&amp;&amp;(std::is_void&lt;typename std::decay_t&lt;X&gt;::value_type&gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&lt;typename T::value_type,typename std::decay_t&lt;X&gt;::value_type&gt;)&amp;&amp;(std::is_void&lt;typename std::decay_t&lt;X&gt;::error_type&gt;::value||outcome_v2_xxx::detail::is_explicitly_constructible&lt;typename T::error_type,typename std::decay_t&lt;X&gt;::error_type&gt;)&gt;<span class="pun">&gt;</span>
 <span class="kwd">constexpr</span> <span class="typ dec var fun">T</span> <span class="typ dec var fun">operator()</span><span class="pun">(</span><span class="typ dec var fun">X</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
-</code></pre>
+</code></pre></p>
 
 <p>Default converter for types matching the <code>ValueOrError</code> concept.</p>
 
