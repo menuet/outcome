@@ -1060,8 +1060,7 @@ result&amp;lt;R, S, NoValuePolicy&amp;gt;&lt;span class=&quot;pun&quot;&gt;&amp;
  is true, then <code>throw std::system_error(error()|make_error_code(error()))</code> [<a href="https://ned14.github.io/outcome/reference/policies/result_error_code_throw_as_system_error" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> policy::error_code_throw_as_system_error&lt;S&gt;</a>
 ]</p></li>
 
-<li><p>If <a href="https://ned14.github.io/outcome/reference/success_failure/#unexposed-entity-outcome-v2-xxx-trait-has-exception-ptr-v" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> trait::has_exception_ptr_v&lt;S&gt;</a>
-, then <code>std::rethrow_exception(error()|make_exception_ptr(error()))</code> [<a href="https://ned14.github.io/outcome/reference/policies/result_exception_ptr_rethrow/" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> policy::exception_ptr_rethrow&lt;R, S, void&gt;</a>
+<li><p>If \verbatim {{&lt;api “success_failure/#unexposed-entity-outcome-v2-xxx-trait-has-exception-ptr-v” “trait::has_exception_ptr_v&lt;S&gt;”&gt;}} \end, then <code>std::rethrow_exception(error()|make_exception_ptr(error()))</code> [<a href="https://ned14.github.io/outcome/reference/policies/result_exception_ptr_rethrow/" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> policy::exception_ptr_rethrow&lt;R, S, void&gt;</a>
 ]</p></li>
 
 <li><p>If <code>S</code> is <code>void</code>, call <code>std::terminate()</code> [<a href="https://ned14.github.io/outcome/reference/policies/terminate/" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> policy::terminate</a>
