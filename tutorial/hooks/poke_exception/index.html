@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -582,42 +582,41 @@ including the backtrace. Firstly let us look at the function which synthesises
 the exception ptr:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> error_code_extended
-{
-  <span class="s1770">// Synthesise a custom exception_ptr from the TLS slot and write it into the outcome
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">R</span>&gt; <span class="s3e8">inline</span> <span class="s3ee">void</span> poke_exception(outcome&lt;R&gt; *o)
-  {
-    <span class="s3e8">if</span>(o-&gt;has_error())
-    {
-      extended_error_info *eei = mythreadlocaldata().get(OUTCOME_V2_NAMESPACE::hooks::spare_storage(o));
-      <span class="s3e8">if</span>(eei != <span class="s3e8">nullptr</span>)
-      {
-        <span class="s1770">// Make a custom string for the exception
-</span><span class="s1770"></span>        std::string str(o-&gt;error().message());
-        str.append(<span class="sc1c"></span><span class="sc1c">&#34; [&#34;</span>);
-        <span class="s3ee">char</span> **symbols = ::backtrace_symbols(eei-&gt;backtrace.data(), eei-&gt;items);
-        <span class="s3e8">if</span>(symbols != <span class="s3e8">nullptr</span>)
-        {
-          <span class="s3e8">for</span>(size_t n = 0; n &lt; eei-&gt;items; n++)
-          {
-            <span class="s3e8">if</span>(n &gt; 0)
-            {
-              str.append(<span class="sc1c"></span><span class="sc1c">&#34;; &#34;</span>);
-            }
-            str.append(symbols[n]);
-          }
-          ::free(symbols);  <span class="s1770">// not exception safe, could leak symbols if appending str fails
-</span><span class="s1770"></span>        }
-        str.append(<span class="sc1c"></span><span class="sc1c">&#34;]&#34;</span>);
+<span class="k">namespace</span> <span class="n">error_code_extended</span>
+<span class="p">{</span>
+  <span class="c1">// Synthesise a custom exception_ptr from the TLS slot and write it into the outcome
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">R</span><span class="o">&gt;</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="n">poke_exception</span><span class="p">(</span><span class="n">outcome</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">o</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">o</span><span class="o">-&gt;</span><span class="n">has_error</span><span class="p">())</span>
+    <span class="p">{</span>
+      <span class="n">extended_error_info</span> <span class="o">*</span><span class="n">eei</span> <span class="o">=</span> <span class="n">mythreadlocaldata</span><span class="p">().</span><span class="n">get</span><span class="p">(</span><span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">hooks</span><span class="o">::</span><span class="n">spare_storage</span><span class="p">(</span><span class="n">o</span><span class="p">));</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">eei</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="c1">// Make a custom string for the exception
+</span><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">(</span><span class="n">o</span><span class="o">-&gt;</span><span class="n">error</span><span class="p">().</span><span class="n">message</span><span class="p">());</span>
+        <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34; [&#34;</span><span class="p">);</span>
+        <span class="kt">char</span> <span class="o">**</span><span class="n">symbols</span> <span class="o">=</span> <span class="o">::</span><span class="n">backtrace_symbols</span><span class="p">(</span><span class="n">eei</span><span class="o">-&gt;</span><span class="n">backtrace</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">eei</span><span class="o">-&gt;</span><span class="n">items</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">symbols</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">eei</span><span class="o">-&gt;</span><span class="n">items</span><span class="p">;</span> <span class="n">n</span><span class="o">++</span><span class="p">)</span>
+          <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">{</span>
+              <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;; &#34;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbols</span><span class="p">[</span><span class="n">n</span><span class="p">]);</span>
+          <span class="p">}</span>
+          <span class="o">::</span><span class="n">free</span><span class="p">(</span><span class="n">symbols</span><span class="p">);</span>  <span class="c1">// not exception safe, could leak symbols if appending str fails
+</span><span class="c1"></span>        <span class="p">}</span>
+        <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;]&#34;</span><span class="p">);</span>
 
-        <span class="s1770">// Override the payload/exception member in the outcome with our synthesised exception ptr
-</span><span class="s1770"></span>        OUTCOME_V2_NAMESPACE::hooks::override_outcome_exception(o, std::make_exception_ptr(std::runtime_error(str)));
-      }
-    }
-  }
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L136" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+        <span class="c1">// Override the payload/exception member in the outcome with our synthesised exception ptr
+</span><span class="c1"></span>        <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">hooks</span><span class="o">::</span><span class="n">override_outcome_exception</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">make_exception_ptr</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="n">str</span><span class="p">)));</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L136" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>If the localised <code>outcome</code> being constructed is errored, try fetching the TLS slot

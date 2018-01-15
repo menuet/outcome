@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -574,35 +574,34 @@
 <p>Let&rsquo;s replace <code>err</code> with something likely in many people&rsquo;s code, a strongly typed <code>enum</code>:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-  <span class="s3e8">struct</span> udt
-  {
-    <span class="s3ee">int</span> a{0};
-    <span class="s3e8">explicit</span> udt(<span class="s3ee">int</span> _a)
-        : a(_a)
-    {
-    }
-    udt() = <span class="s3e8">default</span>;
-    <span class="s3ee">int</span> <span class="s3e8">operator</span>*() <span class="s3e8">const</span> { <span class="s3e8">return</span> a; }
-  };
-  <span class="s3e8">enum</span> <span class="s3e8">class</span> <span class="s7d4">err</span>
-  {
-    success,   <span class="s1770">// REMEMBER it is best practice to always put &#34;success&#34;
-</span><span class="s1770"></span>    failure1,  <span class="s1770">// with value 0 as your first item in any error code
-</span><span class="s1770"></span>    failure2   <span class="s1770">// enum, even if you never use it.
-</span><span class="s1770"></span>  };
-  result&lt;udt, err&gt; res(err::failure1);
+  <span class="k">struct</span> <span class="n">udt</span>
+  <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">explicit</span> <span class="nf">udt</span><span class="p">(</span><span class="kt">int</span> <span class="n">_a</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">a</span><span class="p">(</span><span class="n">_a</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="n">udt</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="k">enum</span> <span class="k">class</span> <span class="nc">err</span>
+  <span class="p">{</span>
+    <span class="n">success</span><span class="p">,</span>   <span class="c1">// REMEMBER it is best practice to always put &#34;success&#34;
+</span><span class="c1"></span>    <span class="n">failure1</span><span class="p">,</span>  <span class="c1">// with value 0 as your first item in any error code
+</span><span class="c1"></span>    <span class="n">failure2</span>   <span class="c1">// enum, even if you never use it.
+</span><span class="c1"></span>  <span class="p">};</span>
+  <span class="n">result</span><span class="o">&lt;</span><span class="n">udt</span><span class="p">,</span> <span class="n">err</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="n">err</span><span class="o">::</span><span class="n">failure1</span><span class="p">);</span>
 
-  <span class="s1770">// What happens here? What exception type is thrown?
-</span><span class="s1770"></span>  <span class="s3e8">try</span>
-  {
-    std::cout &lt;&lt; *res.value() &lt;&lt; std::endl;
-  }
-  <span class="s3e8">catch</span>(<span class="s3e8">const</span> std::exception &amp;e)
-  {
-    std::cerr &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;Exception thrown was &#34;</span> &lt;&lt; e.what() &lt;&lt; std::endl;
-  }
-  </code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_enums1.cpp#L32" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// What happens here? What exception type is thrown?
+</span><span class="c1"></span>  <span class="k">try</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">catch</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">exception</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;Exception thrown was &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  </code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_enums1.cpp#L32" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="Interacting with result&lt;T, EC&gt; returning C&#43;&#43; functions from C code.">
 
 
@@ -570,28 +570,27 @@
 languages which can speak the C ABI but not the C++ ABI) is how to interpret C++ exception throws. The answer
 is of course that they cannot, thus requiring one to write C shim code on the C++ side
 of things of the form:</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="s1770">// The API we wish to expose to C
-</span><span class="s1770"></span><span class="s3e8">const</span> <span class="s3ee">char</span> *get_value(<span class="s3ee">double</span> v);
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">// The API we wish to expose to C
+</span><span class="c1"></span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">get_value</span><span class="p">(</span><span class="kt">double</span> <span class="n">v</span><span class="p">);</span>
 
-<span class="s1770">// The C shim function for the C++ get_value() function.
-</span><span class="s1770"></span><span class="s3e8">extern</span> <span class="sc1c"></span><span class="sc1c">&#34;C&#34;</span> <span class="s3ee">int</span> c_get_value(<span class="s3e8">const</span> <span class="s3ee">char</span> **ret, <span class="s3ee">double</span> v)
-{
-  <span class="s3e8">try</span>
-  {
-    *ret = get_value(v);
-    <span class="s3e8">return</span> 0;  <span class="s1770">// success
-</span><span class="s1770"></span>  }
-  <span class="s3e8">catch</span>(<span class="s3e8">const</span> std::range_error &amp;)
-  {
-    <span class="s3e8">return</span> ERANGE;
-  }
-  <span class="s1770">// More catch clauses may go in here ...
-</span><span class="s1770"></span>  <span class="s3e8">catch</span>(...)
-  {
-    <span class="s3e8">return</span> EAGAIN;
-  }
-}</code></pre>
-</div>
+<span class="c1">// The C shim function for the C++ get_value() function.
+</span><span class="c1"></span><span class="k">extern</span> <span class="sa"></span><span class="s">&#34;C&#34;</span> <span class="kt">int</span> <span class="n">c_get_value</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">ret</span><span class="p">,</span> <span class="kt">double</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">try</span>
+  <span class="p">{</span>
+    <span class="o">*</span><span class="n">ret</span> <span class="o">=</span> <span class="n">get_value</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// success
+</span><span class="c1"></span>  <span class="p">}</span>
+  <span class="k">catch</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">range_error</span> <span class="o">&amp;</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="n">ERANGE</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// More catch clauses may go in here ...
+</span><span class="c1"></span>  <span class="k">catch</span><span class="p">(...)</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="n">EAGAIN</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 <p>This is sufficiently painful that most reach for a bindings generator tool like
 <a href="http://www.swig.org/">SWIG</a> to automate this sort of tedious boilerplate generation.
 And this is fine for larger projects, but for smaller projects the cost of

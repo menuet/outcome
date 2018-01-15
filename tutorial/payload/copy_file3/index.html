@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -593,62 +593,60 @@ threw the exact same <code>filesystem_error</code> as the Filesystem TS does.</p
 failing paths is easy:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> filesystem2
-{
-  <span class="s1770">// If we would like Outcome to do something other than the default action (see next
-</span><span class="s1770"></span>  <span class="s1770">// section), we can declare this ADL discovered free function to customise what
-</span><span class="s1770"></span>  <span class="s1770">// to do instead.
-</span><span class="s1770"></span>  <span class="s1770">//
-</span><span class="s1770"></span>  <span class="s1770">// Note that rvalue semantics are propagated internally by Outcome, so if the user
-</span><span class="s1770"></span>  <span class="s1770">// called .value() on a rvalued result, failure_info will be moved rather than
-</span><span class="s1770"></span>  <span class="s1770">// copied from the result. That means we can overload once with value semantics,
-</span><span class="s1770"></span>  <span class="s1770">// and not need to overload for lvalue and rvalue situations unless we really feel
-</span><span class="s1770"></span>  <span class="s1770">// we need to for some reason.
-</span><span class="s1770"></span>  <span class="s3e8">inline</span> <span class="s3ee">void</span> throw_as_system_error_with_payload(failure_info fi)
-  {
-    <span class="s1770">// If the error code is not filesystem related e.g. ENOMEM, throw that as a standard STL exception.
-</span><span class="s1770"></span>    outcome::try_throw_std_exception_from_error(fi.ec);
-    <span class="s1770">// Throw the exact same filesystem_error exception which the throwing copy_file() edition does.
-</span><span class="s1770"></span>    <span class="s3e8">throw</span> filesystem_error(fi.ec.message(), std::move(fi.path1), std::move(fi.path2), fi.ec);
-  }
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/outcome_payload.cpp#L69" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">namespace</span> <span class="n">filesystem2</span>
+<span class="p">{</span>
+  <span class="c1">// If we would like Outcome to do something other than the default action (see next
+</span><span class="c1"></span>  <span class="c1">// section), we can declare this ADL discovered free function to customise what
+</span><span class="c1"></span>  <span class="c1">// to do instead.
+</span><span class="c1"></span>  <span class="c1">//
+</span><span class="c1"></span>  <span class="c1">// Note that rvalue semantics are propagated internally by Outcome, so if the user
+</span><span class="c1"></span>  <span class="c1">// called .value() on a rvalued result, failure_info will be moved rather than
+</span><span class="c1"></span>  <span class="c1">// copied from the result. That means we can overload once with value semantics,
+</span><span class="c1"></span>  <span class="c1">// and not need to overload for lvalue and rvalue situations unless we really feel
+</span><span class="c1"></span>  <span class="c1">// we need to for some reason.
+</span><span class="c1"></span>  <span class="kr">inline</span> <span class="kt">void</span> <span class="n">throw_as_system_error_with_payload</span><span class="p">(</span><span class="n">failure_info</span> <span class="n">fi</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// If the error code is not filesystem related e.g. ENOMEM, throw that as a standard STL exception.
+</span><span class="c1"></span>    <span class="n">outcome</span><span class="o">::</span><span class="n">try_throw_std_exception_from_error</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">);</span>
+    <span class="c1">// Throw the exact same filesystem_error exception which the throwing copy_file() edition does.
+</span><span class="c1"></span>    <span class="k">throw</span> <span class="nf">filesystem_error</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">path1</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">path2</span><span class="p">),</span> <span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/outcome_payload.cpp#L69" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Usage of our new &ldquo;upgraded&rdquo; Filesystem <code>copy_file()</code> might now be as follows:</p>
 
 <p><div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-  <span class="s1770">// Non-throwing use case
-</span><span class="s1770"></span>  <span class="s3e8">auto</span> o = filesystem2::copy_file(<span class="sc1c"></span><span class="sc1c">&#34;dontexist&#34;</span>, <span class="sc1c"></span><span class="sc1c">&#34;alsodontexist&#34;</span>);
-  <span class="s3e8">if</span>(!o)
-  {
-    std::cerr &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;Copy file failed with error &#34;</span> &lt;&lt; o.error().ec.message()                   <span class="s1770">//
-</span><span class="s1770"></span>              &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34; (path1 = &#34;</span> &lt;&lt; o.error().path1 &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;, path2 = &#34;</span> &lt;&lt; o.error().path2 &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;)&#34;</span>  <span class="s1770">//
-</span><span class="s1770"></span>              &lt;&lt; std::endl;
-  }
+  <span class="c1">// Non-throwing use case
+</span><span class="c1"></span>  <span class="k">auto</span> <span class="n">o</span> <span class="o">=</span> <span class="n">filesystem2</span><span class="o">::</span><span class="n">copy_file</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;dontexist&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;alsodontexist&#34;</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">o</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;Copy file failed with error &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">o</span><span class="p">.</span><span class="n">error</span><span class="p">().</span><span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span>                   <span class="c1">//
+</span><span class="c1"></span>              <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34; (path1 = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">o</span><span class="p">.</span><span class="n">error</span><span class="p">().</span><span class="n">path1</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;, path2 = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">o</span><span class="p">.</span><span class="n">error</span><span class="p">().</span><span class="n">path2</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;)&#34;</span>  <span class="c1">//
+</span><span class="c1"></span>              <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
 
-  <span class="s1770">// Throwing use case
-</span><span class="s1770"></span>  <span class="s3e8">try</span>
-  {
-    <span class="s1770">// Try to observe the successful value, thus triggering default actions which invokes
-</span><span class="s1770"></span>    <span class="s1770">// our throw_as_system_error_with_payload() above which then throws filesystem_error
-</span><span class="s1770"></span>    <span class="s1770">// exactly like the Filesystem TS does for its throwing overload.
-</span><span class="s1770"></span>    filesystem2::copy_file(<span class="sc1c"></span><span class="sc1c">&#34;dontexist&#34;</span>, <span class="sc1c"></span><span class="sc1c">&#34;alsodontexist&#34;</span>).value();
-  }
-  <span class="s3e8">catch</span>(<span class="s3e8">const</span> filesystem2::filesystem_error &amp;e)
-  {
-    std::cerr &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;Copy file failed with exception &#34;</span> &lt;&lt; e.what()                 <span class="s1770">//
-</span><span class="s1770"></span>              &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34; (path1 = &#34;</span> &lt;&lt; e.path1() &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;, path2 = &#34;</span> &lt;&lt; e.path2() &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;)&#34;</span>  <span class="s1770">//
-</span><span class="s1770"></span>              &lt;&lt; std::endl;
-  }
-  <span class="s3e8">catch</span>(<span class="s3e8">const</span> std::exception &amp;e)
-  {
-    std::cerr &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;Copy file failed with exception &#34;</span> &lt;&lt; e.what()  <span class="s1770">//
-</span><span class="s1770"></span>              &lt;&lt; std::endl;
-  }
-  </code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/outcome_payload.cpp#L93" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// Throwing use case
+</span><span class="c1"></span>  <span class="k">try</span>
+  <span class="p">{</span>
+    <span class="c1">// Try to observe the successful value, thus triggering default actions which invokes
+</span><span class="c1"></span>    <span class="c1">// our throw_as_system_error_with_payload() above which then throws filesystem_error
+</span><span class="c1"></span>    <span class="c1">// exactly like the Filesystem TS does for its throwing overload.
+</span><span class="c1"></span>    <span class="n">filesystem2</span><span class="o">::</span><span class="n">copy_file</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;dontexist&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;alsodontexist&#34;</span><span class="p">).</span><span class="n">value</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">catch</span><span class="p">(</span><span class="k">const</span> <span class="n">filesystem2</span><span class="o">::</span><span class="n">filesystem_error</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;Copy file failed with exception &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span>                 <span class="c1">//
+</span><span class="c1"></span>              <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34; (path1 = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">path1</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;, path2 = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">path2</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;)&#34;</span>  <span class="c1">//
+</span><span class="c1"></span>              <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">catch</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">exception</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;Copy file failed with exception &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span>  <span class="c1">//
+</span><span class="c1"></span>              <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  </code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/outcome_payload.cpp#L93" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 </p>
 
 

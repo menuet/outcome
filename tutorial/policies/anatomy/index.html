@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -575,31 +575,30 @@
 is needed if you never use the policy in an <code>outcome</code>.</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">struct</span> blank_policy
-{
-  <span class="s1770">//! Performs a narrow check of state, used in the assume_value() functions.
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">Impl</span>&gt; <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">void</span> narrow_value_check(Impl &amp;&amp;self) <span class="s3e8">noexcept</span>;
+<span class="k">struct</span> <span class="n">blank_policy</span>
+<span class="p">{</span>
+  <span class="c1">//! Performs a narrow check of state, used in the assume_value() functions.
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Impl</span><span class="o">&gt;</span> <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">void</span> <span class="n">narrow_value_check</span><span class="p">(</span><span class="n">Impl</span> <span class="o">&amp;&amp;</span><span class="n">self</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 
-  <span class="s1770">//! Performs a narrow check of state, used in the assume_error() functions.
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">Impl</span>&gt; <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">void</span> narrow_error_check(Impl &amp;&amp;self) <span class="s3e8">noexcept</span>;
+  <span class="c1">//! Performs a narrow check of state, used in the assume_error() functions.
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Impl</span><span class="o">&gt;</span> <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">void</span> <span class="n">narrow_error_check</span><span class="p">(</span><span class="n">Impl</span> <span class="o">&amp;&amp;</span><span class="n">self</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 
-  <span class="s1770">//! Performs a wide check of state, used in the value() functions.
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">Impl</span>&gt; <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">void</span> wide_value_check(Impl &amp;&amp;self);
+  <span class="c1">//! Performs a wide check of state, used in the value() functions.
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Impl</span><span class="o">&gt;</span> <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">void</span> <span class="n">wide_value_check</span><span class="p">(</span><span class="n">Impl</span> <span class="o">&amp;&amp;</span><span class="n">self</span><span class="p">);</span>
 
-  <span class="s1770">//! Performs a wide check of state, used in the error() functions.
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">Impl</span>&gt; <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">void</span> wide_error_check(Impl &amp;&amp;self);
+  <span class="c1">//! Performs a wide check of state, used in the error() functions.
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Impl</span><span class="o">&gt;</span> <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">void</span> <span class="n">wide_error_check</span><span class="p">(</span><span class="n">Impl</span> <span class="o">&amp;&amp;</span><span class="n">self</span><span class="p">);</span>
 
 
-  <span class="s1770">/******** These only used if the policy is used in Outcome ********/</span>
+  <span class="cm">/******** These only used if the policy is used in Outcome ********/</span>
 
-  <span class="s1770">//! Performs a narrow check of state, used in the assume_exception() functions.
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">Impl</span>&gt; <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">void</span> narrow_exception_check(Impl &amp;&amp;self) <span class="s3e8">noexcept</span>;
+  <span class="c1">//! Performs a narrow check of state, used in the assume_exception() functions.
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Impl</span><span class="o">&gt;</span> <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">void</span> <span class="n">narrow_exception_check</span><span class="p">(</span><span class="n">Impl</span> <span class="o">&amp;&amp;</span><span class="n">self</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
 
-  <span class="s1770">//! Performs a wide check of state, used in the exception() functions.
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">Impl</span>&gt; <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">void</span> wide_exception_check(Impl &amp;&amp;self);
-};
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/policies.cpp#L31" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">//! Performs a wide check of state, used in the exception() functions.
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Impl</span><span class="o">&gt;</span> <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">void</span> <span class="n">wide_exception_check</span><span class="p">(</span><span class="n">Impl</span> <span class="o">&amp;&amp;</span><span class="n">self</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/policies.cpp#L31" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 

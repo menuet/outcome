@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -597,13 +597,12 @@
 
 <p>Outcome is specifically designed for use in the public interfaces of multi-million
 line codebases. Its layout is hard coded to:</p>
-<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="s3e8">struct</span>
-{
-  T value;
-  <span class="s3ee">unsigned</span> <span class="s3ee">int</span> flags;
-  EC error;
-};</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="k">struct</span>
+<span class="p">{</span>
+  <span class="n">T</span> <span class="n">value</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">;</span>
+  <span class="n">EC</span> <span class="n">error</span><span class="p">;</span>
+<span class="p">};</span></code></pre></div>
 <p>This is, of course, C-compatible and Outcome provides <a href="../tutorial/c-api">a macro-based C interface</a>
 for C code needing to call <code>extern &quot;C&quot;</code> C++ functions returning a <code>result&lt;T, EC&gt;</code>.</p>
 
@@ -632,8 +631,7 @@ Boost.Outcome has dependencies on other parts of Boost which are not stable acro
 <p>This implies that <code>outcome&lt;&gt;</code> has different interface that allows you to ask whether we are storing an exception or an error code to rethrow the stored exception but to return by value the error code, etc.</p>
 
 <p>There is one additional possibility. When you know there will be no error codes returned &ndash; only exceptions thrown, but at some layer you want to temporarily change the stack unwinding into returning failures through return values, you can use signature:</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">result&lt;T, std::exception_ptr&gt; f() <span class="s3e8">noexcept</span>;</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">exception_ptr</span><span class="o">&gt;</span> <span class="n">f</span><span class="p">()</span> <span class="k">noexcept</span><span class="p">;</span></code></pre></div>
 <h2 id="how-badly-will-including-outcome-in-my-public-interface-affect-compile-times">How badly will including Outcome in my public interface affect compile times?</h2>
 
 <p>Outcome is dependent on <code>&lt;system_error&gt;</code>, which unfortunately includes <code>&lt;string&gt;</code> and thus
@@ -792,98 +790,97 @@ Expected uses <code>unexpected&lt;E&gt;</code> only.</li>
 can be implemented by wrapping up <code>checked&lt;T, E&gt;</code> with the differing functionality:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">/* Here is a fairly conforming implementation of P0323R3 `expected&lt;T, E&gt;` using `checked&lt;T, E&gt;`.
-</span><span class="s1770">It passes the reference test suite for P0323R3 at
-</span><span class="s1770">https://github.com/viboes/std-make/blob/master/test/expected/expected_pass.cpp with modifications
-</span><span class="s1770">only to move the test much closer to the P0323R3 Expected, as the reference test suite is for a
-</span><span class="s1770">much older proposed Expected.
-</span><span class="s1770">
-</span><span class="s1770">Known differences from P0323R3 in this implementation:
-</span><span class="s1770">- `T` and `E` cannot be the same type.
-</span><span class="s1770">- `E` must be default constructible.
-</span><span class="s1770">- No variant storage is implemented (note the Expected proposal does not actually require this).
-</span><span class="s1770">*/</span>
+<span class="cm">/* Here is a fairly conforming implementation of P0323R3 `expected&lt;T, E&gt;` using `checked&lt;T, E&gt;`.
+</span><span class="cm">It passes the reference test suite for P0323R3 at
+</span><span class="cm">https://github.com/viboes/std-make/blob/master/test/expected/expected_pass.cpp with modifications
+</span><span class="cm">only to move the test much closer to the P0323R3 Expected, as the reference test suite is for a
+</span><span class="cm">much older proposed Expected.
+</span><span class="cm">
+</span><span class="cm">Known differences from P0323R3 in this implementation:
+</span><span class="cm">- `T` and `E` cannot be the same type.
+</span><span class="cm">- `E` must be default constructible.
+</span><span class="cm">- No variant storage is implemented (note the Expected proposal does not actually require this).
+</span><span class="cm">*/</span>
 
-<span class="s3e8">namespace</span> detail
-{
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">using</span> expected_result = OUTCOME_V2_NAMESPACE::checked&lt;T, E&gt;;
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">struct</span> enable_default_constructor : <span class="s3e8">public</span> expected_result&lt;T, E&gt;
-  {
-    <span class="s3e8">using</span> base = expected_result&lt;T, E&gt;;
-    <span class="s3e8">using</span> base::base;
-    <span class="s3e8">constexpr</span> enable_default_constructor()
-        : base{OUTCOME_V2_NAMESPACE::in_place_type&lt;T&gt;}
-    {
-    }
-  };
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">using</span> select_expected_base = std::conditional_t&lt;std::is_default_constructible&lt;T&gt;::value, enable_default_constructor&lt;T, E&gt;, expected_result&lt;T, E&gt;&gt;;
-}
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">class</span> <span class="s7d4">expected</span> : <span class="s3e8">public</span> detail::select_expected_base&lt;T, E&gt;
-{
-  <span class="s3e8">static_assert</span>(!std::is_same&lt;T, E&gt;::value, <span class="sc1c"></span><span class="sc1c">&#34;T and E cannot be the same in this expected implementation&#34;</span>);
-  <span class="s3e8">using</span> base = detail::select_expected_base&lt;T, E&gt;;
+<span class="k">namespace</span> <span class="n">detail</span>
+<span class="p">{</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">expected_result</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">checked</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nl">enable_default_constructor</span> <span class="p">:</span> <span class="k">public</span> <span class="n">expected_result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span>
+  <span class="p">{</span>
+    <span class="k">using</span> <span class="n">base</span> <span class="o">=</span> <span class="n">expected_result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="k">using</span> <span class="n">base</span><span class="o">::</span><span class="n">base</span><span class="p">;</span>
+    <span class="k">constexpr</span> <span class="nf">enable_default_constructor</span><span class="p">()</span>
+        <span class="o">:</span> <span class="n">base</span><span class="p">{</span><span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">in_place_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">select_expected_base</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">conditional_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_default_constructible</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="n">enable_default_constructor</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">expected_result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">expected</span> <span class="o">:</span> <span class="k">public</span> <span class="n">detail</span><span class="o">::</span><span class="n">select_expected_base</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="k">static_assert</span><span class="p">(</span><span class="o">!</span><span class="n">std</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;T and E cannot be the same in this expected implementation&#34;</span><span class="p">);</span>
+  <span class="k">using</span> <span class="n">base</span> <span class="o">=</span> <span class="n">detail</span><span class="o">::</span><span class="n">select_expected_base</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span><span class="p">;</span>
 
-<span class="s3e8">public</span>:
-  <span class="s1770">// Inherit base&#39;s constructors
-</span><span class="s1770"></span>  <span class="s3e8">using</span> base::base;
-  expected() = <span class="s3e8">default</span>;
+<span class="k">public</span><span class="o">:</span>
+  <span class="c1">// Inherit base&#39;s constructors
+</span><span class="c1"></span>  <span class="k">using</span> <span class="n">base</span><span class="o">::</span><span class="n">base</span><span class="p">;</span>
+  <span class="n">expected</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 
-  <span class="s1770">// Expected takes in_place not in_place_type
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;class... Args&gt;
-  <span class="s3e8">constexpr</span> <span class="s3e8">explicit</span> expected(std::in_place_t <span class="s1770">/*unused*/</span>, Args &amp;&amp;... args)
-      : base{OUTCOME_V2_NAMESPACE::in_place_type&lt;T&gt;, std::forward&lt;Args&gt;(args)...}
-  {
-  }
+  <span class="c1">// Expected takes in_place not in_place_type
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="n">class</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+  <span class="k">constexpr</span> <span class="k">explicit</span> <span class="n">expected</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">in_place_t</span> <span class="cm">/*unused*/</span><span class="p">,</span> <span class="n">Args</span> <span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">base</span><span class="p">{</span><span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">in_place_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...}</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
 
-  <span class="s1770">// Expected always accepts a T even if ambiguous
-</span><span class="s1770"></span>  OUTCOME_TEMPLATE(<span class="s3e8">class</span> <span class="s7d4">U</span>)
-  OUTCOME_TREQUIRES(OUTCOME_TPRED(std::is_constructible&lt;T, U&gt;::value))
-  <span class="s3e8">constexpr</span> expected(U &amp;&amp;v)
-      : base{OUTCOME_V2_NAMESPACE::in_place_type&lt;T&gt;, std::forward&lt;U&gt;(v)}
-  {
-  }
+  <span class="c1">// Expected always accepts a T even if ambiguous
+</span><span class="c1"></span>  <span class="n">OUTCOME_TEMPLATE</span><span class="p">(</span><span class="k">class</span> <span class="nc">U</span><span class="p">)</span>
+  <span class="n">OUTCOME_TREQUIRES</span><span class="p">(</span><span class="n">OUTCOME_TPRED</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_constructible</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">))</span>
+  <span class="k">constexpr</span> <span class="n">expected</span><span class="p">(</span><span class="n">U</span> <span class="o">&amp;&amp;</span><span class="n">v</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">base</span><span class="p">{</span><span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">in_place_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="p">)}</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
 
-  <span class="s1770">// Expected has an emplace() modifier
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;class... Args&gt; <span class="s3ee">void</span> emplace(Args &amp;&amp;... args) { *<span class="s3e8">static_cast</span>&lt;base *&gt;(<span class="s3e8">this</span>) = base{OUTCOME_V2_NAMESPACE::in_place_type&lt;T&gt;, std::forward&lt;Args&gt;(args)...}; }
+  <span class="c1">// Expected has an emplace() modifier
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="n">class</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">emplace</span><span class="p">(</span><span class="n">Args</span> <span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span> <span class="o">*</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">base</span> <span class="o">*&gt;</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="o">=</span> <span class="n">base</span><span class="p">{</span><span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">in_place_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...};</span> <span class="p">}</span>
 
-  <span class="s1770">// Expected has a narrow operator* and operator-&gt;
-</span><span class="s1770"></span>  <span class="s3e8">constexpr</span> <span class="s3e8">const</span> T &amp;<span class="s3e8">operator</span>*() <span class="s3e8">const</span> &amp; { <span class="s3e8">return</span> base::assume_value(); }
-  <span class="s3e8">constexpr</span> T &amp;<span class="s3e8">operator</span>*() &amp; { <span class="s3e8">return</span> base::assume_value(); }
-  <span class="s3e8">constexpr</span> <span class="s3e8">const</span> T &amp;&amp;<span class="s3e8">operator</span>*() <span class="s3e8">const</span> &amp;&amp; { <span class="s3e8">return</span> base::assume_value(); }
-  <span class="s3e8">constexpr</span> T &amp;&amp;<span class="s3e8">operator</span>*() &amp;&amp; { <span class="s3e8">return</span> base::assume_value(); }
-  <span class="s3e8">constexpr</span> <span class="s3e8">const</span> T *<span class="s3e8">operator</span>-&gt;() <span class="s3e8">const</span> { <span class="s3e8">return</span> &amp;base::assume_value(); }
-  <span class="s3e8">constexpr</span> T *<span class="s3e8">operator</span>-&gt;() { <span class="s3e8">return</span> &amp;base::assume_value(); }
+  <span class="c1">// Expected has a narrow operator* and operator-&gt;
+</span><span class="c1"></span>  <span class="k">constexpr</span> <span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="n">T</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="k">const</span> <span class="n">T</span> <span class="o">&amp;&amp;</span><span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="o">&amp;&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="n">T</span> <span class="o">&amp;&amp;</span><span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="k">const</span> <span class="n">T</span> <span class="o">*</span><span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">&amp;</span><span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="n">T</span> <span class="o">*</span><span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="o">&amp;</span><span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
 
-  <span class="s1770">// Expected has a narrow error() observer
-</span><span class="s1770"></span>  <span class="s3e8">constexpr</span> <span class="s3e8">const</span> E &amp;error() <span class="s3e8">const</span> &amp; { <span class="s3e8">return</span> base::assume_error(); }
-  <span class="s3e8">constexpr</span> E &amp;error() &amp; { <span class="s3e8">return</span> base::assume_error(); }
-  <span class="s3e8">constexpr</span> <span class="s3e8">const</span> E &amp;&amp;error() <span class="s3e8">const</span> &amp;&amp; { <span class="s3e8">return</span> base::assume_error(); }
-  <span class="s3e8">constexpr</span> E &amp;error() &amp;&amp; { <span class="s3e8">return</span> base::assume_error(); }
-};
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">class</span> <span class="s7d4">expected</span>&lt;<span class="s3ee">void</span>, E&gt; : <span class="s3e8">public</span> OUTCOME_V2_NAMESPACE::result&lt;<span class="s3ee">void</span>, E, OUTCOME_V2_NAMESPACE::policy::throw_bad_result_access&lt;E&gt;&gt;
-{
-  <span class="s3e8">using</span> base = OUTCOME_V2_NAMESPACE::result&lt;<span class="s3ee">void</span>, E, OUTCOME_V2_NAMESPACE::policy::throw_bad_result_access&lt;E&gt;&gt;;
+  <span class="c1">// Expected has a narrow error() observer
+</span><span class="c1"></span>  <span class="k">constexpr</span> <span class="k">const</span> <span class="n">E</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">()</span> <span class="k">const</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_error</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="n">E</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">()</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_error</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="k">const</span> <span class="n">E</span> <span class="o">&amp;&amp;</span><span class="n">error</span><span class="p">()</span> <span class="k">const</span> <span class="o">&amp;&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_error</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="n">E</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_error</span><span class="p">();</span> <span class="p">}</span>
+<span class="p">};</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">expected</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="o">:</span> <span class="k">public</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">policy</span><span class="o">::</span><span class="n">throw_bad_result_access</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;&gt;</span>
+<span class="p">{</span>
+  <span class="k">using</span> <span class="n">base</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">policy</span><span class="o">::</span><span class="n">throw_bad_result_access</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;&gt;</span><span class="p">;</span>
 
-<span class="s3e8">public</span>:
-  <span class="s1770">// Inherit base constructors
-</span><span class="s1770"></span>  <span class="s3e8">using</span> base::base;
+<span class="k">public</span><span class="o">:</span>
+  <span class="c1">// Inherit base constructors
+</span><span class="c1"></span>  <span class="k">using</span> <span class="n">base</span><span class="o">::</span><span class="n">base</span><span class="p">;</span>
 
-  <span class="s1770">// Expected has a narrow operator* and operator-&gt;
-</span><span class="s1770"></span>  <span class="s3e8">constexpr</span> <span class="s3ee">void</span> <span class="s3e8">operator</span>*() <span class="s3e8">const</span> { base::assume_value(); }
-  <span class="s3e8">constexpr</span> <span class="s3ee">void</span> <span class="s3e8">operator</span>-&gt;() <span class="s3e8">const</span> { base::assume_value(); }
-};
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">using</span> unexpected = OUTCOME_V2_NAMESPACE::failure_type&lt;E&gt;;
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">E</span>&gt; unexpected&lt;E&gt; make_unexpected(E &amp;&amp;arg)
-{
-  <span class="s3e8">return</span> OUTCOME_V2_NAMESPACE::failure&lt;E&gt;(std::forward&lt;E&gt;(arg));
-}
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">E</span>, class... Args&gt; unexpected&lt;E&gt; make_unexpected(Args &amp;&amp;... args)
-{
-  <span class="s3e8">return</span> OUTCOME_V2_NAMESPACE::failure&lt;E&gt;(std::forward&lt;Args&gt;(args)...);
-}
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">using</span> bad_expected_access = OUTCOME_V2_NAMESPACE::bad_result_access_with&lt;E&gt;;
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/expected_implementation.cpp#L5" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// Expected has a narrow operator* and operator-&gt;
+</span><span class="c1"></span>  <span class="k">constexpr</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
+  <span class="k">constexpr</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="n">base</span><span class="o">::</span><span class="n">assume_value</span><span class="p">();</span> <span class="p">}</span>
+<span class="p">};</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">unexpected</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">failure_type</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="n">unexpected</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">make_unexpected</span><span class="p">(</span><span class="n">E</span> <span class="o">&amp;&amp;</span><span class="n">arg</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">failure</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">E</span><span class="p">,</span> <span class="n">class</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span> <span class="n">unexpected</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="n">make_unexpected</span><span class="p">(</span><span class="n">Args</span> <span class="o">&amp;&amp;</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">failure</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+<span class="p">}</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">bad_expected_access</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">bad_result_access_with</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/expected_implementation.cpp#L5" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <h2 id="why-doesn-t-outcome-duplicate-std-expected-t-e-s-design">Why doesn&rsquo;t Outcome duplicate <code>std::expected&lt;T, E&gt;</code>&rsquo;s design?</h2>

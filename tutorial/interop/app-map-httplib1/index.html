@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -576,59 +576,58 @@ STL exception type before we can type erase it into an <code>exception_ptr</code
 instance. Please note that this code is defined in the <code>app</code> namespace:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> app
-{
-  <span class="s1770">// Specialise an exception type for httplib errors
-</span><span class="s1770"></span>  <span class="s3e8">struct</span> httplib_error : std::runtime_error
-  {
-    <span class="s1770">// passthrough
-</span><span class="s1770"></span>    <span class="s3e8">using</span> std::runtime_error::runtime_error;
-    httplib_error(httplib::failure _failure, std::string msg)
-        : std::runtime_error(std::move(msg))
-        , failure(std::move(_failure))
-    {
-    }
+<span class="k">namespace</span> <span class="n">app</span>
+<span class="p">{</span>
+  <span class="c1">// Specialise an exception type for httplib errors
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="nl">httplib_error</span> <span class="p">:</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span>
+  <span class="p">{</span>
+    <span class="c1">// passthrough
+</span><span class="c1"></span>    <span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">;</span>
+    <span class="n">httplib_error</span><span class="p">(</span><span class="n">httplib</span><span class="o">::</span><span class="n">failure</span> <span class="n">_failure</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+        <span class="p">,</span> <span class="n">failure</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">_failure</span><span class="p">))</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
 
-    <span class="s1770">// the original failure
-</span><span class="s1770"></span>    httplib::failure failure;
-  };
+    <span class="c1">// the original failure
+</span><span class="c1"></span>    <span class="n">httplib</span><span class="o">::</span><span class="n">failure</span> <span class="n">failure</span><span class="p">;</span>
+  <span class="p">};</span>
 
-  <span class="s1770">// Type erase httplib::result&lt;U&gt; into a httplib_error exception ptr
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">U</span>&gt; <span class="s3e8">inline</span> std::exception_ptr make_httplib_exception(<span class="s3e8">const</span> httplib::result&lt;U&gt; &amp;src)
-  {
-    std::string str(<span class="sc1c"></span><span class="sc1c">&#34;httplib failed with error &#34;</span>);
-    <span class="s3e8">switch</span>(src.error().status)
-    {
-    <span class="s3e8">case</span> httplib::status_code::success:
-      str.append(<span class="sc1c"></span><span class="sc1c">&#34;success&#34;</span>);
-      <span class="s3e8">break</span>;
-    <span class="s3e8">case</span> httplib::status_code::bad_request:
-      str.append(<span class="sc1c"></span><span class="sc1c">&#34;bad request&#34;</span>);
-      <span class="s3e8">break</span>;
-    <span class="s3e8">case</span> httplib::status_code::access_denied:
-      str.append(<span class="sc1c"></span><span class="sc1c">&#34;access denied&#34;</span>);
-      <span class="s3e8">break</span>;
-    <span class="s3e8">case</span> httplib::status_code::logon_failed:
-      str.append(<span class="sc1c"></span><span class="sc1c">&#34;logon failed&#34;</span>);
-      <span class="s3e8">break</span>;
-    <span class="s3e8">case</span> httplib::status_code::forbidden:
-      str.append(<span class="sc1c"></span><span class="sc1c">&#34;forbidden&#34;</span>);
-      <span class="s3e8">break</span>;
-    <span class="s3e8">case</span> httplib::status_code::not_found:
-      str.append(<span class="sc1c"></span><span class="sc1c">&#34;not found&#34;</span>);
-      <span class="s3e8">break</span>;
-    <span class="s3e8">case</span> httplib::status_code::internal_error:
-      str.append(<span class="sc1c"></span><span class="sc1c">&#34;internal error&#34;</span>);
-      <span class="s3e8">break</span>;
-    }
-    str.append(<span class="sc1c"></span><span class="sc1c">&#34; [url was &#34;</span>);
-    str.append(src.error().url);
-    str.append(<span class="sc1c"></span><span class="sc1c">&#34;]&#34;</span>);
-    <span class="s3e8">return</span> std::make_exception_ptr(httplib_error(src.error(), std::move(str)));
-  }
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L178" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// Type erase httplib::result&lt;U&gt; into a httplib_error exception ptr
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">U</span><span class="o">&gt;</span> <span class="kr">inline</span> <span class="n">std</span><span class="o">::</span><span class="n">exception_ptr</span> <span class="n">make_httplib_exception</span><span class="p">(</span><span class="k">const</span> <span class="n">httplib</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">src</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;httplib failed with error &#34;</span><span class="p">);</span>
+    <span class="k">switch</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">error</span><span class="p">().</span><span class="n">status</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="n">httplib</span><span class="o">::</span><span class="n">status_code</span><span class="o">::</span><span class="nl">success</span><span class="p">:</span>
+      <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;success&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">httplib</span><span class="o">::</span><span class="n">status_code</span><span class="o">::</span><span class="nl">bad_request</span><span class="p">:</span>
+      <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;bad request&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">httplib</span><span class="o">::</span><span class="n">status_code</span><span class="o">::</span><span class="nl">access_denied</span><span class="p">:</span>
+      <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;access denied&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">httplib</span><span class="o">::</span><span class="n">status_code</span><span class="o">::</span><span class="nl">logon_failed</span><span class="p">:</span>
+      <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;logon failed&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">httplib</span><span class="o">::</span><span class="n">status_code</span><span class="o">::</span><span class="nl">forbidden</span><span class="p">:</span>
+      <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;forbidden&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">httplib</span><span class="o">::</span><span class="n">status_code</span><span class="o">::</span><span class="nl">not_found</span><span class="p">:</span>
+      <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;not found&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="n">httplib</span><span class="o">::</span><span class="n">status_code</span><span class="o">::</span><span class="nl">internal_error</span><span class="p">:</span>
+      <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;internal error&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34; [url was &#34;</span><span class="p">);</span>
+    <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">error</span><span class="p">().</span><span class="n">url</span><span class="p">);</span>
+    <span class="n">str</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;]&#34;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_exception_ptr</span><span class="p">(</span><span class="n">httplib_error</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">error</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">str</span><span class="p">)));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L178" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>The only real thing to note about <code>app::httplib_error</code> is that it squirrels away

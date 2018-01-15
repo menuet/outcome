@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -575,36 +575,35 @@
 in this tutorial</a>:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">// You may remember this from the tutorial section on Custom Payloads
-</span><span class="s1770"></span><span class="s3e8">namespace</span> filelib
-{
-  <span class="s1770">// Error code + paths related to a failure. Also causes ADL discovery to check this namespace.
-</span><span class="s1770"></span>  <span class="s3e8">struct</span> failure_info
-  {
-    std::error_code ec;
-    path path1{}, path2{};
-  };
+<span class="c1">// You may remember this from the tutorial section on Custom Payloads
+</span><span class="c1"></span><span class="k">namespace</span> <span class="n">filelib</span>
+<span class="p">{</span>
+  <span class="c1">// Error code + paths related to a failure. Also causes ADL discovery to check this namespace.
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="n">failure_info</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+    <span class="n">path</span> <span class="n">path1</span><span class="p">{},</span> <span class="n">path2</span><span class="p">{};</span>
+  <span class="p">};</span>
 
-  <span class="s1770">// Tell Outcome that failure_info is to be treated as a std::error_code
-</span><span class="s1770"></span>  <span class="s3e8">inline</span> <span class="s3e8">const</span> std::error_code &amp;make_error_code(<span class="s3e8">const</span> failure_info &amp;fi) { <span class="s3e8">return</span> fi.ec; }
+  <span class="c1">// Tell Outcome that failure_info is to be treated as a std::error_code
+</span><span class="c1"></span>  <span class="kr">inline</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="o">&amp;</span><span class="n">make_error_code</span><span class="p">(</span><span class="k">const</span> <span class="n">failure_info</span> <span class="o">&amp;</span><span class="n">fi</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">;</span> <span class="p">}</span>
 
-  <span class="s1770">// Tell Outcome that no-value observation should throw a custom exception
-</span><span class="s1770"></span>  <span class="s3e8">inline</span> <span class="s3ee">void</span> throw_as_system_error_with_payload(failure_info fi)
-  {
-    <span class="s1770">// If the error code is not filesystem related e.g. ENOMEM, throw that as a standard STL exception.
-</span><span class="s1770"></span>    OUTCOME_V2_NAMESPACE::try_throw_std_exception_from_error(fi.ec);
-    <span class="s1770">// Throw the exact same filesystem_error exception which the throwing copy_file() edition does.
-</span><span class="s1770"></span>    <span class="s3e8">throw</span> filesystem_error(fi.ec.message(), std::move(fi.path1), std::move(fi.path2), fi.ec);
-  }
+  <span class="c1">// Tell Outcome that no-value observation should throw a custom exception
+</span><span class="c1"></span>  <span class="kr">inline</span> <span class="kt">void</span> <span class="n">throw_as_system_error_with_payload</span><span class="p">(</span><span class="n">failure_info</span> <span class="n">fi</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// If the error code is not filesystem related e.g. ENOMEM, throw that as a standard STL exception.
+</span><span class="c1"></span>    <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">try_throw_std_exception_from_error</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">);</span>
+    <span class="c1">// Throw the exact same filesystem_error exception which the throwing copy_file() edition does.
+</span><span class="c1"></span>    <span class="k">throw</span> <span class="nf">filesystem_error</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">path1</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">path2</span><span class="p">),</span> <span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">);</span>
+  <span class="p">}</span>
 
-  <span class="s1770">// Localise a result implementation specific to this namespace.
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>&gt; <span class="s3e8">using</span> result = OUTCOME_V2_NAMESPACE::result&lt;T, failure_info&gt;;
+  <span class="c1">// Localise a result implementation specific to this namespace.
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">result</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">failure_info</span><span class="o">&gt;</span><span class="p">;</span>
 
-  <span class="s1770">// Writes a chunk of data to some file. Returns bytes written, or failure_info. Never throws exceptions.
-</span><span class="s1770"></span>  result&lt;size_t&gt; write_file(string_view chunk) <span class="s3e8">noexcept</span>;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L93" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// Writes a chunk of data to some file. Returns bytes written, or failure_info. Never throws exceptions.
+</span><span class="c1"></span>  <span class="n">result</span><span class="o">&lt;</span><span class="n">size_t</span><span class="o">&gt;</span> <span class="n">write_file</span><span class="p">(</span><span class="n">string_view</span> <span class="n">chunk</span><span class="p">)</span> <span class="k">noexcept</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L93" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>This uses the advanced Outcome feature of programming the lazy synthesis of

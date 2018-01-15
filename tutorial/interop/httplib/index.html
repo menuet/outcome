@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -579,39 +579,38 @@ incompatible ways, and the third being a C library just for kicks.</p>
 <p>Let us imagine that the HTTP library has the following public interface:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">// This is some standalone library implementing high level HTTP
-</span><span class="s1770"></span><span class="s3e8">namespace</span> httplib
-{
-  <span class="s1770">// These are the error code that this HTTP library can return
-</span><span class="s1770"></span>  <span class="s3e8">enum</span> <span class="s3e8">class</span> <span class="s7d4">status_code</span>
-  {
-    success = 0,  <span class="s1770">// not the HTTP success code of 200
-</span><span class="s1770"></span>
-    <span class="s1770">// A subset of all HTTP status codes for brevity
-</span><span class="s1770"></span>    bad_request = 400,
-    access_denied = 401,
-    logon_failed = 402,
-    forbidden = 403,
-    not_found = 404,
-    internal_error = 500
-  };
-  <span class="s1770">// This is the error type that this HTTP library can return
-</span><span class="s1770"></span>  <span class="s3e8">struct</span> failure
-  {
-    status_code status{status_code::success};
-    std::string url{};  <span class="s1770">// The failing URL
-</span><span class="s1770"></span>  };
-  <span class="s1770">// Localise a result implementation to this library
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>&gt; <span class="s3e8">using</span> result = OUTCOME_V2_NAMESPACE::result&lt;T, failure&gt;;
+<span class="c1">// This is some standalone library implementing high level HTTP
+</span><span class="c1"></span><span class="k">namespace</span> <span class="n">httplib</span>
+<span class="p">{</span>
+  <span class="c1">// These are the error code that this HTTP library can return
+</span><span class="c1"></span>  <span class="k">enum</span> <span class="k">class</span> <span class="nc">status_code</span>
+  <span class="p">{</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  <span class="c1">// not the HTTP success code of 200
+</span><span class="c1"></span>
+    <span class="c1">// A subset of all HTTP status codes for brevity
+</span><span class="c1"></span>    <span class="n">bad_request</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="n">access_denied</span> <span class="o">=</span> <span class="mi">401</span><span class="p">,</span>
+    <span class="n">logon_failed</span> <span class="o">=</span> <span class="mi">402</span><span class="p">,</span>
+    <span class="n">forbidden</span> <span class="o">=</span> <span class="mi">403</span><span class="p">,</span>
+    <span class="n">not_found</span> <span class="o">=</span> <span class="mi">404</span><span class="p">,</span>
+    <span class="n">internal_error</span> <span class="o">=</span> <span class="mi">500</span>
+  <span class="p">};</span>
+  <span class="c1">// This is the error type that this HTTP library can return
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="n">failure</span>
+  <span class="p">{</span>
+    <span class="n">status_code</span> <span class="n">status</span><span class="p">{</span><span class="n">status_code</span><span class="o">::</span><span class="n">success</span><span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">url</span><span class="p">{};</span>  <span class="c1">// The failing URL
+</span><span class="c1"></span>  <span class="p">};</span>
+  <span class="c1">// Localise a result implementation to this library
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">result</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">failure</span><span class="o">&gt;</span><span class="p">;</span>
 
-  <span class="s1770">/* Performs a HTTP GET on the url, returning the body if successful,
-</span><span class="s1770">  a failure with status_code if unsuccessful at the HTTP level, or a
-</span><span class="s1770">  C++ exception throw if something catastrophic happened e.g. bad_alloc
-</span><span class="s1770">  */</span>
-  result&lt;std::string&gt; get(std::string url);
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L34" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="cm">/* Performs a HTTP GET on the url, returning the body if successful,
+</span><span class="cm">  a failure with status_code if unsuccessful at the HTTP level, or a
+</span><span class="cm">  C++ exception throw if something catastrophic happened e.g. bad_alloc
+</span><span class="cm">  */</span>
+  <span class="n">result</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">url</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L34" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>The HTTP library is a mixed-failure design. Likely failures (HTTP status codes)

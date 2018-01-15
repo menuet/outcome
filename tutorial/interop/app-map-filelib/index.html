@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -575,40 +575,39 @@
 converters:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">// Inject custom ValueOrError conversion
-</span><span class="s1770"></span>OUTCOME_V2_NAMESPACE_BEGIN
-<span class="s3e8">namespace</span> convert
-{
-  <span class="s1770">// Provide custom ValueOrError conversion from filelib::result&lt;U&gt; into any app::outcome&lt;T&gt;
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">U</span>&gt; <span class="s3e8">struct</span> value_or_error&lt;app::outcome&lt;T&gt;, filelib::result&lt;U&gt;&gt;
-  {
-    <span class="s1770">// True to indicate that this converter wants `result`/`outcome` to NOT reject all other `result`
-</span><span class="s1770"></span>    <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">bool</span> enable_result_inputs = true;
-    <span class="s1770">// False to indicate that this converter wants `outcome` to NOT reject all other `outcome`
-</span><span class="s1770"></span>    <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">bool</span> enable_outcome_inputs = true;
+<span class="c1">// Inject custom ValueOrError conversion
+</span><span class="c1"></span><span class="n">OUTCOME_V2_NAMESPACE_BEGIN</span>
+<span class="k">namespace</span> <span class="n">convert</span>
+<span class="p">{</span>
+  <span class="c1">// Provide custom ValueOrError conversion from filelib::result&lt;U&gt; into any app::outcome&lt;T&gt;
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">U</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">value_or_error</span><span class="o">&lt;</span><span class="n">app</span><span class="o">::</span><span class="n">outcome</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">filelib</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;&gt;</span>
+  <span class="p">{</span>
+    <span class="c1">// True to indicate that this converter wants `result`/`outcome` to NOT reject all other `result`
+</span><span class="c1"></span>    <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">bool</span> <span class="n">enable_result_inputs</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="c1">// False to indicate that this converter wants `outcome` to NOT reject all other `outcome`
+</span><span class="c1"></span>    <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">bool</span> <span class="n">enable_outcome_inputs</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 
-    <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">X</span>,                                                                              <span class="s1770">//
-</span><span class="s1770"></span>              <span class="s3e8">typename</span> = std::enable_if_t&lt;std::is_same&lt;filelib::result&lt;U&gt;, std::decay_t&lt;X&gt;&gt;::value  <span class="s1770">//
-</span><span class="s1770"></span>                                          &amp;&amp; std::is_constructible&lt;T, U&gt;::value&gt;&gt;                   <span class="s1770">//
-</span><span class="s1770"></span>    <span class="s3e8">constexpr</span> app::outcome&lt;T&gt;
-    <span class="s3e8">operator</span>()(X &amp;&amp;src)
-    {
-      <span class="s1770">// Forward any successful value
-</span><span class="s1770"></span>      <span class="s3e8">if</span>(src.has_value())
-      {
-        <span class="s3e8">return</span> {std::forward&lt;X&gt;(src).value()};
-      }
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">X</span><span class="p">,</span>                                                                              <span class="c1">//
+</span><span class="c1"></span>              <span class="k">typename</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">enable_if_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">filelib</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">decay_t</span><span class="o">&lt;</span><span class="n">X</span><span class="o">&gt;&gt;::</span><span class="n">value</span>  <span class="c1">//
+</span><span class="c1"></span>                                          <span class="o">&amp;&amp;</span> <span class="n">std</span><span class="o">::</span><span class="n">is_constructible</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;&gt;</span>                   <span class="c1">//
+</span><span class="c1"></span>    <span class="k">constexpr</span> <span class="n">app</span><span class="o">::</span><span class="n">outcome</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+    <span class="k">operator</span><span class="p">()(</span><span class="n">X</span> <span class="o">&amp;&amp;</span><span class="n">src</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="c1">// Forward any successful value
+</span><span class="c1"></span>      <span class="k">if</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">has_value</span><span class="p">())</span>
+      <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">X</span><span class="o">&gt;</span><span class="p">(</span><span class="n">src</span><span class="p">).</span><span class="n">value</span><span class="p">()};</span>
+      <span class="p">}</span>
 
-      <span class="s1770">// Synthesise a filesystem_error, exactly as if someone had called src.value()
-</span><span class="s1770"></span>      <span class="s3e8">auto</span> &amp;fi = src.error();
-      OUTCOME_V2_NAMESPACE::try_throw_std_exception_from_error(fi.ec);  <span class="s1770">// might throw
-</span><span class="s1770"></span>      <span class="s3e8">return</span> {std::make_exception_ptr(filelib::filesystem_error(fi.ec.message(), std::move(fi.path1), std::move(fi.path2), fi.ec))};
-    }
-  };
-}
-OUTCOME_V2_NAMESPACE_END
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L268" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+      <span class="c1">// Synthesise a filesystem_error, exactly as if someone had called src.value()
+</span><span class="c1"></span>      <span class="k">auto</span> <span class="o">&amp;</span><span class="n">fi</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">error</span><span class="p">();</span>
+      <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">try_throw_std_exception_from_error</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">);</span>  <span class="c1">// might throw
+</span><span class="c1"></span>      <span class="k">return</span> <span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">make_exception_ptr</span><span class="p">(</span><span class="n">filelib</span><span class="o">::</span><span class="n">filesystem_error</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">path1</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">fi</span><span class="p">.</span><span class="n">path2</span><span class="p">),</span> <span class="n">fi</span><span class="p">.</span><span class="n">ec</span><span class="p">))};</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+<span class="n">OUTCOME_V2_NAMESPACE_END</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L268" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Note that the conversion exactly duplicates the implementation of

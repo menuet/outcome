@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -587,29 +587,28 @@ into the local namespace. This ensures that this namespace will be searched by t
 compiler when discovering the event hooks.</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> error_code_extended
-{
-  <span class="s1770">// Use the error_code type as the ADL bridge for the hooks by creating a type here
-</span><span class="s1770"></span>  <span class="s1770">// It can be any type that your localised result uses, including the value type but
-</span><span class="s1770"></span>  <span class="s1770">// by localising the error code type here you prevent nasty surprises later when the
-</span><span class="s1770"></span>  <span class="s1770">// value type you use doesn&#39;t trigger the ADL bridge.
-</span><span class="s1770"></span>  <span class="s3e8">struct</span> error_code : <span class="s3e8">public</span> std::error_code
-  {
-    <span class="s1770">// literally passthrough
-</span><span class="s1770"></span>    <span class="s3e8">using</span> std::error_code::error_code;
-    error_code() = <span class="s3e8">default</span>;
-    error_code(std::error_code ec)
-        : std::error_code(ec)
-    {
-    }
-  };
+<span class="k">namespace</span> <span class="n">error_code_extended</span>
+<span class="p">{</span>
+  <span class="c1">// Use the error_code type as the ADL bridge for the hooks by creating a type here
+</span><span class="c1"></span>  <span class="c1">// It can be any type that your localised result uses, including the value type but
+</span><span class="c1"></span>  <span class="c1">// by localising the error code type here you prevent nasty surprises later when the
+</span><span class="c1"></span>  <span class="c1">// value type you use doesn&#39;t trigger the ADL bridge.
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="nl">error_code</span> <span class="p">:</span> <span class="k">public</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span>
+  <span class="p">{</span>
+    <span class="c1">// literally passthrough
+</span><span class="c1"></span>    <span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="o">::</span><span class="n">error_code</span><span class="p">;</span>
+    <span class="n">error_code</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="n">error_code</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
 
-  <span class="s1770">// Localise result and outcome to using the local error_code so this namespace gets looked up for the hooks
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">R</span>&gt; <span class="s3e8">using</span> result = OUTCOME_V2_NAMESPACE::result&lt;R, error_code&gt;;
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">R</span>&gt; <span class="s3e8">using</span> outcome = OUTCOME_V2_NAMESPACE::outcome&lt;R, error_code <span class="s1770">/*, std::exception_ptr */</span>&gt;;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L89" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// Localise result and outcome to using the local error_code so this namespace gets looked up for the hooks
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">R</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">result</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">R</span><span class="p">,</span> <span class="n">error_code</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">R</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">outcome</span> <span class="o">=</span> <span class="n">OUTCOME_V2_NAMESPACE</span><span class="o">::</span><span class="n">outcome</span><span class="o">&lt;</span><span class="n">R</span><span class="p">,</span> <span class="n">error_code</span> <span class="cm">/*, std::exception_ptr */</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L89" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>For convenience, we template alias local copies of <code>result</code> and <code>outcome</code> in this

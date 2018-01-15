@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -574,15 +574,14 @@
 <p>First, we need a base definition for <code>construct&lt;T&gt;</code>:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>&gt; <span class="s3e8">struct</span> construct
-{
-  outcome::result&lt;T&gt; <span class="s3e8">operator</span>()() <span class="s3e8">const</span> <span class="s3e8">noexcept</span>
-  {  <span class="s1770">//
-</span><span class="s1770"></span>    <span class="s3e8">static_assert</span>(!std::is_same&lt;T, T&gt;::value, <span class="sc1c"></span><span class="sc1c">&#34;construct&lt;T&gt;() was not specialised for the type T supplied&#34;</span>);
-  }
-};
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/constructors.cpp#L146" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">construct</span>
+<span class="p">{</span>
+  <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()()</span> <span class="k">const</span> <span class="k">noexcept</span>
+  <span class="p">{</span>  <span class="c1">//
+</span><span class="c1"></span>    <span class="k">static_assert</span><span class="p">(</span><span class="o">!</span><span class="n">std</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;construct&lt;T&gt;() was not specialised for the type T supplied&#34;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/constructors.cpp#L146" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>This fails a static assert if the type is ever instantiated unspecialised.</p>
@@ -590,16 +589,15 @@
 <p>We then specialise for <code>construct&lt;file_handle&gt;</code>:</p>
 
 <p><div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">template</span> &lt;&gt; <span class="s3e8">struct</span> construct&lt;file_handle&gt;
-{
-  file_handle::path_type _path;
-  file_handle::mode _mode{file_handle::mode::read};
-  <span class="s1770">// Any other args, default initialised if necessary, follow here ...
-</span><span class="s1770"></span>
-  outcome::result&lt;file_handle&gt; <span class="s3e8">operator</span>()() <span class="s3e8">const</span> <span class="s3e8">noexcept</span> { <span class="s3e8">return</span> file_handle::file(std::move(_path)); }
-};
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/constructors.cpp#L156" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">template</span> <span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="n">construct</span><span class="o">&lt;</span><span class="n">file_handle</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="n">file_handle</span><span class="o">::</span><span class="n">path_type</span> <span class="n">_path</span><span class="p">;</span>
+  <span class="n">file_handle</span><span class="o">::</span><span class="n">mode</span> <span class="n">_mode</span><span class="p">{</span><span class="n">file_handle</span><span class="o">::</span><span class="n">mode</span><span class="o">::</span><span class="n">read</span><span class="p">};</span>
+  <span class="c1">// Any other args, default initialised if necessary, follow here ...
+</span><span class="c1"></span>
+  <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">file_handle</span><span class="o">&gt;</span> <span class="k">operator</span><span class="p">()()</span> <span class="k">const</span> <span class="k">noexcept</span> <span class="p">{</span> <span class="k">return</span> <span class="n">file_handle</span><span class="o">::</span><span class="n">file</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">_path</span><span class="p">));</span> <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/constructors.cpp#L156" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 </p>
 
 <p>Because this is a struct, we can list initialise <code>construct</code>, and use

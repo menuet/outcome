@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -574,50 +574,49 @@
 <p>Now let us call our <code>result</code> returning C++ function from C:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s17d4">#include</span> <span class="s17d4">&lt;stdio.h&gt;</span><span class="s17d4">
-</span><span class="s17d4">#include</span> <span class="s17d4">&lt;string.h&gt;  // for strerror</span><span class="s17d4">
-</span><span class="s17d4"></span><span class="s1770">// This header in Outcome is pure C, it provides a suite of C helper macros
-</span><span class="s1770"></span><span class="s17d4">#include</span> <span class="s17d4">&#34;../../../include/outcome/result.h&#34;</span><span class="s17d4">
-</span><span class="s17d4"></span>
-<span class="s1770">// Declare our C++ function&#39;s returning result type. Only needs to be done once.
-</span><span class="s1770"></span>CXX_DECLARE_RESULT_EC(size_t, size_t);
+<span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;  // for strerror</span><span class="cp">
+</span><span class="cp"></span><span class="c1">// This header in Outcome is pure C, it provides a suite of C helper macros
+</span><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;../../../include/outcome/result.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="c1">// Declare our C++ function&#39;s returning result type. Only needs to be done once.
+</span><span class="c1"></span><span class="n">CXX_DECLARE_RESULT_EC</span><span class="p">(</span><span class="n">size_t</span><span class="p">,</span> <span class="n">size_t</span><span class="p">);</span>
 
-<span class="s1770">// Tell C about our C++ function
-</span><span class="s1770"></span><span class="s3e8">extern</span> CXX_RESULT_EC(size_t) to_string(<span class="s3ee">char</span> *buffer, size_t bufferlen, <span class="s3ee">int</span> v);
+<span class="c1">// Tell C about our C++ function
+</span><span class="c1"></span><span class="k">extern</span> <span class="nf">CXX_RESULT_EC</span><span class="p">(</span><span class="n">size_t</span><span class="p">)</span> <span class="n">to_string</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bufferlen</span><span class="p">,</span> <span class="kt">int</span> <span class="n">v</span><span class="p">);</span>
 
-<span class="s3ee">void</span> print(<span class="s3ee">int</span> v)
-{
-  <span class="s3ee">char</span> buffer[4];
-  CXX_RESULT_EC(size_t) res;
+<span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+  <span class="n">CXX_RESULT_EC</span><span class="p">(</span><span class="n">size_t</span><span class="p">)</span> <span class="n">res</span><span class="p">;</span>
 
-  res = to_string(buffer, <span class="s3e8">sizeof</span>(buffer), v);
-  <span class="s3e8">if</span>(CXX_RESULT_HAS_VALUE(res))
-  {
-    printf(<span class="sc1c"></span><span class="sc1c">&#34;to_string(%d) fills buffer with &#39;%s&#39; of %zu characters</span><span class="sc1c">\n</span><span class="sc1c">&#34;</span>, v, buffer, res.value);
-    <span class="s3e8">return</span>;
-  }
-  <span class="s1770">// Is the error returned in the std::generic_category domain and thus an errno?
-</span><span class="s1770"></span>  <span class="s3e8">if</span>(CXX_RESULT_ERROR_IS_ERRNO(res))
-  {
-    <span class="s1770">// If you get a weird compile error here, note that CXX_RESULT_ERROR()
-</span><span class="s1770"></span>    <span class="s1770">// uses C11 generics, you need a C11 compiler for it to work. If you don&#39;t
-</span><span class="s1770"></span>    <span class="s1770">// have a C11 compiler, res.error or res.error.code can be used directly.
-</span><span class="s1770"></span>    fprintf(stderr, <span class="sc1c"></span><span class="sc1c">&#34;to_string(%d) failed with error code %d (%s)</span><span class="sc1c">\n</span><span class="sc1c">&#34;</span>, v, CXX_RESULT_ERROR(res), strerror(CXX_RESULT_ERROR(res)));
-    <span class="s3e8">return</span>;
-  }
-  fprintf(stderr, <span class="sc1c"></span><span class="sc1c">&#34;to_string(%d) failed with unknown error code %d</span><span class="sc1c">\n</span><span class="sc1c">&#34;</span>, v, CXX_RESULT_ERROR(res));
-}
+  <span class="n">res</span> <span class="o">=</span> <span class="n">to_string</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">v</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">CXX_RESULT_HAS_VALUE</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+  <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;to_string(%d) fills buffer with &#39;%s&#39; of %zu characters</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">res</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// Is the error returned in the std::generic_category domain and thus an errno?
+</span><span class="c1"></span>  <span class="k">if</span><span class="p">(</span><span class="n">CXX_RESULT_ERROR_IS_ERRNO</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+  <span class="p">{</span>
+    <span class="c1">// If you get a weird compile error here, note that CXX_RESULT_ERROR()
+</span><span class="c1"></span>    <span class="c1">// uses C11 generics, you need a C11 compiler for it to work. If you don&#39;t
+</span><span class="c1"></span>    <span class="c1">// have a C11 compiler, res.error or res.error.code can be used directly.
+</span><span class="c1"></span>    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;to_string(%d) failed with error code %d (%s)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">CXX_RESULT_ERROR</span><span class="p">(</span><span class="n">res</span><span class="p">),</span> <span class="n">strerror</span><span class="p">(</span><span class="n">CXX_RESULT_ERROR</span><span class="p">(</span><span class="n">res</span><span class="p">)));</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;to_string(%d) failed with unknown error code %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">CXX_RESULT_ERROR</span><span class="p">(</span><span class="n">res</span><span class="p">));</span>
+<span class="p">}</span>
 
-<span class="s3ee">int</span> main(<span class="s3ee">void</span>)
-{
-  print(9);
-  print(99);
-  print(999);
-  print(9999);
-  <span class="s3e8">return</span> 0;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/c_api.c#L25" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="mi">9</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="mi">99</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="mi">999</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="mi">9999</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/c_api.c#L25" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Running this C program yields:</p>

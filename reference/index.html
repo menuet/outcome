@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -737,7 +737,7 @@
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx::success_type&lt;T"><code>success_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a successful state.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::swap&lt;R,S,P&gt;(result&lt;R,S,P&gt;&amp;,result&lt;R,S,P&gt;&amp;)"><code>swap</code></a> &mdash; Specialise swap for result.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx::swap&lt;R,S,P,N&gt;(outcome&lt;R,S,P,N&gt;&amp;,outcome&lt;R,S,P,N&gt;&amp;)"><code>swap</code></a> &mdash; Specialise swap for outcome.</p></li>
 
 <li><p><a href="try#standardese-outcome_v2_xxx::try_operation_return_as&lt;T&gt;(T&amp;&amp;)"><code>try_operation_return_as</code></a> &mdash; Customisation point for changing what the <code>OUTCOME_TRY</code> macros do. This function defaults to returning <code>std::forward&lt;T&gt;(v).as_failure()</code>.</p></li>
 

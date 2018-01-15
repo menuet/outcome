@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -591,63 +591,62 @@ with a strongly typed <code>enum</code> any more than some user defined <code>st
 Outcome to treat it quite differently.</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">struct</span> udt
-{
-  <span class="s3ee">int</span> a{0};
-  <span class="s3e8">explicit</span> udt(<span class="s3ee">int</span> _a)
-      : a(_a)
-  {
-  }
-  udt() = <span class="s3e8">default</span>;
-  <span class="s3ee">int</span> <span class="s3e8">operator</span>*() <span class="s3e8">const</span> { <span class="s3e8">return</span> a; }
-};
-<span class="s3e8">enum</span> <span class="s3e8">class</span> <span class="s7d4">err</span>
-{
-  success,
-  failure1,
-  failure2
-};
+<span class="k">struct</span> <span class="n">udt</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+  <span class="k">explicit</span> <span class="nf">udt</span><span class="p">(</span><span class="kt">int</span> <span class="n">_a</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">a</span><span class="p">(</span><span class="n">_a</span><span class="p">)</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+  <span class="n">udt</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">err</span>
+<span class="p">{</span>
+  <span class="n">success</span><span class="p">,</span>
+  <span class="n">failure1</span><span class="p">,</span>
+  <span class="n">failure2</span>
+<span class="p">};</span>
 
-<span class="s1770">// Tell the standard library that enum err is an error code enum
-</span><span class="s1770">// by specialising the is_error_code_enum trait. See
-</span><span class="s1770">// http://en.cppreference.com/w/cpp/error/error_code/is_error_code_enum
-</span><span class="s1770"></span><span class="s3e8">namespace</span> std
-{
-  <span class="s3e8">template</span> &lt;&gt; <span class="s3e8">struct</span> is_error_code_enum&lt;err&gt; : std::true_type
-  {
-  };
-}
+<span class="c1">// Tell the standard library that enum err is an error code enum
+</span><span class="c1">// by specialising the is_error_code_enum trait. See
+</span><span class="c1">// http://en.cppreference.com/w/cpp/error/error_code/is_error_code_enum
+</span><span class="c1"></span><span class="k">namespace</span> <span class="n">std</span>
+<span class="p">{</span>
+  <span class="k">template</span> <span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="n">is_error_code_enum</span><span class="o">&lt;</span><span class="n">err</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">std</span><span class="o">::</span><span class="n">true_type</span>
+  <span class="p">{</span>
+  <span class="p">};</span>
+<span class="p">}</span>
 
-<span class="s1770">// We also must declare a free function make_error_code. This is
-</span><span class="s1770">// discovered via ADL by the standard library. See
-</span><span class="s1770">// http://en.cppreference.com/w/cpp/error/errc/make_error_code
-</span><span class="s1770"></span><span class="s3e8">inline</span> std::error_code make_error_code(err c)
-{
-  <span class="s1770">// We need to inherit from std::error_category to define
-</span><span class="s1770"></span>  <span class="s1770">// an error code domain with the standard library for
-</span><span class="s1770"></span>  <span class="s1770">// our strongly typed enum. See
-</span><span class="s1770"></span>  <span class="s1770">// http://en.cppreference.com/w/cpp/error/error_category
-</span><span class="s1770"></span>  <span class="s3e8">static</span> <span class="s3e8">struct</span> err_category : std::error_category
-  {
-    <span class="s3e8">virtual</span> <span class="s3e8">const</span> <span class="s3ee">char</span> *name() <span class="s3e8">const</span> <span class="s3e8">noexcept</span> <span class="s3e8">override</span> <span class="s3e8">final</span> { <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err_category&#34;</span>; };
-    <span class="s3e8">virtual</span> std::string message(<span class="s3ee">int</span> c) <span class="s3e8">const</span> <span class="s3e8">override</span> <span class="s3e8">final</span>
-    {
-      <span class="s3e8">switch</span>(<span class="s3e8">static_cast</span>&lt;err&gt;(c))
-      {
-      <span class="s3e8">case</span> err::success:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err::success&#34;</span>;
-      <span class="s3e8">case</span> err::failure1:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err::failure1&#34;</span>;
-      <span class="s3e8">case</span> err::failure2:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;err::failure2&#34;</span>;
-      }
-      <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;unknown&#34;</span>;
-    }
-  } category;
-  <span class="s3e8">return</span> std::error_code(<span class="s3e8">static_cast</span>&lt;<span class="s3ee">int</span>&gt;(c), category);
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_enums2.cpp#L29" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="c1">// We also must declare a free function make_error_code. This is
+</span><span class="c1">// discovered via ADL by the standard library. See
+</span><span class="c1">// http://en.cppreference.com/w/cpp/error/errc/make_error_code
+</span><span class="c1"></span><span class="kr">inline</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="n">make_error_code</span><span class="p">(</span><span class="n">err</span> <span class="n">c</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// We need to inherit from std::error_category to define
+</span><span class="c1"></span>  <span class="c1">// an error code domain with the standard library for
+</span><span class="c1"></span>  <span class="c1">// our strongly typed enum. See
+</span><span class="c1"></span>  <span class="c1">// http://en.cppreference.com/w/cpp/error/error_category
+</span><span class="c1"></span>  <span class="k">static</span> <span class="k">struct</span> <span class="nl">err_category</span> <span class="p">:</span> <span class="n">std</span><span class="o">::</span><span class="n">error_category</span>
+  <span class="p">{</span>
+    <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">noexcept</span> <span class="k">override</span> <span class="k">final</span> <span class="p">{</span> <span class="k">return</span> <span class="sa"></span><span class="s">&#34;err_category&#34;</span><span class="p">;</span> <span class="p">};</span>
+    <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">message</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="k">final</span>
+    <span class="p">{</span>
+      <span class="k">switch</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">err</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+      <span class="p">{</span>
+      <span class="k">case</span> <span class="n">err</span><span class="o">::</span><span class="nl">success</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa"></span><span class="s">&#34;err::success&#34;</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">err</span><span class="o">::</span><span class="nl">failure1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa"></span><span class="s">&#34;err::failure1&#34;</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">err</span><span class="o">::</span><span class="nl">failure2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa"></span><span class="s">&#34;err::failure2&#34;</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="sa"></span><span class="s">&#34;unknown&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="n">category</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">category</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_enums2.cpp#L29" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 

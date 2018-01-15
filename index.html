@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -557,10 +557,9 @@ that are not exception-safe whilst retaining all information from the thrown exc
 <p>Function that may need to report failure needs to reflect that in its return type:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">auto</span> read_int_from_file(string_view path) <span class="s3e8">noexcept</span>
-  -&gt; outcome::result&lt;<span class="s3ee">int</span>&gt;;
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L19" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">auto</span> <span class="nf">read_int_from_file</span><span class="p">(</span><span class="n">string_view</span> <span class="n">path</span><span class="p">)</span> <span class="k">noexcept</span>
+  <span class="o">-&gt;</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L19" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Function <code>read_int_from_file</code> will either return an <code>int</code> or information about
@@ -569,37 +568,34 @@ the reason for failure.</p>
 <p>It is possible to inspect the returned state manually:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">if</span> (<span class="s3e8">auto</span> rslt = read_int_from_file(<span class="sc1c"></span><span class="sc1c">&#34;config.cfg&#34;</span>))
-  use_int(rslt.value());
-<span class="s3e8">else</span>
-  report_error(rslt.error()); <span class="s1770">// returns std::error_code
-</span><span class="s1770"></span></code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L35" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">if</span> <span class="p">(</span><span class="k">auto</span> <span class="n">rslt</span> <span class="o">=</span> <span class="n">read_int_from_file</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;config.cfg&#34;</span><span class="p">))</span>
+  <span class="n">use_int</span><span class="p">(</span><span class="n">rslt</span><span class="p">.</span><span class="n">value</span><span class="p">());</span>
+<span class="k">else</span>
+  <span class="nf">report_error</span><span class="p">(</span><span class="n">rslt</span><span class="p">.</span><span class="n">error</span><span class="p">());</span> <span class="c1">// returns std::error_code
+</span><span class="c1"></span></code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L35" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>But most of the time you would inspect the object indirectly through a dedicated control statement. An implementation of <code>read_int_from_file</code> that has to (1) open the file, (2) read raw data to a buffer, and (3) interpret it as <code>int</code>, using the following three functions</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">auto</span> open_file(string_view path) <span class="s3e8">noexcept</span> -&gt; outcome::result&lt;Handle&gt;;
-<span class="s3e8">auto</span> read_data(Handle&amp; h)        <span class="s3e8">noexcept</span> -&gt; outcome::result&lt;Buffer&gt;;     
-<span class="s3e8">auto</span> parse(<span class="s3e8">const</span> Buffer&amp; b)      <span class="s3e8">noexcept</span> -&gt; outcome::result&lt;<span class="s3ee">int</span>&gt;;
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L24" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">auto</span> <span class="nf">open_file</span><span class="p">(</span><span class="n">string_view</span> <span class="n">path</span><span class="p">)</span> <span class="k">noexcept</span> <span class="o">-&gt;</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">Handle</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">auto</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">Handle</span><span class="o">&amp;</span> <span class="n">h</span><span class="p">)</span>        <span class="k">noexcept</span> <span class="o">-&gt;</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="p">;</span>     
+<span class="k">auto</span> <span class="nf">parse</span><span class="p">(</span><span class="k">const</span> <span class="n">Buffer</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span>      <span class="k">noexcept</span> <span class="o">-&gt;</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L24" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>will look like this:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">auto</span> read_int_from_file(string_view path) <span class="s3e8">noexcept</span>
-  -&gt; outcome::result&lt;<span class="s3ee">int</span>&gt;
-{
-  OUTCOME_TRY(handle, open_file(path));    <span class="s1770">// decltype(handle) == Handle
-</span><span class="s1770"></span>  OUTCOME_TRY(buffer, read_data(handle));  <span class="s1770">// decltype(buffer) == Buffer
-</span><span class="s1770"></span>  OUTCOME_TRY(val, parse(buffer));         <span class="s1770">// decltype(val) == int
-</span><span class="s1770"></span>  <span class="s3e8">return</span> val;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L44" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">auto</span> <span class="nf">read_int_from_file</span><span class="p">(</span><span class="n">string_view</span> <span class="n">path</span><span class="p">)</span> <span class="k">noexcept</span>
+  <span class="o">-&gt;</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span>
+<span class="p">{</span>
+  <span class="n">OUTCOME_TRY</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">open_file</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>    <span class="c1">// decltype(handle) == Handle
+</span><span class="c1"></span>  <span class="n">OUTCOME_TRY</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">read_data</span><span class="p">(</span><span class="n">handle</span><span class="p">));</span>  <span class="c1">// decltype(buffer) == Buffer
+</span><span class="c1"></span>  <span class="n">OUTCOME_TRY</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">parse</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>         <span class="c1">// decltype(val) == int
+</span><span class="c1"></span>  <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/intro_example.cpp#L44" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Each occurance of <code>OUTCOME_TRY</code> is a control statement. If the returned <code>result&lt;T&gt;</code> contains an error information, the function is immediately returned with <code>result&lt;U&gt;</code> containing the same error information; otherwise object of type <code>T</code> is move-constructed on the stack.</p>

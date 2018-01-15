@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -580,23 +580,22 @@ it could indeed throw an exception and thus with the <code>noexcept</code> hooks
 process would be terminated.</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> error_code_extended
-{
-  <span class="s1770">// Specialise the outcome copy and move conversion hook for when our localised result
-</span><span class="s1770"></span>  <span class="s1770">// is used as the source for copy construction our localised outcome
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">U</span>&gt; <span class="s3e8">inline</span> <span class="s3ee">void</span> hook_outcome_copy_construction(outcome&lt;T&gt; *res, <span class="s3e8">const</span> result&lt;U&gt; &amp; <span class="s1770">/*unused*/</span>) <span class="s3e8">noexcept</span>
-  {
-    <span class="s1770">// when copy constructing from a result&lt;T&gt;, poke in an exception
-</span><span class="s1770"></span>    poke_exception(res);
-  }
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">U</span>&gt; <span class="s3e8">inline</span> <span class="s3ee">void</span> hook_outcome_move_construction(outcome&lt;T&gt; *res, result&lt;U&gt; &amp;&amp; <span class="s1770">/*unused*/</span>) <span class="s3e8">noexcept</span>
-  {
-    <span class="s1770">// when move constructing from a result&lt;T&gt;, poke in an exception
-</span><span class="s1770"></span>    poke_exception(res);
-  }
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L173" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="k">namespace</span> <span class="n">error_code_extended</span>
+<span class="p">{</span>
+  <span class="c1">// Specialise the outcome copy and move conversion hook for when our localised result
+</span><span class="c1"></span>  <span class="c1">// is used as the source for copy construction our localised outcome
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">U</span><span class="o">&gt;</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="n">hook_outcome_copy_construction</span><span class="p">(</span><span class="n">outcome</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">res</span><span class="p">,</span> <span class="k">const</span> <span class="n">result</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="cm">/*unused*/</span><span class="p">)</span> <span class="k">noexcept</span>
+  <span class="p">{</span>
+    <span class="c1">// when copy constructing from a result&lt;T&gt;, poke in an exception
+</span><span class="c1"></span>    <span class="n">poke_exception</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">U</span><span class="o">&gt;</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="n">hook_outcome_move_construction</span><span class="p">(</span><span class="n">outcome</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">res</span><span class="p">,</span> <span class="n">result</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="o">&amp;&amp;</span> <span class="cm">/*unused*/</span><span class="p">)</span> <span class="k">noexcept</span>
+  <span class="p">{</span>
+    <span class="c1">// when move constructing from a result&lt;T&gt;, poke in an exception
+</span><span class="c1"></span>    <span class="n">poke_exception</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_extended.cpp#L173" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 

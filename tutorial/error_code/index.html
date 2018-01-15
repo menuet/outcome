@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="Illustrates how you can hook into the std::error_code system from the Standard Library in order to work with your own set of error codes.">
 
 
@@ -305,66 +305,6 @@
         <span>Interoperation</span><i class="fa fa-angle-right fa-lg category-icon"></i>
       </a>
         <ul>
-      <li data-nav-id="/outcome/tutorial/interop/problem/" class="dd-item">
-        <a href="/outcome/tutorial/interop/problem/">
-          <span>Incommensurate E types</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/value-or-error/" class="dd-item">
-        <a href="/outcome/tutorial/interop/value-or-error/">
-          <span>ValueOrError Concept</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/httplib/" class="dd-item">
-        <a href="/outcome/tutorial/interop/httplib/">
-          <span>The HTTP library</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/tidylib/" class="dd-item">
-        <a href="/outcome/tutorial/interop/tidylib/">
-          <span>The HTMLTidy library</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/filelib/" class="dd-item">
-        <a href="/outcome/tutorial/interop/filelib/">
-          <span>The File I/O library</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/app/" class="dd-item">
-        <a href="/outcome/tutorial/interop/app/">
-          <span>The Application</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/app-map-httplib1/" class="dd-item">
-        <a href="/outcome/tutorial/interop/app-map-httplib1/">
-          <span>Mapping the HTTP library into the Application 1/2</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/app-map-httplib2/" class="dd-item">
-        <a href="/outcome/tutorial/interop/app-map-httplib2/">
-          <span>Mapping the HTTP library into the Application 2/2</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/app-map-filelib/" class="dd-item">
-        <a href="/outcome/tutorial/interop/app-map-filelib/">
-          <span>Mapping the File I/O library into the Application</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/app-map-tidylib/" class="dd-item">
-        <a href="/outcome/tutorial/interop/app-map-tidylib/">
-          <span>Mapping the HTMLTidy library into the Application</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/app-go/" class="dd-item">
-        <a href="/outcome/tutorial/interop/app-go/">
-          <span>In use</span>
-        </a>
-    </li>
-      <li data-nav-id="/outcome/tutorial/interop/conclusion/" class="dd-item">
-        <a href="/outcome/tutorial/interop/conclusion/">
-          <span>Conclusion</span>
-        </a>
-    </li>
         </ul>
     </li>
       <li data-nav-id="/outcome/tutorial/error_code/" class="dd-item active">
@@ -581,107 +521,106 @@ The list is:</p>
 </ul>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s17d4">#include</span> <span class="s17d4">&lt;iostream&gt;</span><span class="s17d4">
-</span><span class="s17d4">#include</span> <span class="s17d4">&lt;string&gt;        // for string printing</span><span class="s17d4">
-</span><span class="s17d4">#include</span> <span class="s17d4">&lt;system_error&gt;  // bring in std::error_code et al</span><span class="s17d4">
-</span><span class="s17d4"></span>
-<span class="s1770">// This is the custom error code enum
-</span><span class="s1770"></span><span class="s3e8">enum</span> <span class="s3e8">class</span> <span class="s7d4">ConversionErrc</span>
-{
-  EmptyString = 1, <span class="s1770">// 0 is never an error
-</span><span class="s1770"></span>  IllegalChar = 2,
-  TooLong     = 3,
-};
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;string&gt;        // for string printing</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;system_error&gt;  // bring in std::error_code et al</span><span class="cp">
+</span><span class="cp"></span>
+<span class="c1">// This is the custom error code enum
+</span><span class="c1"></span><span class="k">enum</span> <span class="k">class</span> <span class="nc">ConversionErrc</span>
+<span class="p">{</span>
+  <span class="n">EmptyString</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// 0 is never an error
+</span><span class="c1"></span>  <span class="n">IllegalChar</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">TooLong</span>     <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">};</span>
 
-<span class="s3e8">namespace</span> std
-{
-  <span class="s1770">// Tell the C++ 11 STL metaprogramming that enum MathError::valid_errors
-</span><span class="s1770"></span>  <span class="s1770">// is registered with the standard error code system
-</span><span class="s1770"></span>  <span class="s3e8">template</span> &lt;&gt; <span class="s3e8">struct</span> is_error_code_enum&lt;ConversionErrc&gt; : std::true_type
-  {
-  };
-}
+<span class="k">namespace</span> <span class="n">std</span>
+<span class="p">{</span>
+  <span class="c1">// Tell the C++ 11 STL metaprogramming that enum MathError::valid_errors
+</span><span class="c1"></span>  <span class="c1">// is registered with the standard error code system
+</span><span class="c1"></span>  <span class="k">template</span> <span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="n">is_error_code_enum</span><span class="o">&lt;</span><span class="n">ConversionErrc</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">std</span><span class="o">::</span><span class="n">true_type</span>
+  <span class="p">{</span>
+  <span class="p">};</span>
+<span class="p">}</span>
 
-<span class="s3e8">namespace</span> detail
-{
-  <span class="s1770">// Define a custom error code category derived from std::error_category
-</span><span class="s1770"></span>  <span class="s3e8">class</span> <span class="s7d4">ConversionErrc_category</span> : <span class="s3e8">public</span> std::error_category
-  {
-  <span class="s3e8">public</span>:
-    <span class="s1770">// Return a short descriptive name for the category
-</span><span class="s1770"></span>    <span class="s3e8">virtual</span> <span class="s3e8">const</span> <span class="s3ee">char</span> *name() <span class="s3e8">const</span> <span class="s3e8">noexcept</span> <span class="s3e8">override</span> <span class="s3e8">final</span> { <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;ConversionError&#34;</span>; }
-    <span class="s1770">// Return what each enum means in text
-</span><span class="s1770"></span>    <span class="s3e8">virtual</span> std::string message(<span class="s3ee">int</span> c) <span class="s3e8">const</span> <span class="s3e8">override</span> <span class="s3e8">final</span>
-    {
-      <span class="s3e8">switch</span> (<span class="s3e8">static_cast</span>&lt;ConversionErrc&gt;(c))
-      {
-      <span class="s3e8">case</span> ConversionErrc::EmptyString:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;converting empty string&#34;</span>;
-      <span class="s3e8">case</span> ConversionErrc::IllegalChar:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;got non-digit chatr when converting to a number&#34;</span>;
-      <span class="s3e8">case</span> ConversionErrc::TooLong:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;the number would not fit into memory&#34;</span>;
-      <span class="s3e8">default</span>:
-        <span class="s3e8">return</span> <span class="sc1c"></span><span class="sc1c">&#34;unknown&#34;</span>;
-      }
-    }
-    <span class="s1770">// OPTIONAL: Allow generic error conditions to be compared to me
-</span><span class="s1770"></span>    <span class="s3e8">virtual</span> std::error_condition default_error_condition(<span class="s3ee">int</span> c) <span class="s3e8">const</span> <span class="s3e8">noexcept</span> <span class="s3e8">override</span> <span class="s3e8">final</span>
-    {
-      <span class="s3e8">switch</span> (<span class="s3e8">static_cast</span>&lt;ConversionErrc&gt;(c))
-      {
-      <span class="s3e8">case</span> ConversionErrc::EmptyString:
-        <span class="s3e8">return</span> make_error_condition(std::errc::invalid_argument);
-      <span class="s3e8">case</span> ConversionErrc::IllegalChar:
-        <span class="s3e8">return</span> make_error_condition(std::errc::invalid_argument);
-      <span class="s3e8">case</span> ConversionErrc::TooLong:
-        <span class="s3e8">return</span> make_error_condition(std::errc::result_out_of_range);
-      <span class="s3e8">default</span>:
-        <span class="s1770">// I have no mapping for this code
-</span><span class="s1770"></span>        <span class="s3e8">return</span> std::error_condition(c, *<span class="s3e8">this</span>);
-      }
-    }
-  };
-}
+<span class="k">namespace</span> <span class="n">detail</span>
+<span class="p">{</span>
+  <span class="c1">// Define a custom error code category derived from std::error_category
+</span><span class="c1"></span>  <span class="k">class</span> <span class="nc">ConversionErrc_category</span> <span class="o">:</span> <span class="k">public</span> <span class="n">std</span><span class="o">::</span><span class="n">error_category</span>
+  <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="c1">// Return a short descriptive name for the category
+</span><span class="c1"></span>    <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">noexcept</span> <span class="k">override</span> <span class="k">final</span> <span class="p">{</span> <span class="k">return</span> <span class="sa"></span><span class="s">&#34;ConversionError&#34;</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// Return what each enum means in text
+</span><span class="c1"></span>    <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">message</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="k">final</span>
+    <span class="p">{</span>
+      <span class="k">switch</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">ConversionErrc</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+      <span class="p">{</span>
+      <span class="k">case</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="nl">EmptyString</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa"></span><span class="s">&#34;converting empty string&#34;</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="nl">IllegalChar</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa"></span><span class="s">&#34;got non-digit chatr when converting to a number&#34;</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="nl">TooLong</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa"></span><span class="s">&#34;the number would not fit into memory&#34;</span><span class="p">;</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="k">return</span> <span class="sa"></span><span class="s">&#34;unknown&#34;</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// OPTIONAL: Allow generic error conditions to be compared to me
+</span><span class="c1"></span>    <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">error_condition</span> <span class="n">default_error_condition</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">)</span> <span class="k">const</span> <span class="k">noexcept</span> <span class="k">override</span> <span class="k">final</span>
+    <span class="p">{</span>
+      <span class="k">switch</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">ConversionErrc</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+      <span class="p">{</span>
+      <span class="k">case</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="nl">EmptyString</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">make_error_condition</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">errc</span><span class="o">::</span><span class="n">invalid_argument</span><span class="p">);</span>
+      <span class="k">case</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="nl">IllegalChar</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">make_error_condition</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">errc</span><span class="o">::</span><span class="n">invalid_argument</span><span class="p">);</span>
+      <span class="k">case</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="nl">TooLong</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">make_error_condition</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">errc</span><span class="o">::</span><span class="n">result_out_of_range</span><span class="p">);</span>
+      <span class="k">default</span><span class="o">:</span>
+        <span class="c1">// I have no mapping for this code
+</span><span class="c1"></span>        <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">error_condition</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="o">*</span><span class="k">this</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">}</span>
 
-<span class="s1770">// Define the linkage for this function to be used by external code.
-</span><span class="s1770">// This would be the usual __declspec(dllexport) or __declspec(dllimport)
-</span><span class="s1770">// if we were in a Windows DLL etc. But for this example use a global
-</span><span class="s1770">// instance but with inline linkage so multiple definitions do not collide.
-</span><span class="s1770"></span><span class="s17d4">#define THIS_MODULE_API_DECL extern inline
-</span><span class="s17d4"></span>
-<span class="s1770">// Declare a global function returning a static instance of the custom category
-</span><span class="s1770"></span>THIS_MODULE_API_DECL <span class="s3e8">const</span> detail::ConversionErrc_category &amp;ConversionErrc_category()
-{
-  <span class="s3e8">static</span> detail::ConversionErrc_category c;
-  <span class="s3e8">return</span> c;
-}
+<span class="c1">// Define the linkage for this function to be used by external code.
+</span><span class="c1">// This would be the usual __declspec(dllexport) or __declspec(dllimport)
+</span><span class="c1">// if we were in a Windows DLL etc. But for this example use a global
+</span><span class="c1">// instance but with inline linkage so multiple definitions do not collide.
+</span><span class="c1"></span><span class="cp">#define THIS_MODULE_API_DECL extern inline
+</span><span class="cp"></span>
+<span class="c1">// Declare a global function returning a static instance of the custom category
+</span><span class="c1"></span><span class="n">THIS_MODULE_API_DECL</span> <span class="k">const</span> <span class="n">detail</span><span class="o">::</span><span class="n">ConversionErrc_category</span> <span class="o">&amp;</span><span class="n">ConversionErrc_category</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">static</span> <span class="n">detail</span><span class="o">::</span><span class="n">ConversionErrc_category</span> <span class="n">c</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
 
 
-<span class="s1770">// Overload the global make_error_code() free function with our
-</span><span class="s1770">// custom enum. It will be found via ADL by the compiler if needed.
-</span><span class="s1770"></span><span class="s3e8">inline</span> std::error_code make_error_code(ConversionErrc e)
-{
-  <span class="s3e8">return</span> {<span class="s3e8">static_cast</span>&lt;<span class="s3ee">int</span>&gt;(e), ConversionErrc_category()};
-}
+<span class="c1">// Overload the global make_error_code() free function with our
+</span><span class="c1">// custom enum. It will be found via ADL by the compiler if needed.
+</span><span class="c1"></span><span class="kr">inline</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="n">make_error_code</span><span class="p">(</span><span class="n">ConversionErrc</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">ConversionErrc_category</span><span class="p">()};</span>
+<span class="p">}</span>
 
-<span class="s3ee">int</span> main(<span class="s3ee">void</span>)
-{
-  <span class="s1770">// Note that we can now supply ConversionErrc directly to error_code
-</span><span class="s1770"></span>  std::error_code ec = ConversionErrc::IllegalChar;
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// Note that we can now supply ConversionErrc directly to error_code
+</span><span class="c1"></span>  <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span> <span class="o">=</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="n">IllegalChar</span><span class="p">;</span>
 
-  std::cout &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;ConversionErrc::IllegalChar is printed by std::error_code as &#34;</span>
-    &lt;&lt; ec &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34; with explanatory message &#34;</span> &lt;&lt; ec.message() &lt;&lt; std::endl;
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;ConversionErrc::IllegalChar is printed by std::error_code as &#34;</span>
+    <span class="o">&lt;&lt;</span> <span class="n">ec</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34; with explanatory message &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 
-  <span class="s1770">// We can compare ConversionErrc containing error codes to generic conditions
-</span><span class="s1770"></span>  std::cout &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;ec is equivalent to std::errc::invalid_argument = &#34;</span>
-    &lt;&lt; (ec == std::errc::invalid_argument) &lt;&lt; std::endl;
-  std::cout &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;ec is equivalent to std::errc::result_out_of_range = &#34;</span>
-    &lt;&lt; (ec == std::errc::result_out_of_range) &lt;&lt; std::endl;
-  <span class="s3e8">return</span> 0;
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_registration.cpp#L2" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// We can compare ConversionErrc containing error codes to generic conditions
+</span><span class="c1"></span>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;ec is equivalent to std::errc::invalid_argument = &#34;</span>
+    <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">ec</span> <span class="o">==</span> <span class="n">std</span><span class="o">::</span><span class="n">errc</span><span class="o">::</span><span class="n">invalid_argument</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;ec is equivalent to std::errc::result_out_of_range = &#34;</span>
+    <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">ec</span> <span class="o">==</span> <span class="n">std</span><span class="o">::</span><span class="n">errc</span><span class="o">::</span><span class="n">result_out_of_range</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/error_code_registration.cpp#L2" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>This might look like a lot of extra boilerplate over simply using your custom

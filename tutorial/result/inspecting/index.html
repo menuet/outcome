@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -586,9 +586,8 @@
 <p>Suppose we will be writing function <code>print_half</code> that takes an integral number (however big) represented as an <code>std::string</code> and outputs a number which is twice smaller:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-outcome::result&lt;<span class="s3ee">void</span>&gt; print_half(<span class="s3e8">const</span> std::string&amp; text);
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_result.cpp#L111" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">print_half</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">text</span><span class="p">);</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_result.cpp#L111" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Type <code>result&lt;void&gt;</code> means that there is no value to be retuned upon success, but that the operation might still fail, and we may be interested in inspecting the cause of the failure. Class template <code>result&lt;&gt;</code> is declared with attribute <code>[[nodiscard]]</code>, which means compiler will warn you if you forget to inspect the returned object (in C++ 17 or later).</p>
@@ -596,28 +595,27 @@ outcome::result&lt;<span class="s3ee">void</span>&gt; print_half(<span class="s3
 <p>The implementation will do the following: if the integral number can be represnted by an <code>int</code>, we will convert to <code>int</code> and use its arithmetical operations. If the number is too large, we will fall back to using a custom <code>BigInt</code> implementation that needs to allocate memory. In the implementation we will use function <code>convert</code> defined in the previous section.</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-outcome::result&lt;<span class="s3ee">void</span>&gt; print_half(<span class="s3e8">const</span> std::string&amp; text)
-{
-  <span class="s3e8">if</span> (outcome::result&lt;<span class="s3ee">int</span>&gt; r = convert(text))     <span class="s1770">// #1
-</span><span class="s1770"></span>  {
-    std::cout &lt;&lt; (r.value() / 2) &lt;&lt; std::endl;    <span class="s1770">// #2
-</span><span class="s1770"></span>  }
-  <span class="s3e8">else</span>
-  {
-    <span class="s3e8">if</span> (r.error() == ConversionErrc::TooLong)     <span class="s1770">// #3 
-</span><span class="s1770"></span>    {
-      OUTCOME_TRY (i, BigInt::fromString(text));  <span class="s1770">// #4
-</span><span class="s1770"></span>      std::cout &lt;&lt; i.half() &lt;&lt; std::endl;
-    }
-    <span class="s3e8">else</span>
-    {
-      <span class="s3e8">return</span> r.as_failure();                      <span class="s1770">// #5
-</span><span class="s1770"></span>    }
-  }
-  <span class="s3e8">return</span> outcome::success();                      <span class="s1770">// #6
-</span><span class="s1770"></span>}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_result.cpp#L115" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+<span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">print_half</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>     <span class="c1">// #1
+</span><span class="c1"></span>  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>    <span class="c1">// #2
+</span><span class="c1"></span>  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">error</span><span class="p">()</span> <span class="o">==</span> <span class="n">ConversionErrc</span><span class="o">::</span><span class="n">TooLong</span><span class="p">)</span>     <span class="c1">// #3 
+</span><span class="c1"></span>    <span class="p">{</span>
+      <span class="n">OUTCOME_TRY</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">BigInt</span><span class="o">::</span><span class="n">fromString</span><span class="p">(</span><span class="n">text</span><span class="p">));</span>  <span class="c1">// #4
+</span><span class="c1"></span>      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">.</span><span class="n">half</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+      <span class="k">return</span> <span class="n">r</span><span class="p">.</span><span class="n">as_failure</span><span class="p">();</span>                      <span class="c1">// #5
+</span><span class="c1"></span>    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">outcome</span><span class="o">::</span><span class="n">success</span><span class="p">();</span>                      <span class="c1">// #6
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_result.cpp#L115" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>#1. You test if <code>result&lt;&gt;</code> object represents a successful operation with contextual conversion to <code>bool</code>.</p>
@@ -628,11 +626,10 @@ outcome::result&lt;<span class="s3ee">void</span>&gt; print_half(<span class="s3
 
 <p>#4. Macro <code>OUTCOME_TRY</code> represents a control statement. It implies that the function call in the second argument returns a <code>result&lt;&gt;</code>. It is defined as:</p>
 
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">/*static*/</span> outcome::result&lt;BigInt&gt; BigInt::fromString(<span class="s3e8">const</span> std::string&amp; s)
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_result.cpp#L104" class="code-snippet-url" target="_blank">View this code on Github</a></div>
-
+<p><div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
+<span class="cm">/*static*/</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">BigInt</span><span class="o">&gt;</span> <span class="n">BigInt</span><span class="o">::</span><span class="n">fromString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/using_result.cpp#L104" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+</p>
 
 <p>Our control statement means: if <code>fromString</code> returned failure, this same error information should be returned from <code>print_half</code>, even though the type of <code>result&lt;&gt;</code> is different. If <code>fromString</code> returned success, we create  variable <code>i</code> of type <code>int</code> with the value returned from <code>fromString</code>. If control goes to subsequent line, it means <code>fromString</code> succeeded and variable of type <code>int</code> is in scope.</p>
 

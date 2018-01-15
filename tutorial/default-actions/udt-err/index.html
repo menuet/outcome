@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -574,67 +574,63 @@
 <p>Let us imagine a some user defined value type (<code>udt</code>) and some user defined error type (<code>err</code>):</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-  <span class="s3e8">struct</span> udt
-  {
-    <span class="s3ee">int</span> a{0};
-    <span class="s3e8">explicit</span> udt(<span class="s3ee">int</span> _a)
-        : a(_a)
-    {
-    }
-    udt() = <span class="s3e8">default</span>;
-    <span class="s3ee">int</span> <span class="s3e8">operator</span>*() <span class="s3e8">const</span> { <span class="s3e8">return</span> a; }
-  };
+  <span class="k">struct</span> <span class="n">udt</span>
+  <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">explicit</span> <span class="nf">udt</span><span class="p">(</span><span class="kt">int</span> <span class="n">_a</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">a</span><span class="p">(</span><span class="n">_a</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="n">udt</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">}</span>
+  <span class="p">};</span>
 
-  <span class="s3e8">struct</span> err
-  {
-    <span class="s3ee">int</span> a{0};
-    <span class="s3e8">explicit</span> err(<span class="s3ee">int</span> _a)
-        : a(_a)
-    {
-    }
-    err() = <span class="s3e8">default</span>;
-  };
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L32" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="k">struct</span> <span class="n">err</span>
+  <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">explicit</span> <span class="nf">err</span><span class="p">(</span><span class="kt">int</span> <span class="n">_a</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">a</span><span class="p">(</span><span class="n">_a</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="n">err</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="p">};</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L32" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Firstly, note that both the <code>udt</code> and <code>err</code> types can be constructed from an <code>int</code>.
 Thus this won&rsquo;t compile:</p>
 
 <p><div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-  result&lt;udt, err&gt; res(5);  <span class="s1770">// fails to compile, cannot convert &#39;int&#39; to result
-</span><span class="s1770"></span></code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L55" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="n">result</span><span class="o">&lt;</span><span class="n">udt</span><span class="p">,</span> <span class="n">err</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>  <span class="c1">// fails to compile, cannot convert &#39;int&#39; to result
+</span><span class="c1"></span></code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L55" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 </p>
 
 <p>This is because all the implicit constructors self-disable because it could be ambiguous whether you
 might mean <code>udt</code> or <code>err</code>. This is not a problem, it just requires typing some more so you
 are explicit as to which you intend:</p>
 
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-  <span class="s1770">// When it is not unambiguous which to construct, we must say which we want same as with std::variant&lt;&gt;
-</span><span class="s1770"></span>  result&lt;udt, err&gt; res(in_place_type&lt;err&gt;, 5);
-  </code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L58" class="code-snippet-url" target="_blank">View this code on Github</a></div>
-
+<p><div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
+  <span class="c1">// When it is not unambiguous which to construct, we must say which we want same as with std::variant&lt;&gt;
+</span><span class="c1"></span>  <span class="n">result</span><span class="o">&lt;</span><span class="n">udt</span><span class="p">,</span> <span class="n">err</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="n">in_place_type</span><span class="o">&lt;</span><span class="n">err</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+  </code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L58" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+</p>
 
 <p>Now, what do you think will happen if we try to retrieve a <code>udt</code> from this <code>result</code> holding an <code>err</code>?</p>
 
-<div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-  result&lt;udt, err&gt; res(in_place_type&lt;err&gt;, 5);
+<p><div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
+  <span class="n">result</span><span class="o">&lt;</span><span class="n">udt</span><span class="p">,</span> <span class="n">err</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="n">in_place_type</span><span class="o">&lt;</span><span class="n">err</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
 
-  <span class="s1770">// What happens here? What exception type is thrown?
-</span><span class="s1770"></span>  <span class="s3e8">try</span>
-  {
-    std::cout &lt;&lt; *res.value() &lt;&lt; std::endl;
-  }
-  <span class="s3e8">catch</span>(<span class="s3e8">const</span> std::exception &amp;e)
-  {
-    std::cerr &lt;&lt; <span class="sc1c"></span><span class="sc1c">&#34;Exception thrown was &#34;</span> &lt;&lt; e.what() &lt;&lt; std::endl;
-  }
-  </code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L63" class="code-snippet-url" target="_blank">View this code on Github</a></div>
-
+  <span class="c1">// What happens here? What exception type is thrown?
+</span><span class="c1"></span>  <span class="k">try</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">catch</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">exception</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="sa"></span><span class="s">&#34;Exception thrown was &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  </code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/udts.cpp#L63" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+</p>
 
 
 <footer class=" footline" >

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -572,21 +572,19 @@
 
 
 <p>No doubt many will dislike the two-stage invocation pattern i.e.</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">construct&lt;file_handle&gt;{<span class="sc1c"></span><span class="sc1c">&#34;hello&#34;</span>}();</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">construct</span><span class="o">&lt;</span><span class="n">file_handle</span><span class="o">&gt;</span><span class="p">{</span><span class="sa"></span><span class="s">&#34;hello&#34;</span><span class="p">}();</span></code></pre></div>
 <p>So let us examine the most obvious alternative: a templated free function <code>construct&lt;T&gt;</code>.</p>
 
 <p>Due to the inability to partially specialise templated functions in C++, you
 need to use tagged overloading e.g.</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="s3e8">template</span>&lt;class... Args&gt;
-<span class="s3e8">inline</span> outcome::result&lt;file_handle&gt; construct(std::in_place_type_t&lt;file_handle&gt;, Args&amp;&amp; ... args)
-{
-  <span class="s3e8">return</span> file_handle::file(std::forward&lt;Args&gt;(args)...);
-}
-...
-<span class="s1770">// Now you must always write this:
-</span><span class="s1770"></span>construct(std::in_place_type&lt;file_handle&gt;, <span class="sc1c"></span><span class="sc1c">&#34;hello&#34;</span>);</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">template</span><span class="o">&lt;</span><span class="n">class</span><span class="p">...</span> <span class="n">Args</span><span class="o">&gt;</span>
+<span class="kr">inline</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">file_handle</span><span class="o">&gt;</span> <span class="n">construct</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">in_place_type_t</span><span class="o">&lt;</span><span class="n">file_handle</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Args</span><span class="o">&amp;&amp;</span> <span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">file_handle</span><span class="o">::</span><span class="n">file</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="c1">// Now you must always write this:
+</span><span class="c1"></span><span class="n">construct</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">in_place_type</span><span class="o">&lt;</span><span class="n">file_handle</span><span class="o">&gt;</span><span class="p">,</span> <span class="sa"></span><span class="s">&#34;hello&#34;</span><span class="p">);</span></code></pre></div>
 <p>Tagged overloading is fine for smaller projects, but for larger code bases:</p>
 
 <ol>

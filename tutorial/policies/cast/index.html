@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -581,37 +581,36 @@ not be immediately visible.</p>
 cast to a more derived form before use like this:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">EC</span>, <span class="s3e8">class</span> <span class="s7d4">E</span>&gt; <span class="s3e8">struct</span> outcome_policy
-{
-  <span class="s1770">/*! Performs a wide check of state, used in the value() functions.
-</span><span class="s1770">
-</span><span class="s1770">  \effects If outcome does not have a value, if it has an exception it rethrows it via `std::rethrow_exception()`,
-</span><span class="s1770">  if has an error it throws a `std::system_error(error())`, else it throws `bad_outcome_access`.
-</span><span class="s1770">  */</span>
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">Impl</span>&gt; <span class="s3e8">static</span> <span class="s3e8">constexpr</span> <span class="s3ee">void</span> wide_value_check(<span class="s3e8">const</span> Impl &amp;self)
-  {
-    <span class="s1770">// All of the have_*() state check functions are always present in all Impl types
-</span><span class="s1770"></span>    <span class="s3e8">if</span>(!self.have_value())
-    {
-      <span class="s3e8">if</span>(self.have_exception())
-      {
-        <span class="s1770">// .value() is implemented by the result part of Outcome. It knows nothing
-</span><span class="s1770"></span>        <span class="s1770">// of outcome&#39;s .exception(), so we need to cast to the derived type first.
-</span><span class="s1770"></span>        <span class="s3e8">const</span> MyOutcomeType &amp;_self = <span class="s3e8">static_cast</span>&lt;<span class="s3e8">const</span> MyOutcomeType &amp;&gt;(self);
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">EC</span><span class="p">,</span> <span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">outcome_policy</span>
+<span class="p">{</span>
+  <span class="cm">/*! Performs a wide check of state, used in the value() functions.
+</span><span class="cm">
+</span><span class="cm">  \effects If outcome does not have a value, if it has an exception it rethrows it via `std::rethrow_exception()`,
+</span><span class="cm">  if has an error it throws a `std::system_error(error())`, else it throws `bad_outcome_access`.
+</span><span class="cm">  */</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">Impl</span><span class="o">&gt;</span> <span class="k">static</span> <span class="k">constexpr</span> <span class="kt">void</span> <span class="n">wide_value_check</span><span class="p">(</span><span class="k">const</span> <span class="n">Impl</span> <span class="o">&amp;</span><span class="n">self</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// All of the have_*() state check functions are always present in all Impl types
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">self</span><span class="p">.</span><span class="n">have_value</span><span class="p">())</span>
+    <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">have_exception</span><span class="p">())</span>
+      <span class="p">{</span>
+        <span class="c1">// .value() is implemented by the result part of Outcome. It knows nothing
+</span><span class="c1"></span>        <span class="c1">// of outcome&#39;s .exception(), so we need to cast to the derived type first.
+</span><span class="c1"></span>        <span class="k">const</span> <span class="n">MyOutcomeType</span> <span class="o">&amp;</span><span class="n">_self</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">MyOutcomeType</span> <span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
 
-        <span class="s1770">// Note this will invoke narrow_exception_check() in this policy
-</span><span class="s1770"></span>        std::rethrow_exception(_self.assume_exception());
-      }
-      <span class="s3e8">if</span>(self.have_error())
-      {
-        <span class="s3e8">throw</span> std::system_error(make_error_code(self.assume_error()));
-      }
-      <span class="s3e8">throw</span> bad_outcome_access(<span class="sc1c"></span><span class="sc1c">&#34;no value&#34;</span>);
-    }
-  }
-};
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/policies.cpp#L59" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+        <span class="c1">// Note this will invoke narrow_exception_check() in this policy
+</span><span class="c1"></span>        <span class="n">std</span><span class="o">::</span><span class="n">rethrow_exception</span><span class="p">(</span><span class="n">_self</span><span class="p">.</span><span class="n">assume_exception</span><span class="p">());</span>
+      <span class="p">}</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">have_error</span><span class="p">())</span>
+      <span class="p">{</span>
+        <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">make_error_code</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">assume_error</span><span class="p">()));</span>
+      <span class="p">}</span>
+      <span class="k">throw</span> <span class="n">bad_outcome_access</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;no value&#34;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/policies.cpp#L59" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Note that const-ness and lvalue/rvalue-ness is propagated to

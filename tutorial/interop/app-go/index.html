@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -574,39 +574,38 @@
 <p>This is how you might now write application code using these three libraries:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s3e8">namespace</span> app
-{
-  outcome&lt;<span class="s3ee">void</span>&gt; go()  <span class="s1770">// NOT noexcept, this can throw STL exceptions e.g. bad_alloc
-</span><span class="s1770"></span>  {
-    <span class="s1770">// Note that explicit construction is required when converting between differing types
-</span><span class="s1770"></span>    <span class="s1770">// of outcome and result. This makes it explicit what you intend to do as conversion
-</span><span class="s1770"></span>    <span class="s1770">// may be a lot more expensive than moves.
-</span><span class="s1770"></span>
-    <span class="s1770">// Try to GET this URL. If an unsuccessful HTTP status is returned, serialise a string
-</span><span class="s1770"></span>    <span class="s1770">// containing a description of the HTTP status code and the URL which failed, storing
-</span><span class="s1770"></span>    <span class="s1770">// that into a httplib_error exception type which is stored as an exception ptr. The
-</span><span class="s1770"></span>    <span class="s1770">// TRY operation below will return that exception ptr to be rethrown in the caller.
-</span><span class="s1770"></span>    <span class="s1770">// Otherwise the fetched data is returned in a std::string data.
-</span><span class="s1770"></span>    OUTCOME_TRY(data, outcome&lt;std::string&gt;(httplib::get(<span class="sc1c"></span><span class="sc1c">&#34;http://www.nedproductions.biz/&#34;</span>)));
-    string_view data_view(data);
+<span class="k">namespace</span> <span class="n">app</span>
+<span class="p">{</span>
+  <span class="n">outcome</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span> <span class="n">go</span><span class="p">()</span>  <span class="c1">// NOT noexcept, this can throw STL exceptions e.g. bad_alloc
+</span><span class="c1"></span>  <span class="p">{</span>
+    <span class="c1">// Note that explicit construction is required when converting between differing types
+</span><span class="c1"></span>    <span class="c1">// of outcome and result. This makes it explicit what you intend to do as conversion
+</span><span class="c1"></span>    <span class="c1">// may be a lot more expensive than moves.
+</span><span class="c1"></span>
+    <span class="c1">// Try to GET this URL. If an unsuccessful HTTP status is returned, serialise a string
+</span><span class="c1"></span>    <span class="c1">// containing a description of the HTTP status code and the URL which failed, storing
+</span><span class="c1"></span>    <span class="c1">// that into a httplib_error exception type which is stored as an exception ptr. The
+</span><span class="c1"></span>    <span class="c1">// TRY operation below will return that exception ptr to be rethrown in the caller.
+</span><span class="c1"></span>    <span class="c1">// Otherwise the fetched data is returned in a std::string data.
+</span><span class="c1"></span>    <span class="n">OUTCOME_TRY</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">outcome</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">httplib</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="sa"></span><span class="s">&#34;http://www.nedproductions.biz/&#34;</span><span class="p">)));</span>
+    <span class="n">string_view</span> <span class="nf">data_view</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
 
-    <span class="s1770">// HTML tidy the fetched data. If the C library fails due to an error corresponding to
-</span><span class="s1770"></span>    <span class="s1770">// a standard library exception type, throw that. Otherwise, synthesise an exception
-</span><span class="s1770"></span>    <span class="s1770">// ptr of type tidylib_error which stores the error code returned in an error code with
-</span><span class="s1770"></span>    <span class="s1770">// generic category (i.e. errno domain).
-</span><span class="s1770"></span>    <span class="s1770">// TRY operation below will return that exception ptr to be rethrown in the caller.
-</span><span class="s1770"></span>    <span class="s1770">// Otherwise the tidied data is returned into holdmem, with the string view updated to
-</span><span class="s1770"></span>    <span class="s1770">// point at the tidied data.
-</span><span class="s1770"></span>    OUTCOME_TRY(holdmem, tidy_html(data_view));
+    <span class="c1">// HTML tidy the fetched data. If the C library fails due to an error corresponding to
+</span><span class="c1"></span>    <span class="c1">// a standard library exception type, throw that. Otherwise, synthesise an exception
+</span><span class="c1"></span>    <span class="c1">// ptr of type tidylib_error which stores the error code returned in an error code with
+</span><span class="c1"></span>    <span class="c1">// generic category (i.e. errno domain).
+</span><span class="c1"></span>    <span class="c1">// TRY operation below will return that exception ptr to be rethrown in the caller.
+</span><span class="c1"></span>    <span class="c1">// Otherwise the tidied data is returned into holdmem, with the string view updated to
+</span><span class="c1"></span>    <span class="c1">// point at the tidied data.
+</span><span class="c1"></span>    <span class="n">OUTCOME_TRY</span><span class="p">(</span><span class="n">holdmem</span><span class="p">,</span> <span class="n">tidy_html</span><span class="p">(</span><span class="n">data_view</span><span class="p">));</span>
 
-    <span class="s1770">// Write the tidied data to some file. If the write fails, synthesise a filesystem_error
-</span><span class="s1770"></span>    <span class="s1770">// exception ptr exactly as if one called filelib::write_file(data_view).value().
-</span><span class="s1770"></span>    OUTCOME_TRY(written, outcome&lt;size_t&gt;(filelib::write_file(data_view)));
-    <span class="s3e8">return</span> success();
-  }
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L344" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+    <span class="c1">// Write the tidied data to some file. If the write fails, synthesise a filesystem_error
+</span><span class="c1"></span>    <span class="c1">// exception ptr exactly as if one called filelib::write_file(data_view).value().
+</span><span class="c1"></span>    <span class="n">OUTCOME_TRY</span><span class="p">(</span><span class="n">written</span><span class="p">,</span> <span class="n">outcome</span><span class="o">&lt;</span><span class="n">size_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">filelib</span><span class="o">::</span><span class="n">write_file</span><span class="p">(</span><span class="n">data_view</span><span class="p">)));</span>
+    <span class="k">return</span> <span class="nf">success</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/finale.cpp#L344" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>Many will wish that the explicit converting wrappers around third party

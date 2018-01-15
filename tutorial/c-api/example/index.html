@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -574,35 +574,34 @@
 <p>Let us start with a simple C++ function which we wish to make available to C code:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">// Fill the supplied buffer with the integer v converted to a string, returning
-</span><span class="s1770">// length of string minus null terminator
-</span><span class="s1770"></span><span class="s3e8">extern</span> <span class="sc1c"></span><span class="sc1c">&#34;C&#34;</span> outcome::result&lt;size_t&gt; to_string(<span class="s3ee">char</span> *buffer, size_t bufferlen, <span class="s3ee">int</span> v) <span class="s3e8">noexcept</span>
-{
-  <span class="s3e8">try</span>
-  {
-    <span class="s1770">// Could throw an exception!
-</span><span class="s1770"></span>    std::string temp(std::to_string(v));
+<span class="c1">// Fill the supplied buffer with the integer v converted to a string, returning
+</span><span class="c1">// length of string minus null terminator
+</span><span class="c1"></span><span class="k">extern</span> <span class="sa"></span><span class="s">&#34;C&#34;</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">size_t</span><span class="o">&gt;</span> <span class="n">to_string</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bufferlen</span><span class="p">,</span> <span class="kt">int</span> <span class="n">v</span><span class="p">)</span> <span class="k">noexcept</span>
+<span class="p">{</span>
+  <span class="k">try</span>
+  <span class="p">{</span>
+    <span class="c1">// Could throw an exception!
+</span><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">temp</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
 
-    <span class="s1770">// Will this string exceed the supplied buffer?
-</span><span class="s1770"></span>    <span class="s3e8">if</span>(temp.size() + 1 &gt; bufferlen)
-      <span class="s3e8">return</span> std::errc::no_buffer_space;
+    <span class="c1">// Will this string exceed the supplied buffer?
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">bufferlen</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">errc</span><span class="o">::</span><span class="n">no_buffer_space</span><span class="p">;</span>
 
-    <span class="s1770">// Copy the string into the supplied buffer, and return length of string
-</span><span class="s1770"></span>    memcpy(buffer, temp.data(), temp.size() + 1);
-    <span class="s3e8">return</span> temp.size();
-  }
-  <span class="s3e8">catch</span>(...)
-  {
-    <span class="s1770">// This utility function rethrows the C++ exception, matching it
-</span><span class="s1770"></span>    <span class="s1770">// against every standard library exception and generating an
-</span><span class="s1770"></span>    <span class="s1770">// error code exactly matching it if possible. So, if the
-</span><span class="s1770"></span>    <span class="s1770">// string creation threw std::bad_alloc, that would be converted
-</span><span class="s1770"></span>    <span class="s1770">// into make_error_code(std::errc::not_enough_memory).
-</span><span class="s1770"></span>    <span class="s3e8">return</span> outcome::error_from_exception();
-  }
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/cpp_api.cpp.disabled#L31" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+    <span class="c1">// Copy the string into the supplied buffer, and return length of string
+</span><span class="c1"></span>    <span class="n">memcpy</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">temp</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">temp</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">temp</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">catch</span><span class="p">(...)</span>
+  <span class="p">{</span>
+    <span class="c1">// This utility function rethrows the C++ exception, matching it
+</span><span class="c1"></span>    <span class="c1">// against every standard library exception and generating an
+</span><span class="c1"></span>    <span class="c1">// error code exactly matching it if possible. So, if the
+</span><span class="c1"></span>    <span class="c1">// string creation threw std::bad_alloc, that would be converted
+</span><span class="c1"></span>    <span class="c1">// into make_error_code(std::errc::not_enough_memory).
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">outcome</span><span class="o">::</span><span class="n">error_from_exception</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/cpp_api.cpp.disabled#L31" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>A surprise to some may be that one can return an <code>outcome::result&lt;size_t&gt;</code>

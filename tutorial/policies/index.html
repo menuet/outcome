@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="Defining your own NoValuePolicy policies, plus an overview of the precanned policies which come in the Outcome source code.">
 
 
@@ -579,21 +579,20 @@ is fully programmable.</p>
 <p><code>result&lt;T, EC&gt;</code> is actually <code>result&lt;T, EC, NoValuePolicy&gt;</code>. <code>outcome&lt;T, EC, EP&gt;</code> is in
 fact <code>outcome&lt;T, EC, EP, NoValuePolicy&gt;</code>. The <code>NoValuePolicy</code> template type is defaulted
 to a template alias as follows:</p>
-<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="s3e8">namespace</span> policy {
-  <span class="s3e8">template</span> &lt;<span class="s3e8">class</span> <span class="s7d4">T</span>, <span class="s3e8">class</span> <span class="s7d4">EC</span>, <span class="s3e8">class</span> <span class="s7d4">E</span>&gt;
-  <span class="s3e8">using</span> default_policy = std::conditional_t&lt;
-    std::is_void&lt;EC&gt;::value &amp;&amp; std::is_void&lt;E&gt;::value,
-    terminate,
-    std::conditional_t&lt;
-      trait::has_error_code_v&lt;EC&gt;,
-      error_code_throw_as_system_error&lt;T, EC, E&gt;,
-      std::conditional_t&lt;
-        trait::has_exception_ptr_v&lt;EC&gt; || trait::has_exception_ptr_v&lt;E&gt;,
-        exception_ptr_rethrow&lt;T, EC, E&gt;,
-        all_narrow
-  &gt;&gt;&gt;;
-}</code></pre>
-</div>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">namespace</span> <span class="n">policy</span> <span class="p">{</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="p">,</span> <span class="k">class</span> <span class="nc">EC</span><span class="p">,</span> <span class="k">class</span> <span class="nc">E</span><span class="o">&gt;</span>
+  <span class="k">using</span> <span class="n">default_policy</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">conditional_t</span><span class="o">&lt;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">is_void</span><span class="o">&lt;</span><span class="n">EC</span><span class="o">&gt;::</span><span class="n">value</span> <span class="o">&amp;&amp;</span> <span class="n">std</span><span class="o">::</span><span class="n">is_void</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span>
+    <span class="n">terminate</span><span class="p">,</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">conditional_t</span><span class="o">&lt;</span>
+      <span class="n">trait</span><span class="o">::</span><span class="n">has_error_code_v</span><span class="o">&lt;</span><span class="n">EC</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="n">error_code_throw_as_system_error</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">EC</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">conditional_t</span><span class="o">&lt;</span>
+        <span class="n">trait</span><span class="o">::</span><span class="n">has_exception_ptr_v</span><span class="o">&lt;</span><span class="n">EC</span><span class="o">&gt;</span> <span class="o">||</span> <span class="n">trait</span><span class="o">::</span><span class="n">has_exception_ptr_v</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">exception_ptr_rethrow</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">EC</span><span class="p">,</span> <span class="n">E</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">all_narrow</span>
+  <span class="o">&gt;&gt;&gt;</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
 <ul>
 <li>For <code>unchecked&lt;T, EC&gt;</code>, <code>NoValuePolicy</code> is hard coded to <a href="https://ned14.github.io/outcome/reference/policies/all_narrow" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> policy::all_narrow</a>
 .</li>

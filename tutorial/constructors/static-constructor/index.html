@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.32.4" />
     <meta name="description" content="">
 
 
@@ -574,48 +574,47 @@
 <p>Its phase 2 constructor:</p>
 
 <div class="code-snippet"><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">
-<span class="s1770">// Phase 2 static member constructor function, which cannot throw
-</span><span class="s1770"></span><span class="s3e8">inline</span> outcome::result&lt;file_handle&gt; file_handle::file(file_handle::path_type path, file_handle::mode mode) <span class="s3e8">noexcept</span>
-{
-  <span class="s1770">// Perform phase 1 of object construction
-</span><span class="s1770"></span>  file_handle ret;
+<span class="c1">// Phase 2 static member constructor function, which cannot throw
+</span><span class="c1"></span><span class="kr">inline</span> <span class="n">outcome</span><span class="o">::</span><span class="n">result</span><span class="o">&lt;</span><span class="n">file_handle</span><span class="o">&gt;</span> <span class="n">file_handle</span><span class="o">::</span><span class="n">file</span><span class="p">(</span><span class="n">file_handle</span><span class="o">::</span><span class="n">path_type</span> <span class="n">path</span><span class="p">,</span> <span class="n">file_handle</span><span class="o">::</span><span class="n">mode</span> <span class="n">mode</span><span class="p">)</span> <span class="k">noexcept</span>
+<span class="p">{</span>
+  <span class="c1">// Perform phase 1 of object construction
+</span><span class="c1"></span>  <span class="n">file_handle</span> <span class="n">ret</span><span class="p">;</span>
 
-  <span class="s1770">// Perform phase 2 of object construction
-</span><span class="s1770"></span>  <span class="s3ee">int</span> flags = 0;
-  <span class="s3e8">switch</span>(mode)
-  {
-  <span class="s3e8">case</span> mode::attr_read:
-  <span class="s3e8">case</span> mode::read:
-    flags = O_RDONLY;
-    <span class="s3e8">break</span>;
-  <span class="s3e8">case</span> mode::attr_write:
-  <span class="s3e8">case</span> mode::write:
-    flags = O_RDWR;
-    <span class="s3e8">break</span>;
-  <span class="s3e8">case</span> mode::append:
-    flags = O_APPEND;
-    <span class="s3e8">break</span>;
-  <span class="s3e8">default</span>:
-    <span class="s3e8">return</span> std::errc::invalid_argument;
-  }
-  ret._fd = ::open(path.u8string().c_str(), flags);
-  <span class="s3e8">if</span>(-1 == ret._fd)
-  {
-    <span class="s1770">// Note that if we bail out here, ~file_handle() will correctly not call ::close()
-</span><span class="s1770"></span>    <span class="s3e8">return</span> {errno, std::system_category()};
-  }
-  <span class="s3e8">if</span>(-1 == ::fstat(ret._fd, &amp;ret._stat))
-  {
-    <span class="s1770">// Note that if we bail out here, ~file_handle() will correctly call ::close()
-</span><span class="s1770"></span>    <span class="s3e8">return</span> {errno, std::system_category()};
-  }
+  <span class="c1">// Perform phase 2 of object construction
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">switch</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+  <span class="p">{</span>
+  <span class="k">case</span> <span class="n">mode</span><span class="o">::</span><span class="nl">attr_read</span><span class="p">:</span>
+  <span class="k">case</span> <span class="n">mode</span><span class="o">::</span><span class="nl">read</span><span class="p">:</span>
+    <span class="n">flags</span> <span class="o">=</span> <span class="n">O_RDONLY</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="n">mode</span><span class="o">::</span><span class="nl">attr_write</span><span class="p">:</span>
+  <span class="k">case</span> <span class="n">mode</span><span class="o">::</span><span class="nl">write</span><span class="p">:</span>
+    <span class="n">flags</span> <span class="o">=</span> <span class="n">O_RDWR</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="n">mode</span><span class="o">::</span><span class="nl">append</span><span class="p">:</span>
+    <span class="n">flags</span> <span class="o">=</span> <span class="n">O_APPEND</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">default</span><span class="o">:</span>
+    <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">errc</span><span class="o">::</span><span class="n">invalid_argument</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">ret</span><span class="p">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">.</span><span class="n">u8string</span><span class="p">().</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">flags</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="n">ret</span><span class="p">.</span><span class="n">_fd</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// Note that if we bail out here, ~file_handle() will correctly not call ::close()
+</span><span class="c1"></span>    <span class="k">return</span> <span class="p">{</span><span class="n">errno</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">system_category</span><span class="p">()};</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="o">::</span><span class="n">fstat</span><span class="p">(</span><span class="n">ret</span><span class="p">.</span><span class="n">_fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ret</span><span class="p">.</span><span class="n">_stat</span><span class="p">))</span>
+  <span class="p">{</span>
+    <span class="c1">// Note that if we bail out here, ~file_handle() will correctly call ::close()
+</span><span class="c1"></span>    <span class="k">return</span> <span class="p">{</span><span class="n">errno</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">system_category</span><span class="p">()};</span>
+  <span class="p">}</span>
 
-  <span class="s1770">// Returning ret directly is an area full of compiler specific behaviour quirks,
-</span><span class="s1770"></span>  <span class="s1770">// so be explicit by wrapping into an initialiser list with embedded move.
-</span><span class="s1770"></span>  <span class="s3e8">return</span> {std::move(ret)};
-}
-</code></pre>
-</div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/constructors.cpp#L103" class="code-snippet-url" target="_blank">View this code on Github</a></div>
+  <span class="c1">// Returning ret directly is an area full of compiler specific behaviour quirks,
+</span><span class="c1"></span>  <span class="c1">// so be explicit by wrapping into an initialiser list with embedded move.
+</span><span class="c1"></span>  <span class="k">return</span> <span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ret</span><span class="p">)};</span>
+<span class="p">}</span>
+</code></pre></div><a href="https://github.com/ned14/outcome/tree/master/doc/src/snippets/constructors.cpp#L103" class="code-snippet-url" target="_blank">View this code on Github</a></div>
 
 
 <p>The static member function implementing phase 2 firstly calls phase 1
