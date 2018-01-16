@@ -582,32 +582,32 @@
 
 <h1 id="header-file-bad-access-hpp">Header file <code>bad_access.hpp</code></h1>
 
-<p><a id="standardese-bad_access.hpp"></a>
+<p><a id="standardese-bad_access.hpp" style="display: none"></a></p>
+
 <pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
 <span class="pun">{</span>
-    <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::bad_result_access"><span class="typ dec var fun">bad_result_access</span></a><span class="pun">;</span></p>
+    <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::bad_result_access"><span class="typ dec var fun">bad_result_access</span></a><span class="pun">;</span>
 
-<pre><code>&lt;span class=&quot;kwd&quot;&gt;template&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kwd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;typ dec var fun&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;kwd&quot;&gt;class&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;bad_result_access_with&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+    <span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">S</span><span class="pun">&gt;</span>
+    <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E"><span class="typ dec var fun">bad_result_access_with</span></a><span class="pun">;</span>
 
-&lt;span class=&quot;kwd&quot;&gt;class&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::bad_outcome_access&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;bad_outcome_access&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+    <span class="kwd">class</span> <a href="#standardese-outcome_v2_xxx::bad_outcome_access"><span class="typ dec var fun">bad_outcome_access</span></a><span class="pun">;</span>
+<span class="pun">}</span>
 </code></pre>
 
-<p><span class="pun">}</span>
-</code></pre></p>
-
-<p><a id="standardese-outcome_v2_xxx"></a></p>
+<p><a id="standardese-outcome_v2_xxx" style="display: none"></a></p>
 
 <h3 id="class-outcome-v2-xxx-bad-result-access">Class <code>outcome_v2_xxx::bad_result_access</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::bad_result_access"></a>
+<p><a id="standardese-outcome_v2_xxx::bad_result_access" style="display: none"></a></p>
+
 <pre><code class="standardese-language-cpp"><span class="kwd">class</span> <span class="typ dec var fun">bad_result_access</span>
 <span class="pun">:</span> <span class="kwd">public</span> <span class="typ dec var fun">std::logic_error</span>
 <span class="pun">{</span>
 <span class="kwd">public</span><span class="pun">:</span>
     <span class="kwd">explicit</span> <span class="typ dec var fun">bad_result_access</span><span class="pun">(</span><span class="kwd">char</span> <span class="kwd">const</span><span class="pun">*</span> <span class="typ dec var fun">what</span><span class="pun">)</span><span class="pun">;</span>
 <span class="pun">};</span>
-</code></pre></p>
+</code></pre>
 
 <p>Thrown when you try to access state in a <code>result&lt;R, S&gt;</code> which isn’t present.</p>
 
@@ -615,37 +615,37 @@
 
 <h3 id="class-outcome-v2-xxx-bad-result-access-with">Class <code>outcome_v2_xxx::bad_result_access_with</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::bad_result_access_with&lt;S&gt;"></a>
+<p><a id="standardese-outcome_v2_xxx::bad_result_access_with&lt;S&gt;" style="display: none"></a></p>
+
 <pre><code class="standardese-language-cpp"><span class="kwd">template</span> <span class="pun">&lt;</span><span class="kwd">class</span> <span class="typ dec var fun">S</span><span class="pun">&gt;</span>
 <span class="kwd">class</span> <span class="typ dec var fun">bad_result_access_with</span>
 <span class="pun">:</span> <span class="kwd">public</span> <span class="typ dec var fun">bad_result_access</span>
 <span class="pun">{</span>
 <span class="kwd">public</span><span class="pun">:</span>
-    <span class="kwd">explicit</span> <span class="typ dec var fun">bad_result_access_with</span><span class="pun">(</span><span class="typ dec var fun">S</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span></p>
+    <span class="kwd">explicit</span> <span class="typ dec var fun">bad_result_access_with</span><span class="pun">(</span><span class="typ dec var fun">S</span> <span class="typ dec var fun">v</span><span class="pun">)</span><span class="pun">;</span>
 
-<pre><code>&amp;#x2F;&amp;#x2F;=== result_error ===&amp;#x2F;&amp;#x2F;
-&lt;span class=&quot;typ dec var fun&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;error&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;typ dec var fun&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;error&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;typ dec var fun&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;error&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kwd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;typ dec var fun&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;a href=&quot;#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;amp;&quot;&gt;&lt;span class=&quot;typ dec var fun&quot;&gt;error&lt;/span&gt;&lt;/a&gt;&lt;span class=&quot;pun&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;pun&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;pun&quot;&gt;;&lt;/span&gt;
+    &#x2F;&#x2F;=== result_error ===&#x2F;&#x2F;
+    <span class="typ dec var fun">S</span> <span class="kwd">const</span><span class="pun">&amp;</span> <a href="#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;"><span class="typ dec var fun">error</span></a><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span>
+    <span class="typ dec var fun">S</span><span class="pun">&amp;</span> <a href="#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;"><span class="typ dec var fun">error</span></a><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span>
+    <span class="typ dec var fun">S</span> <span class="kwd">const</span><span class="pun">&amp;&amp;</span> <a href="#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;"><span class="typ dec var fun">error</span></a><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span>
+    <span class="typ dec var fun">S</span><span class="pun">&amp;&amp;</span> <a href="#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E::error()const&amp;"><span class="typ dec var fun">error</span></a><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span>
+<span class="pun">};</span>
 </code></pre>
-
-<p><span class="pun">};</span>
-</code></pre></p>
 
 <p>Thrown when you try to access a vlue in a <code>result&lt;R, S&gt;</code> which isn’t present.</p>
 
 <h3 id="function-error">Function <code>error</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::bad_result_access_with&lt;S&gt;::error()const&amp;"></a>
-<pre><code class="standardese-language-cpp">(1) <span class="typ dec var fun">S</span> <span class="kwd">const</span><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+<p><a id="standardese-outcome_v2_xxx::bad_result_access_with&lt;S&gt;::error()const&amp;" style="display: none"></a></p>
 
-<p>(2) <span class="typ dec var fun">S</span><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span></p>
+<pre><code class="standardese-language-cpp">(1) <span class="typ dec var fun">S</span> <span class="kwd">const</span><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;</span><span class="pun">;</span>
 
-<p>(3) <span class="typ dec var fun">S</span> <span class="kwd">const</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span></p>
+(2) <span class="typ dec var fun">S</span><span class="pun">&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;</span><span class="pun">;</span>
 
-<p>(4) <span class="typ dec var fun">S</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span>
-</code></pre></p>
+(3) <span class="typ dec var fun">S</span> <span class="kwd">const</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="kwd">const</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span>
+
+(4) <span class="typ dec var fun">S</span><span class="pun">&amp;&amp;</span> <span class="typ dec var fun">error</span><span class="pun">(</span><span class="pun">)</span> <span class="pun">&amp;&amp;</span><span class="pun">;</span>
+</code></pre>
 
 <p>Observes the error</p>
 
@@ -655,14 +655,15 @@
 
 <h3 id="class-outcome-v2-xxx-bad-outcome-access">Class <code>outcome_v2_xxx::bad_outcome_access</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::bad_outcome_access"></a>
+<p><a id="standardese-outcome_v2_xxx::bad_outcome_access" style="display: none"></a></p>
+
 <pre><code class="standardese-language-cpp"><span class="kwd">class</span> <span class="typ dec var fun">bad_outcome_access</span>
 <span class="pun">:</span> <span class="kwd">public</span> <span class="typ dec var fun">std::logic_error</span>
 <span class="pun">{</span>
 <span class="kwd">public</span><span class="pun">:</span>
     <span class="kwd">explicit</span> <span class="typ dec var fun">bad_outcome_access</span><span class="pun">(</span><span class="kwd">char</span> <span class="kwd">const</span><span class="pun">*</span> <span class="typ dec var fun">what</span><span class="pun">)</span><span class="pun">;</span>
 <span class="pun">};</span>
-</code></pre></p>
+</code></pre>
 
 <p>Thrown when you try to access state in a <code>outcome&lt;T, EC, E&gt;</code> which isn’t present.</p>
 
