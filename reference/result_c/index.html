@@ -585,7 +585,7 @@
 
 <h1 id="header-file-result-c">Header file <code>result_c</code></h1>
 
-<p><a id="standardese-result.h" style="display: none"></a></p>
+<p><a id="standardese-result-h" style="display: none"></a></p>
 
 <pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <a href="#standardese-cxx_error_code"><span class="typ dec var fun">cxx_error_code</span></a><span class="pun">;</span>
 
@@ -683,7 +683,7 @@
 
 <p><a id="standardese-CXX_RESULT_HAS_ERROR" style="display: none"></a></p>
 
-<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_ERROR</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; 1) == 0)</span>
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_ERROR</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; 2) == 2)</span>
 </code></pre>
 
 <p>True if a result struct has a valid error</p>

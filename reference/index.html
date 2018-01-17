@@ -604,88 +604,88 @@
 
 <li><h2 id="namespace-outcome-v2-xxx-convert">Namespace <code>outcome_v2_xxx::convert</code></h2>
 
-<p><a id="standardese-outcome_v2_xxx::convert" style="display: none"></a></p>
+<p><a id="standardese-outcome_v2_xxx__convert" style="display: none"></a></p>
 
 <p>Namespace for injected convertibility</p>
 
 <ul>
-<li><p><a href="convert#standardese-outcome_v2_xxx::convert"><code>ValueOrError</code></a></p></li>
+<li><p><a href="convert#standardese-outcome_v2_xxx__convert"><code>ValueOrError</code></a></p></li>
 
-<li><p><a href="convert#standardese-outcome_v2_xxx::convert"><code>ValueOrNone</code></a></p></li>
+<li><p><a href="convert#standardese-outcome_v2_xxx__convert"><code>ValueOrNone</code></a></p></li>
 
-<li><p><a href="convert#standardese-outcome_v2_xxx::convert::value_or_error&lt;T,U"><code>value_or_error</code></a> &mdash; Default converter for types matching the <code>ValueOrError</code> concept.</p></li>
+<li><p><a href="convert#standardese-outcome_v2_xxx__convert__value_or_error-T-U-"><code>value_or_error</code></a> &mdash; Default converter for types matching the <code>ValueOrError</code> concept.</p></li>
 </ul></li>
 
 <li><h2 id="namespace-outcome-v2-xxx-hooks">Namespace <code>outcome_v2_xxx::hooks</code></h2>
 
-<p><a id="standardese-outcome_v2_xxx::hooks" style="display: none"></a></p>
+<p><a id="standardese-outcome_v2_xxx__hooks" style="display: none"></a></p>
 
 <p>Namespace containing hooks used for intercepting and manipulating result/outcome</p>
 
 <ul>
-<li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::hook_outcome_construction&lt;T,U&gt;(T*,U&amp;&amp;)"><code>hook_outcome_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is first created by conversion from one of its possible types. Does nothing.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__hooks__hook_outcome_construction-T-U--T--U---"><code>hook_outcome_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is first created by conversion from one of its possible types. Does nothing.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::hook_outcome_copy_construction&lt;T,U&gt;(T*,U&amp;&amp;)"><code>hook_outcome_copy_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is created by copying from another <code>outcome</code> or <code>result</code>. Does nothing.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__hooks__hook_outcome_copy_construction-T-U--T--U---"><code>hook_outcome_copy_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is created by copying from another <code>outcome</code> or <code>result</code>. Does nothing.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::hook_outcome_in_place_construction&lt;T,U,Args&gt;(T*,in_place_type_t&lt;U&gt;,Args&amp;&amp;...)"><code>hook_outcome_in_place_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is created by in place construction. Does nothing.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__hooks__hook_outcome_in_place_construction-T-U-Args--T--in_place_type_t-U--Args------"><code>hook_outcome_in_place_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is created by in place construction. Does nothing.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::hook_outcome_move_construction&lt;T,U&gt;(T*,U&amp;&amp;)"><code>hook_outcome_move_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is created by moving from another <code>outcome</code> or <code>result</code>. Does nothing.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__hooks__hook_outcome_move_construction-T-U--T--U---"><code>hook_outcome_move_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>outcome</code> is created by moving from another <code>outcome</code> or <code>result</code>. Does nothing.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::hook_result_construction&lt;T,U&gt;(T*,U&amp;&amp;)"><code>hook_result_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is first created by conversion from one of its possible types. Does nothing.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__hooks__hook_result_construction-T-U--T--U---"><code>hook_result_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is first created by conversion from one of its possible types. Does nothing.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::hook_result_copy_construction&lt;T,U&gt;(T*,U&amp;&amp;)"><code>hook_result_copy_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is created by copying from another <code>result</code>. Does nothing.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__hooks__hook_result_copy_construction-T-U--T--U---"><code>hook_result_copy_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is created by copying from another <code>result</code>. Does nothing.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::hook_result_in_place_construction&lt;T,U,Args&gt;(T*,in_place_type_t&lt;U&gt;,Args&amp;&amp;...)"><code>hook_result_in_place_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is created by in place construction. Does nothing.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__hooks__hook_result_in_place_construction-T-U-Args--T--in_place_type_t-U--Args------"><code>hook_result_in_place_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is created by in place construction. Does nothing.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::hook_result_move_construction&lt;T,U&gt;(T*,U&amp;&amp;)"><code>hook_result_move_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is created by moving from another <code>result</code>. Does nothing.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__hooks__hook_result_move_construction-T-U--T--U---"><code>hook_result_move_construction</code></a> &mdash; The default instantiation hook implementation called when a <code>result</code> is created by moving from another <code>result</code>. Does nothing.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::hooks::override_outcome_exception&lt;R,S,P,NoValuePolicy,U&gt;(outcome&lt;R,S,P,NoValuePolicy&gt;*,U&amp;&amp;)"><code>override_outcome_exception</code></a> &mdash; Used in hook implementations to override the payload/exception to something other than what was constructed.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__hooks__override_outcome_exception-R-S-P-NoValuePolicy-U--outcome-R-S-P-NoValuePolicy---U---"><code>override_outcome_exception</code></a> &mdash; Used in hook implementations to override the payload/exception to something other than what was constructed.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::set_spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;*,uint16_t)"><code>set_spare_storage</code></a> &mdash; Sets the sixteen bits of spare storage in a <code>result</code> or <code>outcome</code>.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__hooks__set_spare_storage-R-S-NoValuePolicy--detail__result_final-R-S-NoValuePolicy---uint16_t-"><code>set_spare_storage</code></a> &mdash; Sets the sixteen bits of spare storage in a <code>result</code> or <code>outcome</code>.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::hooks::spare_storage&lt;R,S,NoValuePolicy&gt;(detail::result_final&lt;R,S,NoValuePolicy&gt;const*)"><code>spare_storage</code></a> &mdash; Get the sixteen bits of spare storage in a <code>result</code> or <code>outcome</code>.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__hooks__spare_storage-R-S-NoValuePolicy--detail__result_final-R-S-NoValuePolicy-const--"><code>spare_storage</code></a> &mdash; Get the sixteen bits of spare storage in a <code>result</code> or <code>outcome</code>.</p></li>
 </ul></li>
 
 <li><h2 id="namespace-outcome-v2-xxx-policy">Namespace <code>outcome_v2_xxx::policy</code></h2>
 
-<p><a id="standardese-outcome_v2_xxx::policy" style="display: none"></a></p>
+<p><a id="standardese-outcome_v2_xxx__policy" style="display: none"></a></p>
 
 <p>Namespace for policies</p>
 
 <ul>
-<li><p><a href="policies/all_narrow#standardese-outcome_v2_xxx::policy::all_narrow"><code>all_narrow</code></a> &mdash; Policy which treats wide checks as narrow checks.</p></li>
+<li><p><a href="policies/all_narrow#standardese-outcome_v2_xxx__policy__all_narrow"><code>all_narrow</code></a> &mdash; Policy which treats wide checks as narrow checks.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::policy::default_policy&lt;T,EC,E"><code>default_policy</code></a> &mdash; Default policy selector.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__policy__default_policy-T-EC-E-"><code>default_policy</code></a> &mdash; Default policy selector.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::policy::error_code&lt;T&gt;(T&amp;&amp;)"><code>error_code</code></a> &mdash; Used by policies to extract a <code>std::error_code</code> from some input <code>T</code> via ADL discovery of some <code>make_error_code(T)</code> function.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__policy__error_code-T--T---"><code>error_code</code></a> &mdash; Used by policies to extract a <code>std::error_code</code> from some input <code>T</code> via ADL discovery of some <code>make_error_code(T)</code> function.</p></li>
 
-<li><p><a href="policies/result_error_code_throw_as_system_error#standardese-outcome_v2_xxx::policy::error_code_throw_as_system_error&lt;T,EC"><code>error_code_throw_as_system_error</code></a> &mdash; Policy interpreting <code>EC</code> as a type for which <code>trait::has_error_code_v&lt;EC&gt;</code> is true.</p></li>
+<li><p><a href="policies/outcome_error_code_throw_as_system_error#standardese-outcome_v2_xxx__policy__error_code_throw_as_system_error-T-EC-E-"><code>error_code_throw_as_system_error</code></a> &mdash; Policy interpreting <code>EC</code> as a type for which <code>trait::has_error_code_v&lt;EC&gt;</code> is true.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::policy::exception_ptr&lt;T&gt;(T&amp;&amp;)"><code>exception_ptr</code></a> &mdash; Used by policies to extract a <code>std::exception_ptr</code> from some input <code>T</code> via ADL discovery of some <code>make_exception_ptr(T)</code> function.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__policy__exception_ptr-T--T---"><code>exception_ptr</code></a> &mdash; Used by policies to extract a <code>std::exception_ptr</code> from some input <code>T</code> via ADL discovery of some <code>make_exception_ptr(T)</code> function.</p></li>
 
-<li><p><a href="policies/outcome_exception_ptr_rethrow#standardese-outcome_v2_xxx::policy::exception_ptr_rethrow&lt;T,EC,E"><code>exception_ptr_rethrow</code></a> &mdash; Policy interpreting <code>EC</code> or <code>E</code> as a type for which <code>trait::has_exception_ptr_v&lt;EC|E&gt;</code> is true.</p></li>
+<li><p><a href="policies/outcome_exception_ptr_rethrow#standardese-outcome_v2_xxx__policy__exception_ptr_rethrow-T-EC-E-"><code>exception_ptr_rethrow</code></a> &mdash; Policy interpreting <code>EC</code> or <code>E</code> as a type for which <code>trait::has_exception_ptr_v&lt;EC|E&gt;</code> is true.</p></li>
 
-<li><p><a href="policies/terminate#standardese-outcome_v2_xxx::policy::terminate"><code>terminate</code></a> &mdash; Policy implementing any wide attempt to access the successful state as calling <code>std::terminate</code></p></li>
+<li><p><a href="policies/terminate#standardese-outcome_v2_xxx__policy__terminate"><code>terminate</code></a> &mdash; Policy implementing any wide attempt to access the successful state as calling <code>std::terminate</code></p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::policy::throw_as_system_error_with_payload&lt;Error&gt;(Errorconst&amp;)"><code>throw_as_system_error_with_payload</code></a> &mdash; Override to define what the policies which throw a system error with payload ought to do for some particular <code>result.error()</code>.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__policy__throw_as_system_error_with_payload-Error--Errorconst--"><code>throw_as_system_error_with_payload</code></a> &mdash; Override to define what the policies which throw a system error with payload ought to do for some particular <code>result.error()</code>.</p></li>
 
-<li><p><a href="policies/throw_bad_result_access#standardese-outcome_v2_xxx::policy::throw_bad_result_access&lt;EC"><code>throw_bad_result_access</code></a> &mdash; Policy which throws <code>bad_result_access_with&lt;EC&gt;</code> or <code>bad_result_access</code> during wide checks.</p></li>
+<li><p><a href="policies/throw_bad_result_access#standardese-outcome_v2_xxx__policy__throw_bad_result_access-EC-"><code>throw_bad_result_access</code></a> &mdash; Policy which throws <code>bad_result_access_with&lt;EC&gt;</code> or <code>bad_result_access</code> during wide checks.</p></li>
 </ul></li>
 
 <li><h2 id="namespace-outcome-v2-xxx-trait">Namespace <code>outcome_v2_xxx::trait</code></h2>
 
-<p><a id="standardese-outcome_v2_xxx::trait" style="display: none"></a></p>
+<p><a id="standardese-outcome_v2_xxx__trait" style="display: none"></a></p>
 
 <p>Namespace for traits</p>
 
 <ul>
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::trait::has_error_code&lt;T"><code>has_error_code</code></a> &mdash; Trait for whether a free function <code>make_error_code(T)</code> returning a <code>std::error_code</code> exists or not.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__trait__has_error_code-T-"><code>has_error_code</code></a> &mdash; Trait for whether a free function <code>make_error_code(T)</code> returning a <code>std::error_code</code> exists or not.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::trait::has_error_code_v"><code>has_error_code_v</code></a> &mdash; Trait for whether a free function <code>make_error_code(T)</code> returning a <code>std::error_code</code> exists or not.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__trait__has_error_code_v"><code>has_error_code_v</code></a> &mdash; Trait for whether a free function <code>make_error_code(T)</code> returning a <code>std::error_code</code> exists or not.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::trait::has_exception_ptr&lt;T"><code>has_exception_ptr</code></a> &mdash; Trait for whether a free function <code>make_exception_ptr(T)</code> returning a <code>std::exception_ptr</code> exists or not.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__trait__has_exception_ptr-T-"><code>has_exception_ptr</code></a> &mdash; Trait for whether a free function <code>make_exception_ptr(T)</code> returning a <code>std::exception_ptr</code> exists or not.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::trait::has_exception_ptr_v"><code>has_exception_ptr_v</code></a> &mdash; Trait for whether a free function <code>make_exception_ptr(T)</code> returning a <code>std::exception_ptr</code> exists or not.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__trait__has_exception_ptr_v"><code>has_exception_ptr_v</code></a> &mdash; Trait for whether a free function <code>make_exception_ptr(T)</code> returning a <code>std::exception_ptr</code> exists or not.</p></li>
 </ul></li>
 
 <li><h2 id="namespace-outcome-v2-xxx">Namespace <code>outcome_v2_xxx</code></h2>
@@ -693,57 +693,57 @@
 <p><a id="standardese-outcome_v2_xxx" style="display: none"></a></p>
 
 <ul>
-<li><p><a href="bad_access#standardese-outcome_v2_xxx::bad_outcome_access"><code>bad_outcome_access</code></a> &mdash; Thrown when you try to access state in a <code>outcome&lt;T, EC, E&gt;</code> which isn’t present.</p></li>
+<li><p><a href="bad_access#standardese-outcome_v2_xxx__bad_outcome_access"><code>bad_outcome_access</code></a> &mdash; Thrown when you try to access state in a <code>outcome&lt;T, EC, E&gt;</code> which isn’t present.</p></li>
 
-<li><p><a href="bad_access#standardese-outcome_v2_xxx::bad_result_access"><code>bad_result_access</code></a> &mdash; Thrown when you try to access state in a <code>result&lt;R, S&gt;</code> which isn’t present.</p></li>
+<li><p><a href="bad_access#standardese-outcome_v2_xxx__bad_result_access"><code>bad_result_access</code></a> &mdash; Thrown when you try to access state in a <code>result&lt;R, S&gt;</code> which isn’t present.</p></li>
 
-<li><p><a href="bad_access#standardese-outcome_v2_xxx::bad_result_access_with&lt;S"><code>bad_result_access_with</code></a> &mdash; Thrown when you try to access a vlue in a <code>result&lt;R, S&gt;</code> which isn’t present.</p></li>
+<li><p><a href="bad_access#standardese-outcome_v2_xxx__bad_result_access_with-S-"><code>bad_result_access_with</code></a> &mdash; Thrown when you try to access a value in a <code>result&lt;R, S&gt;</code> which isn’t present.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::checked&lt;R,S"><code>checked</code></a> &mdash; A “checked” edition of <code>result&lt;T, E&gt;</code> which does no special handling of specific <code>E</code> types at all.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__checked-R-S-"><code>checked</code></a> &mdash; A “checked” edition of <code>result&lt;T, E&gt;</code> which resembles fairly closely a <code>std::expected&lt;T, E&gt;</code>.</p></li>
 
-<li><p><a href="utils#standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code)"><code>error_from_exception</code></a> &mdash; Utility function which tries to match the exception in the pointer provided to an equivalent error code. Ought to work for all standard STL types.</p></li>
+<li><p><a href="utils#standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code-"><code>error_from_exception</code></a> &mdash; Utility function which tries to match the exception in the pointer provided to an equivalent error code. Ought to work for all standard STL types.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::failure&lt;EC&gt;(EC&amp;&amp;)"><code>failure</code></a> &mdash; Returns type sugar for implicitly constructing a <code>result&lt;T&gt;</code> with a failure state.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__failure-EC--EC---"><code>failure</code></a> &mdash; Returns type sugar for implicitly constructing a <code>result&lt;T&gt;</code> with a failure state.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::failure_type&lt;EC,E"><code>failure_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a failure state of error code and exception.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__failure_type-EC-E-"><code>failure_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a failure state of error code and exception.</p></li>
 
-<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx::in_place_type"><code>in_place_type</code></a> &mdash; Aliases <code>std::in_place_type&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
+<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx__in_place_type"><code>in_place_type</code></a> &mdash; Aliases <code>std::in_place_type&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
 
-<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx::in_place_type_t&lt;T"><code>in_place_type_t</code></a> &mdash; Aliases <code>std::in_place_type_t&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
+<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx__in_place_type_t-T-"><code>in_place_type_t</code></a> &mdash; Aliases <code>std::in_place_type_t&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::is_outcome&lt;T"><code>is_outcome</code></a> &mdash; True if an outcome</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__is_outcome-T-"><code>is_outcome</code></a> &mdash; True if an outcome</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::is_outcome_v"><code>is_outcome_v</code></a> &mdash; True if an outcome</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__is_outcome_v"><code>is_outcome_v</code></a> &mdash; True if an outcome</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::is_result&lt;T"><code>is_result</code></a> &mdash; True if a result</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__is_result-T-"><code>is_result</code></a> &mdash; True if a result</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::is_result_v"><code>is_result_v</code></a> &mdash; True if a result</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__is_result_v"><code>is_result_v</code></a> &mdash; True if a result</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::operator!=&lt;T,U,V,R,S,P,N,&gt;(result&lt;T,U,V&gt;const&amp;,outcome&lt;R,S,P,N&gt;const&amp;)"><code>operator!=</code></a> &mdash; True if the result is not equal to the outcome</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__operator---T-U-V-R-S-P-N---result-T-U-V-const--outcome-R-S-P-N-const--"><code>operator!=</code></a> &mdash; True if the result is not equal to the outcome</p></li>
 
-<li><p><a href="iostream_support#standardese-outcome_v2_xxx::operator&lt;&lt;&lt;R,S,P,,&gt;(std::ostream&amp;,result&lt;R,S,P&gt;const&amp;)"><code>operator&lt;&lt;</code></a> &mdash; Serialise a result. Format is <code>status_unsigned [value][error]</code>. Spare storage is preserved.</p></li>
+<li><p><a href="iostream_support#standardese-outcome_v2_xxx__operator---R-S-P----std__ostream--result-R-S-P-const--"><code>operator&lt;&lt;</code></a> &mdash; Serialise a result. Format is <code>status_unsigned [value][error]</code>. Spare storage is preserved.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::operator==&lt;T,U,V,R,S,P,N,&gt;(result&lt;T,U,V&gt;const&amp;,outcome&lt;R,S,P,N&gt;const&amp;)"><code>operator==</code></a> &mdash; True if the result is equal to the outcome</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__operator---T-U-V-R-S-P-N---result-T-U-V-const--outcome-R-S-P-N-const--"><code>operator==</code></a> &mdash; True if the result is equal to the outcome</p></li>
 
-<li><p><a href="iostream_support#standardese-outcome_v2_xxx::operator&gt;&gt;&lt;R,S,P,,&gt;(std::istream&amp;,result&lt;R,S,P&gt;&amp;)"><code>operator&gt;&gt;</code></a> &mdash; Deserialise a result. Format is <code>status_unsigned [value][error]</code>. Spare storage is preserved.</p></li>
+<li><p><a href="iostream_support#standardese-outcome_v2_xxx__operator---R-S-P----std__istream--result-R-S-P---"><code>operator&gt;&gt;</code></a> &mdash; Deserialise a result. Format is <code>status_unsigned [value][error]</code>. Spare storage is preserved.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::outcome&lt;R,S,P,NoValuePolicy"><code>outcome</code></a> &mdash; Used to return from functions one of (i) a successful value (ii) a cause of failure (ii) a different cause of failure. <code>constexpr</code> capable.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__outcome-R-S-P-NoValuePolicy-"><code>outcome</code></a> &mdash; Used to return from functions one of (i) a successful value (ii) a cause of failure (ii) a different cause of failure. <code>constexpr</code> capable.</p></li>
 
-<li><p><a href="iostream_support#standardese-outcome_v2_xxx::print&lt;R,S,P&gt;(detail::result_final&lt;R,S,P&gt;const&amp;)"><code>print</code></a> &mdash; Debug print a result into a form suitable for human reading. Format is <code>value|error</code>. If the error type is <code>error_code</code>, appends <code>&quot; (ec.message())&quot;</code> afterwards.</p></li>
+<li><p><a href="iostream_support#standardese-outcome_v2_xxx__print-R-S-P--detail__result_final-R-S-P-const--"><code>print</code></a> &mdash; Debug print a result into a form suitable for human reading. Format is <code>value|error</code>. If the error type is <code>error_code</code>, appends <code>&quot; (ec.message())&quot;</code> afterwards.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::result&lt;R,S,NoValuePolicy"><code>result</code></a> &mdash; Used to return from functions either (i) a successful value (ii) a cause of failure. <code>constexpr</code> capable.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__result-R-S-NoValuePolicy-"><code>result</code></a> &mdash; Used to return from functions either (i) a successful value (ii) a cause of failure. <code>constexpr</code> capable.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::success&lt;T&gt;(T&amp;&amp;)"><code>success</code></a> &mdash; Returns type sugar for implicitly constructing a <code>result&lt;T&gt;</code> with a successful state, default constructing <code>T</code> if necessary.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__success-T--T---"><code>success</code></a> &mdash; Returns type sugar for implicitly constructing a <code>result&lt;T&gt;</code> with a successful state, default constructing <code>T</code> if necessary.</p></li>
 
-<li><p><a href="success_failure#standardese-outcome_v2_xxx::success_type&lt;T"><code>success_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a successful state.</p></li>
+<li><p><a href="success_failure#standardese-outcome_v2_xxx__success_type-T-"><code>success_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a successful state.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx::swap&lt;R,S,P,N&gt;(outcome&lt;R,S,P,N&gt;&amp;,outcome&lt;R,S,P,N&gt;&amp;)"><code>swap</code></a> &mdash; Specialise swap for outcome.</p></li>
+<li><p><a href="outcome#standardese-outcome_v2_xxx__swap-R-S-P-N--outcome-R-S-P-N---outcome-R-S-P-N---"><code>swap</code></a> &mdash; Specialise swap for outcome.</p></li>
 
-<li><p><a href="try#standardese-outcome_v2_xxx::try_operation_return_as&lt;T&gt;(T&amp;&amp;)"><code>try_operation_return_as</code></a> &mdash; Customisation point for changing what the <code>OUTCOME_TRY</code> macros do. This function defaults to returning <code>std::forward&lt;T&gt;(v).as_failure()</code>.</p></li>
+<li><p><a href="try#standardese-outcome_v2_xxx__try_operation_return_as-T--T---"><code>try_operation_return_as</code></a> &mdash; Customisation point for changing what the <code>OUTCOME_TRY</code> macros do. This function defaults to returning <code>std::forward&lt;T&gt;(v).as_failure()</code>.</p></li>
 
-<li><p><a href="utils#standardese-outcome_v2_xxx::try_throw_std_exception_from_error(std::error_code,std::stringconst&amp;)"><code>try_throw_std_exception_from_error</code></a> &mdash; Utility function which tries to throw the equivalent STL exception type for some given error code, not including <code>system_error</code>.</p></li>
+<li><p><a href="utils#standardese-outcome_v2_xxx__try_throw_std_exception_from_error-std__error_code-std__stringconst--"><code>try_throw_std_exception_from_error</code></a> &mdash; Utility function which tries to throw the equivalent STL exception type for some given error code, not including <code>system_error</code>.</p></li>
 
-<li><p><a href="result#standardese-outcome_v2_xxx::unchecked&lt;R,S"><code>unchecked</code></a> &mdash; An “unchecked” edition of <code>result&lt;T, E&gt;</code> which does no special handling of specific <code>E</code> types at all.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__unchecked-R-S-"><code>unchecked</code></a> &mdash; An “unchecked” edition of <code>result&lt;T, E&gt;</code> which does no special handling of specific <code>E</code> types at all.</p></li>
 </ul></li>
 </ul>
 

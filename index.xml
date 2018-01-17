@@ -636,7 +636,7 @@ namespace outcome_v2_xxx { class bad_result_access; template &amp;lt;class S&amp
 Class outcome_v2_xxx::bad_result_access 
 class bad_result_access : public std::logic_error { public: explicit bad_result_access(char const* what); };  Thrown when you try to access state in a result&amp;lt;R, S&amp;gt; which isn’t present.
 Class outcome_v2_xxx::bad_result_access_with 
-template &amp;lt;class S&amp;gt; class bad_result_access_with : public bad_result_access { public: explicit bad_result_access_with(S v); &amp;#x2F;&amp;#x2F;=== result_error ===&amp;#x2F;&amp;#x2F; S const&amp;amp; error() const &amp;amp;; S&amp;amp; error() &amp;amp;; S const&amp;amp;&amp;amp; error() const &amp;amp;&amp;amp;; S&amp;amp;&amp;amp; error() &amp;amp;&amp;amp;; };  Thrown when you try to access a vlue in a result&amp;lt;R, S&amp;gt; which isn’t present.</description>
+template &amp;lt;class S&amp;gt; class bad_result_access_with : public bad_result_access { public: explicit bad_result_access_with(S v); &amp;#x2F;&amp;#x2F;=== result_error ===&amp;#x2F;&amp;#x2F; S const&amp;amp; error() const &amp;amp;; S&amp;amp; error() &amp;amp;; S const&amp;amp;&amp;amp; error() const &amp;amp;&amp;amp;; S&amp;amp;&amp;amp; error() &amp;amp;&amp;amp;; };  Thrown when you try to access a value in a result&amp;lt;R, S&amp;gt; which isn’t present.</description>
     </item>
     
     <item>

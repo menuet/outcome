@@ -560,7 +560,7 @@
 <ul>
 <li><a href="#parameters">Parameters</a></li>
 </ul></li>
-<li><a href="#parameter-not-matched">Parameter <code>not_matched</code></a></li>
+<li><a href="#parameter-outcome-v2-xxx-not-matched">Parameter <code>outcome_v2_xxx::not_matched</code></a></li>
 <li><a href="#function-outcome-v2-xxx-try-throw-std-exception-from-error">Function <code>outcome_v2_xxx::try_throw_std_exception_from_error</code></a>
 <ul>
 <li><a href="#parameters-1">Parameters</a></li>
@@ -587,13 +587,13 @@
 
 <h1 id="header-file-utils-hpp">Header file <code>utils.hpp</code></h1>
 
-<p><a id="standardese-utils.hpp" style="display: none"></a></p>
+<p><a id="standardese-utils-hpp" style="display: none"></a></p>
 
 <pre><code class="standardese-language-cpp"><span class="kwd">namespace</span> <span class="typ dec var fun">outcome_v2_xxx</span>
 <span class="pun">{</span>
-    <span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code)"><span class="typ dec var fun">error_from_exception</span></a><span class="pun">(</span><span class="typ dec var fun">std::exception_ptr</span><span class="pun">&amp;&amp;</span> <a href="#standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code).ep"><span class="typ dec var fun">ep</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">current_exception</span><span class="pun">(</span><span class="pun">,</span> <span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code).not_matched"><span class="typ dec var fun">not_matched</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">make_error_code</span><span class="pun">(</span><span class="kwd">std</span><span class="pun">::</span><span class="kwd">errc</span><span class="pun">::</span><span class="kwd">resource_unavailable_try_again</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
+    <span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code-"><span class="typ dec var fun">error_from_exception</span></a><span class="pun">(</span><span class="typ dec var fun">std::exception_ptr</span><span class="pun">&amp;&amp;</span> <a href="#standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code--ep"><span class="typ dec var fun">ep</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">current_exception</span><span class="pun">(</span><span class="pun">,</span> <span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code--not_matched"><span class="typ dec var fun">not_matched</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">make_error_code</span><span class="pun">(</span><span class="kwd">std</span><span class="pun">::</span><span class="kwd">errc</span><span class="pun">::</span><span class="kwd">resource_unavailable_try_again</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
 
-    <span class="kwd">void</span> <a href="#standardese-outcome_v2_xxx::try_throw_std_exception_from_error(std::error_code,std::stringconst&amp;)"><span class="typ dec var fun">try_throw_std_exception_from_error</span></a><span class="pun">(</span><span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx::try_throw_std_exception_from_error(std::error_code,std::stringconst&amp;).ec"><span class="typ dec var fun">ec</span></a><span class="pun">,</span> <span class="typ dec var fun">std::string</span> <span class="kwd">const</span><span class="pun">&amp;</span> <a href="#standardese-outcome_v2_xxx::try_throw_std_exception_from_error(std::error_code,std::stringconst&amp;).msg"><span class="typ dec var fun">msg</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">string</span><span class="pun">{</span><span class="pun">)</span><span class="pun">;</span>
+    <span class="kwd">void</span> <a href="#standardese-outcome_v2_xxx__try_throw_std_exception_from_error-std__error_code-std__stringconst--"><span class="typ dec var fun">try_throw_std_exception_from_error</span></a><span class="pun">(</span><span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx__try_throw_std_exception_from_error-std__error_code-std__stringconst---ec"><span class="typ dec var fun">ec</span></a><span class="pun">,</span> <span class="typ dec var fun">std::string</span> <span class="kwd">const</span><span class="pun">&amp;</span> <a href="#standardese-outcome_v2_xxx__try_throw_std_exception_from_error-std__error_code-std__stringconst---msg"><span class="typ dec var fun">msg</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">string</span><span class="pun">{</span><span class="pun">)</span><span class="pun">;</span>
 <span class="pun">}</span>
 </code></pre>
 
@@ -601,9 +601,9 @@
 
 <h3 id="function-outcome-v2-xxx-error-from-exception">Function <code>outcome_v2_xxx::error_from_exception</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code)" style="display: none"></a></p>
+<p><a id="standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code-" style="display: none"></a></p>
 
-<pre><code class="standardese-language-cpp"><span class="typ dec var fun">std::error_code</span> <span class="typ dec var fun">error_from_exception</span><span class="pun">(</span><span class="typ dec var fun">std::exception_ptr</span><span class="pun">&amp;&amp;</span> <a href="#standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code).ep"><span class="typ dec var fun">ep</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">current_exception</span><span class="pun">(</span><span class="pun">,</span> <span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code).not_matched"><span class="typ dec var fun">not_matched</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">make_error_code</span><span class="pun">(</span><span class="kwd">std</span><span class="pun">::</span><span class="kwd">errc</span><span class="pun">::</span><span class="kwd">resource_unavailable_try_again</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
+<pre><code class="standardese-language-cpp"><span class="typ dec var fun">std::error_code</span> <span class="typ dec var fun">error_from_exception</span><span class="pun">(</span><span class="typ dec var fun">std::exception_ptr</span><span class="pun">&amp;&amp;</span> <a href="#standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code--ep"><span class="typ dec var fun">ep</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">current_exception</span><span class="pun">(</span><span class="pun">,</span> <span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code--not_matched"><span class="typ dec var fun">not_matched</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">make_error_code</span><span class="pun">(</span><span class="kwd">std</span><span class="pun">::</span><span class="kwd">errc</span><span class="pun">::</span><span class="kwd">resource_unavailable_try_again</span><span class="pun">)</span> <span class="kwd">noexcept</span><span class="pun">;</span>
 </code></pre>
 
 <p>Utility function which tries to match the exception in the pointer provided to an equivalent error code. Ought to work for all standard STL types.</p>
@@ -616,9 +616,9 @@
 <li><code>ep</code> &mdash; The pointer to an exception to convert. If matched, on exit this is reset to a null pointer.</li>
 </ul>
 
-<h3 id="parameter-not-matched">Parameter <code>not_matched</code></h3>
+<h3 id="parameter-outcome-v2-xxx-not-matched">Parameter <code>outcome_v2_xxx::not_matched</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::error_from_exception(std::exception_ptr&amp;&amp;,std::error_code).not_matched" style="display: none"></a></p>
+<p><a id="standardese-outcome_v2_xxx__error_from_exception-std__exception_ptr---std__error_code--not_matched" style="display: none"></a></p>
 
 <pre><code class="standardese-language-cpp"><span class="typ dec var fun">std::error_code</span> <span class="typ dec var fun">not_matched</span> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">make_error_code</span><span class="pun">(</span><span class="kwd">std</span><span class="pun">::</span><span class="kwd">errc</span><span class="pun">::</span><span class="kwd">resource_unavailable_try_again</span></code></pre>
 
@@ -632,9 +632,9 @@
 
 <h3 id="function-outcome-v2-xxx-try-throw-std-exception-from-error">Function <code>outcome_v2_xxx::try_throw_std_exception_from_error</code></h3>
 
-<p><a id="standardese-outcome_v2_xxx::try_throw_std_exception_from_error(std::error_code,std::stringconst&amp;)" style="display: none"></a></p>
+<p><a id="standardese-outcome_v2_xxx__try_throw_std_exception_from_error-std__error_code-std__stringconst--" style="display: none"></a></p>
 
-<pre><code class="standardese-language-cpp"><span class="kwd">void</span> <span class="typ dec var fun">try_throw_std_exception_from_error</span><span class="pun">(</span><span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx::try_throw_std_exception_from_error(std::error_code,std::stringconst&amp;).ec"><span class="typ dec var fun">ec</span></a><span class="pun">,</span> <span class="typ dec var fun">std::string</span> <span class="kwd">const</span><span class="pun">&amp;</span> <a href="#standardese-outcome_v2_xxx::try_throw_std_exception_from_error(std::error_code,std::stringconst&amp;).msg"><span class="typ dec var fun">msg</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">string</span><span class="pun">{</span><span class="pun">)</span><span class="pun">;</span>
+<pre><code class="standardese-language-cpp"><span class="kwd">void</span> <span class="typ dec var fun">try_throw_std_exception_from_error</span><span class="pun">(</span><span class="typ dec var fun">std::error_code</span> <a href="#standardese-outcome_v2_xxx__try_throw_std_exception_from_error-std__error_code-std__stringconst---ec"><span class="typ dec var fun">ec</span></a><span class="pun">,</span> <span class="typ dec var fun">std::string</span> <span class="kwd">const</span><span class="pun">&amp;</span> <a href="#standardese-outcome_v2_xxx__try_throw_std_exception_from_error-std__error_code-std__stringconst---msg"><span class="typ dec var fun">msg</span></a> <span class="pun">=</span> <span class="kwd">std</span><span class="pun">::</span><span class="kwd">string</span><span class="pun">{</span><span class="pun">)</span><span class="pun">;</span>
 </code></pre>
 
 <p>Utility function which tries to throw the equivalent STL exception type for some given error code, not including <code>system_error</code>.</p>
