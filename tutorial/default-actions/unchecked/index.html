@@ -592,20 +592,20 @@ various default actions upon no-value observation according to traits defined up
 
 <p>If you don&rsquo;t want all this clever automatic detection of traits, and just want a plain,
 always-undefined-behaviour-on-no-value-observation success-or-failure type, we provide
-a simplified template alias to <code>result&lt;T, E&gt;</code> called <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx::unchecked%3CR,S%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> unchecked&lt;T, E&gt;</a>
+a simplified template alias to <code>result&lt;T, E&gt;</code> called <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx__unchecked-R-S-" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> unchecked&lt;T, E&gt;</a>
 . It literally does
 no run time checking whatsoever, no-value observation is always undefined behaviour.</p>
 
 <p>If instead you would prefer a plain, always-throwing-logic-error-on-no-value-observation
-type, we also provide another simplified template alias to <code>result&lt;T, E&gt;</code> called <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx::checked%3CR,S%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> checked&lt;T, E&gt;</a>
+type, we also provide another simplified template alias to <code>result&lt;T, E&gt;</code> called <a href="https://ned14.github.io/outcome/reference/result/#standardese-outcome_v2_xxx__checked-R-S-" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> checked&lt;T, E&gt;</a>
 .
 Similar to <code>.value()</code> in the WG21 Expected proposal or Optional, no-value observation throws
 these logic error type exceptions:</p>
 
 <ul>
-<li>No-value <code>.value()</code> observation throws <a href="https://ned14.github.io/outcome/reference/bad_access/#standardese-outcome_v2_xxx::bad_result_access_with%3CS%3E" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> bad_result_access_with&lt;E&gt;</a>
+<li>No-value <code>.value()</code> observation throws <a href="https://ned14.github.io/outcome/reference/bad_access/#standardese-outcome_v2_xxx__bad_result_access_with-S-" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> bad_result_access_with&lt;E&gt;</a>
 .</li>
-<li>No-error <code>.error()</code> observation throws <a href="https://ned14.github.io/outcome/reference/bad_access/#standardese-outcome_v2_xxx::bad_result_access" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> bad_result_access</a>
+<li>No-error <code>.error()</code> observation throws <a href="https://ned14.github.io/outcome/reference/bad_access/#standardese-outcome_v2_xxx__bad_result_access" class="api-reference"><i class="fa fa-book" aria-hidden="true"></i> bad_result_access</a>
 .</li>
 </ul>
 
