@@ -585,7 +585,7 @@
 
 <h1 id="header-file-result-c">Header file <code>result_c</code></h1>
 
-<p><a id="standardese-result-h" style="display: none"></a></p>
+<p><span id="standardese-result-h"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <a href="#standardese-cxx_error_code"><span class="typ dec var fun">cxx_error_code</span></a><span class="pun">;</span>
 
@@ -610,7 +610,7 @@
 
 <h2 id="struct-cxx-error-code">Struct <code>cxx_error_code</code></h2>
 
-<p><a id="standardese-cxx_error_code" style="display: none"></a></p>
+<p><span id="standardese-cxx_error_code"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="kwd">struct</span> <span class="typ dec var fun">cxx_error_code</span>
 <span class="pun">{</span>
@@ -626,7 +626,7 @@
 
 <h2 id="macro-cxx-declare-result">Macro <code>CXX_DECLARE_RESULT</code></h2>
 
-<p><a id="standardese-CXX_DECLARE_RESULT" style="display: none"></a></p>
+<p><span id="standardese-CXX_DECLARE_RESULT"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_DECLARE_RESULT</span><span class="pre">(</span><span class="pre">R,RD,S,SD</span><span class="pre">)</span> <span class="pre">struct result_##R##_##S { RD value; unsigned flags; SD error; }</span>
 </code></pre>
@@ -637,7 +637,7 @@
 
 <h2 id="macro-cxx-declare-result-ec">Macro <code>CXX_DECLARE_RESULT_EC</code></h2>
 
-<p><a id="standardese-CXX_DECLARE_RESULT_EC" style="display: none"></a></p>
+<p><span id="standardese-CXX_DECLARE_RESULT_EC"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_DECLARE_RESULT_EC</span><span class="pre">(</span><span class="pre">R,RD</span><span class="pre">)</span> <span class="pre">CXX_DECLARE_RESULT(R, RD, errorcode, struct cxx_error_code)</span>
 </code></pre>
@@ -648,7 +648,7 @@
 
 <h2 id="macro-cxx-result">Macro <code>CXX_RESULT</code></h2>
 
-<p><a id="standardese-CXX_RESULT" style="display: none"></a></p>
+<p><span id="standardese-CXX_RESULT"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT</span><span class="pre">(</span><span class="pre">R,S</span><span class="pre">)</span> <span class="pre">struct result_##R##_##S</span>
 </code></pre>
@@ -659,7 +659,7 @@
 
 <h2 id="macro-cxx-result-ec">Macro <code>CXX_RESULT_EC</code></h2>
 
-<p><a id="standardese-CXX_RESULT_EC" style="display: none"></a></p>
+<p><span id="standardese-CXX_RESULT_EC"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_EC</span><span class="pre">(</span><span class="pre">R</span><span class="pre">)</span> <span class="pre">struct result_##R##_errorcode</span>
 </code></pre>
@@ -670,9 +670,9 @@
 
 <h2 id="macro-cxx-result-has-value">Macro <code>CXX_RESULT_HAS_VALUE</code></h2>
 
-<p><a id="standardese-CXX_RESULT_HAS_VALUE" style="display: none"></a></p>
+<p><span id="standardese-CXX_RESULT_HAS_VALUE"></span></p>
 
-<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_VALUE</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; 1) == 1)</span>
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_VALUE</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; 1U) == 1U)</span>
 </code></pre>
 
 <p>True if a result struct has a valid value</p>
@@ -681,9 +681,9 @@
 
 <h2 id="macro-cxx-result-has-error">Macro <code>CXX_RESULT_HAS_ERROR</code></h2>
 
-<p><a id="standardese-CXX_RESULT_HAS_ERROR" style="display: none"></a></p>
+<p><span id="standardese-CXX_RESULT_HAS_ERROR"></span></p>
 
-<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_ERROR</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; 2) == 2)</span>
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_HAS_ERROR</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; 2U) == 2U)</span>
 </code></pre>
 
 <p>True if a result struct has a valid error</p>
@@ -692,9 +692,9 @@
 
 <h2 id="macro-cxx-result-error-is-errno">Macro <code>CXX_RESULT_ERROR_IS_ERRNO</code></h2>
 
-<p><a id="standardese-CXX_RESULT_ERROR_IS_ERRNO" style="display: none"></a></p>
+<p><span id="standardese-CXX_RESULT_ERROR_IS_ERRNO"></span></p>
 
-<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_ERROR_IS_ERRNO</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; (1 &lt;&lt; 4)) == (1 &lt;&lt; 4))</span>
+<pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_ERROR_IS_ERRNO</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(((r).flags &amp; (1U &lt;&lt; 4U)) == (1U &lt;&lt; 4U))</span>
 </code></pre>
 
 <p>True if a result struct’s <code>error</code> or <code>code</code> is an <code>errno</code> domain code suitable for setting <code>errno</code> with.</p>
@@ -703,7 +703,7 @@
 
 <h2 id="macro-cxx-result-error">Macro <code>CXX_RESULT_ERROR</code></h2>
 
-<p><a id="standardese-CXX_RESULT_ERROR" style="display: none"></a></p>
+<p><span id="standardese-CXX_RESULT_ERROR"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_ERROR</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">_Generic((r).error, struct cxx_error_code : ((struct cxx_error_code *) &amp;(r).error)-&gt;code, default : (r).error)</span>
 </code></pre>
@@ -714,7 +714,7 @@
 
 <h2 id="macro-cxx-result-set-errno">Macro <code>CXX_RESULT_SET_ERRNO</code></h2>
 
-<p><a id="standardese-CXX_RESULT_SET_ERRNO" style="display: none"></a></p>
+<p><span id="standardese-CXX_RESULT_SET_ERRNO"></span></p>
 
 <pre><code class="standardese-language-cpp"><span class="pre">#define</span> <span class="typ dec var fun">CXX_RESULT_SET_ERRNO</span><span class="pre">(</span><span class="pre">r</span><span class="pre">)</span> <span class="pre">(errno = CXX_RESULT_HAS_ERROR(r) ? (CXX_RESULT_ERROR_IS_ERRNO(r) ? CXX_RESULT_ERROR(r) : EAGAIN) : 0)</span>
 </code></pre>
