@@ -659,7 +659,7 @@
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx__policy__error_code-T--T---"><code>error_code</code></a> &mdash; Used by policies to extract a <code>std::error_code</code> from some input <code>T</code> via ADL discovery of some <code>make_error_code(T)</code> function.</p></li>
 
-<li><p><a href="policies/outcome_error_code_throw_as_system_error#standardese-outcome_v2_xxx__policy__error_code_throw_as_system_error-T-EC-E-"><code>error_code_throw_as_system_error</code></a> &mdash; Policy interpreting <code>EC</code> as a type for which <code>trait::has_error_code_v&lt;EC&gt;</code> is true.</p></li>
+<li><p><a href="policies/result_error_code_throw_as_system_error#standardese-outcome_v2_xxx__policy__error_code_throw_as_system_error-T-EC-"><code>error_code_throw_as_system_error</code></a> &mdash; Policy interpreting <code>EC</code> as a type for which <code>trait::has_error_code_v&lt;EC&gt;</code> is true.</p></li>
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx__policy__exception_ptr-T--T---"><code>exception_ptr</code></a> &mdash; Used by policies to extract a <code>std::exception_ptr</code> from some input <code>T</code> via ADL discovery of some <code>make_exception_ptr(T)</code> function.</p></li>
 
@@ -707,9 +707,9 @@
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx__failure_type-EC-E-"><code>failure_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a failure state of error code and exception.</p></li>
 
-<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx__in_place_type"><code>in_place_type</code></a> &mdash; Aliases <code>std::in_place_type&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
+<li><p><code>in_place_type</code> &mdash; Aliases <code>std::in_place_type&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
 
-<li><p><a href="doc_value_storage.md#standardese-outcome_v2_xxx__in_place_type_t-T-"><code>in_place_type_t</code></a> &mdash; Aliases <code>std::in_place_type_t&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
+<li><p><code>in_place_type_t</code> &mdash; Aliases <code>std::in_place_type_t&lt;T&gt;</code> if on C++ 17 or later, else defined locally.</p></li>
 
 <li><p><a href="outcome#standardese-outcome_v2_xxx__is_outcome-T-"><code>is_outcome</code></a> &mdash; True if an outcome</p></li>
 
@@ -737,7 +737,7 @@
 
 <li><p><a href="success_failure#standardese-outcome_v2_xxx__success_type-T-"><code>success_type</code></a> &mdash; Type sugar for implicitly constructing a <code>result&lt;&gt;</code> with a successful state.</p></li>
 
-<li><p><a href="outcome#standardese-outcome_v2_xxx__swap-R-S-P-N--outcome-R-S-P-N---outcome-R-S-P-N---"><code>swap</code></a> &mdash; Specialise swap for outcome.</p></li>
+<li><p><a href="result#standardese-outcome_v2_xxx__swap-R-S-P--result-R-S-P---result-R-S-P---"><code>swap</code></a> &mdash; Specialise swap for result.</p></li>
 
 <li><p><a href="try#standardese-outcome_v2_xxx__try_operation_return_as-T--T---"><code>try_operation_return_as</code></a> &mdash; Customisation point for changing what the <code>OUTCOME_TRY</code> macros do. This function defaults to returning <code>std::forward&lt;T&gt;(v).as_failure()</code>.</p></li>
 

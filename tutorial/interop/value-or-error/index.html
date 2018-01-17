@@ -588,10 +588,10 @@
 
 <p>Something not really mentioned until now is how Outcome interoperates with the proposed
 <a href="https://wg21.link/P0323"><code>std::expected&lt;T, E&gt;</code></a>, whose design lands in between <code>outcome::unchecked&lt;T, E&gt;</code>
-and <code>outcome::checked&lt;T, E&gt;</code>, both of which are simplified aliases for <code>outcome::result&lt;T, E&gt;</code> <a href="../policies">hard
+and <code>outcome::checked&lt;T, E&gt;</code>, both of which are simplified aliases for <code>outcome::result&lt;T, E&gt;</code> <a href="../../policies">hard
 coding the <code>NoValuePolicy</code> to a fixed policy</a>.</p>
 
-<p>Expected and Outcome are <a href="../../faq/#why-doesn-t-outcome-duplicate-std-expected-t-e-s-design">isomorphic to one another in design intent</a>, but interoperation
+<p>Expected and Outcome are <a href="../../../faq/#why-doesn-t-outcome-duplicate-std-expected-t-e-s-design">isomorphic to one another in design intent</a>, but interoperation
 for code using Expected and Outcome ought to be seamless thanks to the proposed <a href="https://wg21.link/P0786"><code>ValueOrError</code>
 concept framework</a>, a subset of which Outcome implements.</p>
 
