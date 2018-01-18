@@ -573,7 +573,7 @@
         <p>What about result&lt;udt, void&gt;? This is absolutely legal, it means that no error state is returned when there was an error. This can help with clarifying in code the use of std::optional&lt;udt&gt; as Optional more logically means value-or-nothing, not necessarily value-or-error.
 In contrast, result&lt;udt, void&gt; unambiguously does mean success-or-failure, just with an unspecified cause of failure.
 Outcome&rsquo;s default action for EC = void is to call std::terminate:
-struct udt{int a{0};explicit udt(int _a): a(_a){}udt() = default;int operator*() const { return a; }};result&lt;udt, void&gt; res(in_place_type&lt;void&gt;);// What happens here? <a class="read-more" href="/outcome/tutorial/default-actions/void/">&raquo;</a></p>
+struct udt { int a{0}; explicit udt(int _a) : a(_a) { } udt() = default; int operator*() const { return a; } }; result&lt;udt, void&gt; res(in_place_type&lt;void&gt;); // What happens here? <a class="read-more" href="/outcome/tutorial/default-actions/void/">&raquo;</a></p>
     </section>
     <footer class=" footline" >
          
