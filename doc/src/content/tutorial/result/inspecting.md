@@ -11,7 +11,7 @@ Suppose we will be writing function `print_half` that takes an integral number (
 
 Type `result<void>` means that there is no value to be retuned upon success, but that the operation might still fail, and we may be interested in inspecting the cause of the failure. Class template `result<>` is declared with attribute `[[nodiscard]]`, which means compiler will warn you if you forget to inspect the returned object (in C++ 17 or later).
 
-The implementation will do the following: if the integral number can be represnted by an `int`, we will convert to `int` and use its arithmetical operations. If the number is too large, we will fall back to using a custom `BigInt` implementation that needs to allocate memory. In the implementation we will use function `convert` defined in the previous section.
+The implementation will do the following: if the integral number can be represented by an `int`, we will convert to `int` and use its arithmetical operations. If the number is too large, we will fall back to using a custom `BigInt` implementation that needs to allocate memory. In the implementation we will use function `convert` defined in the previous section.
 
 {{% snippet "using_result.cpp" "half_impl" %}}
 
@@ -21,7 +21,7 @@ The implementation will do the following: if the integral number can be represnt
 
 #3. Function `.error()` allows you to inspect the error sub-object, representing information about the reason for failure.
 
-#4. Macro `OUTCOME_TRY` represents a control statement. It implies that the function call in the second argument returns a `result<>`. It is defined as:
+#4. Macro `OUTCOME_TRY` represents a control statement. It implies that the function call in the second argument returns a `result<>`, for instance:
 
 {{% snippet "using_result.cpp" "from_string" %}}
 
